@@ -53,8 +53,11 @@ const LANGS={
 };
 function applyLanguage(lang){lang=LANGS[lang]?lang:'fr';localStorage.setItem('vc_language',lang);document.documentElement.lang=lang;const t=LANGS[lang];document.querySelectorAll('#nav button').forEach((b,i)=>{if(t.nav[i])b.textContent=b.textContent.replace(/^.*?(?=\s)/,'')?b.textContent.replace(/(?<=\s).*/,t.nav[i]):t.nav[i]});const h1=document.querySelector('#dashboard h1');if(h1)h1.textContent=t.h1;document.querySelectorAll('section.section > h2').forEach((el,i)=>{if(t.h2[i])el.textContent=el.textContent.replace(/^[^A-Za-zÀ-ÿ]+/,'')?el.textContent.replace(/(?<=\s).*/,t.h2[i]):t.h2[i]});let labelIndex=0;document.querySelectorAll('label').forEach(el=>{if(el.closest('#admin')||el.closest('header'))return;if(t.labels[labelIndex])el.textContent=t.labels[labelIndex];labelIndex++});const fnMap={saveFarm:'saveFarm',addAnimal:'addAnimal',addFinance:'addFinance',addProduct:'addProduct',addReview:'addReview',sendMessage:'sendMessage',getLocation:'getLocation',startTracking:'startTracking',stopTracking:'stopTracking',analyzeImage:'analyzeImage'};for(const [key,fn] of Object.entries(fnMap)){const el=document.querySelector(`[onclick^="${fn}("]`);if(el&&t.buttons[key])el.textContent=t.buttons[key]} }
 const languageSelect=document.getElementById('languageSelect');languageSelect.value=localStorage.getItem('vc_language')||'fr';languageSelect.addEventListener('change',()=>applyLanguage(languageSelect.value));applyLanguage(languageSelect.value);
-
-function apiRoot(){return (document.getElementById('apiBase').value.trim()||localStorage.getItem('vc_api_base')||'').replace(/\/$/,'')}
+const API_DEFAULT='https://volaconnect-api.onrender.com';
+function apiRoot(){
+ const field=document.getElementById('apiBase');
+ return ((field?.value || localStorage.getItem('vc_api_base') || API_DEFAULT).trim()).replace(/\/+$/,'');
+}
 function cloudMessage(s){const el=document.getElementById('cloudStatus');if(el)el.textContent=s}
 function cloudHeaders(){return {'Content-Type':'application/json','Authorization':'Bearer '+sessionStorage.getItem('vc_token')}}
 async function cloudRequest(path,options={}){const base=apiRoot();if(!base)throw new Error('Configurez d’abord l’adresse HTTPS de votre API.');localStorage.setItem('vc_api_base',base);const r=await fetch(base+path,{...options,headers:{...cloudHeaders(),...(options.headers||{})}});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||('Erreur serveur '+r.status));return d}
