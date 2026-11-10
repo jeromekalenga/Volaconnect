@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#176b45"><meta name="description" content="VolaConnect — plateforme de gestion et de commercialisation avicole">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>VolaConnect — Élevage connecté</title>
+<style>
+:root{--green:#176b45;--green2:#e8f4ed;--ink:#17251d;--muted:#65746b;--line:#e2e9e4;--bg:#f5f8f6;--white:#fff;--orange:#f1a33c;--red:#c94d4d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,Arial,sans-serif}
+header{background:linear-gradient(120deg,#104b32,#208354);color:white;padding:18px max(18px,calc((100vw - 1200px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{font-size:22px;font-weight:850;letter-spacing:.2px}.brand span{color:#b9f0cd}.sub{font-size:12px;opacity:.85}
+.topright{display:flex;align-items:center;gap:10px}.pill{border:1px solid #ffffff55;border-radius:30px;padding:6px 11px;font-size:12px}
+.layout{max-width:1200px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:220px 1fr;gap:20px}
+nav{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;height:max-content;position:sticky;top:88px}
+nav button{display:flex;width:100%;border:0;background:transparent;padding:11px 12px;border-radius:10px;text-align:left;color:#405047;cursor:pointer;font-weight:650;gap:9px}
+nav button.active,nav button:hover{background:var(--green2);color:var(--green)}
+main{min-width:0}.hero{background:linear-gradient(115deg,#e3f3e9,#fff);border:1px solid #d4e8da;border-radius:18px;padding:22px;margin-bottom:16px}
+h1{font-size:25px;margin:0 0 5px}.muted{color:var(--muted)}.small{font-size:12px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}
+.card{background:white;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px #153d2410}
+.metric{font-size:25px;font-weight:800;margin-top:5px}.metric-label{font-size:12px;color:var(--muted)}
+.section{display:none}.section.active{display:block}.section h2{margin:4px 0 14px;font-size:21px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}
+button,.btn{background:var(--green);color:white;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+button.secondary,.btn.secondary{background:#edf4ef;color:var(--green);border:1px solid #d8e7dc}
+button.danger{background:#fff0f0;color:var(--red);border:1px solid #f2d2d2}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid #d9e2dc;border-radius:9px;background:white;font:inherit;color:var(--ink)}
+label{font-size:12px;font-weight:700;color:#53645a;display:block;margin:9px 0 5px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.formgrid .full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase}
+.tag{display:inline-block;padding:3px 8px;border-radius:20px;background:var(--green2);color:var(--green);font-size:11px;font-weight:700}
+.product{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:12px 0}
+.product:last-child{border:0}.notice{padding:11px 13px;background:#fff7e9;border:1px solid #f4dfb9;border-radius:10px;color:#76531d;font-size:13px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#173d2b;color:white;padding:10px 16px;border-radius:20px;display:none;z-index:10}
+.mapbox{height:240px;background:linear-gradient(135deg,#e3eee6,#d4e4d9);border-radius:12px;display:grid;place-items:center;text-align:center;padding:20px;color:#42634e}
+footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static;display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto}.grid{grid-template-columns:repeat(2,1fr)}header{padding:14px 16px}}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}.hero{padding:16px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">🐓 Vola<span>Connect</span></div><div class="sub">Produire local • Connecter • Développer</div></div><div class="topright"><label for="languageSelect" style="color:white;margin:0">Langue</label><select id="languageSelect" aria-label="Language" style="width:auto;padding:6px 8px;border-radius:20px"><option value="fr">Français</option><option value="en">English</option><option value="sw">Kiswahili</option><option value="ln">Lingála</option><option value="bem">Bemba</option></select><span class="pill" id="syncStatus">● Mode local</span><span class="pill">Lubumbashi · RDC</span></div></header>
+<div class="layout">
+<nav id="nav">
+<button class="active" data-page="dashboard">⌂ Tableau de bord</button>
+<button data-page="farm">🏡 Ma ferme</button>
+<button data-page="animals">🐔 Cheptel & santé</button>
+<button data-page="finance">💰 Finances</button>
+<button data-page="market">🛒 Marché</button>
+<button data-page="clients">👥 Clients & avis</button>
+<button data-page="location">📍 Localisation</button>
+<button data-page="messages">💬 Messages</button>
+<button data-page="ai">✨ Assistant IA</button>
+<button data-page="admin">⚙ Administration</button>
+</nav>
+<main>
+<section class="section active" id="dashboard">
+<div class="hero"><div class="small tag">PLATEFORME AVICOLE · VERSION PILOTE</div><h1>Bienvenue sur VolaConnect</h1><div class="muted">Gérez votre élevage, suivez vos opérations et développez votre marché depuis un seul espace.</div><div class="row" style="margin-top:14px"><button onclick="showPage('farm')">Configurer ma ferme</button><button class="secondary" onclick="showPage('market')">Voir le marché</button></div></div>
+<div class="grid">
+<div class="card"><div class="metric-label">Animaux déclarés</div><div class="metric" id="dashAnimals">0</div><div class="small muted">Effectif renseigné dans votre ferme</div></div>
+<div class="card"><div class="metric-label">Suivis enregistrés</div><div class="metric" id="dashRecords">0</div><div class="small muted">Santé et production</div></div>
+<div class="card"><div class="metric-label">Dépenses enregistrées</div><div class="metric" id="dashExpenses">0 $</div><div class="small muted">Données saisies localement</div></div>
+<div class="card"><div class="metric-label">Revenus enregistrés</div><div class="metric" id="dashIncome">0 $</div><div class="small muted">Données saisies localement</div></div>
+</div>
+<div class="grid" style="grid-template-columns:1.3fr 1fr">
+<div class="card"><h3>Activités récentes</h3><div id="recentActivity" class="muted small">Aucune activité enregistrée. Commencez par ajouter une opération.</div></div>
+<div class="card"><h3>État de synchronisation</h3><p class="muted small">Les actions sont conservées sur cet appareil lorsque la connexion est faible. Elles seront synchronisées lorsqu'un serveur sera configuré et accessible.</p><span class="tag" id="queueCount">0 opération en attente</span></div>
+</div>
+</section>
+<section class="section" id="farm"><h2>🏡 Espace ferme</h2><div class="card">
+<p class="muted">Enregistrez les informations de votre exploitation.</p><div class="formgrid">
+<div><label>Nom de la ferme</label><input id="farmName" placeholder="Ex. AgriVolaille"></div><div><label>Responsable</label><input id="farmOwner" placeholder="Nom du responsable"></div>
+<div><label>Type d'élevage</label><select id="farmType"><option>Poulets de chair et pondeuses</option><option>Poulets de chair</option><option>Pondeuses</option><option>Autre élevage</option></select></div><div><label>Effectif actuel</label><input id="farmCount" type="number" min="0" placeholder="Nombre d'animaux"></div>
+<div class="full"><label>Adresse / quartier</label><input id="farmAddress" placeholder="Lubumbashi, quartier..."></div><div class="full"><button onclick="saveFarm()">Enregistrer la ferme</button></div></div><p id="farmSaved" class="small muted"></p></div></section>
+<section class="section" id="animals"><h2>🐔 Cheptel, bandes et santé</h2><div class="card"><h3>Ajouter un suivi sanitaire ou de production</h3><div class="formgrid">
+<div><label>Type d'opération</label><select id="animalKind"><option>Vaccination</option><option>Alimentation</option><option>Mortalité</option><option>Ponte / production</option><option>Visite vétérinaire</option></select></div><div><label>Date</label><input id="animalDate" type="date"></div>
+<div><label>Effectif concerné / quantité</label><input id="animalQty" type="number" min="0"></div><div><label>Bande / bâtiment</label><input id="animalBatch" placeholder="Bande A"></div>
+<div class="full"><label>Produit, observation ou commentaire</label><textarea id="animalNote" rows="2" placeholder="Détails de l'opération..."></textarea></div>
+<div class="full"><button onclick="addAnimal()">Enregistrer le suivi</button></div></div></div>
+<div class="card" style="margin-top:14px"><h3>Historique sanitaire</h3><div id="animalList" class="muted small">Aucun suivi enregistré.</div></div></section>
+<section class="section" id="finance"><h2>💰 Comptabilité de la ferme</h2><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="metric-label">Revenus</div><div class="metric" id="incomeTotal">0 $</div></div><div class="card"><div class="metric-label">Dépenses</div><div class="metric" id="expenseTotal">0 $</div></div><div class="card"><div class="metric-label">Solde</div><div class="metric" id="balanceTotal">0 $</div></div></div>
+<div class="card"><h3>Nouvelle opération financière</h3><div class="formgrid"><div><label>Nature</label><select id="finType"><option value="expense">Dépense</option><option value="income">Revenu</option></select></div><div><label>Catégorie</label><select id="finCategory"><option>Aliments</option><option>Poussins / poulettes</option><option>Vaccins et soins</option><option>Transport</option><option>Équipement</option><option>Vente d'œufs</option><option>Vente de poulets</option><option>Autre</option></select></div><div><label>Montant (USD)</label><input id="finAmount" type="number" min="0.01" step="0.01"></div><div><label>Date</label><input id="finDate" type="date"></div><div class="full"><label>Note / référence</label><input id="finNote" placeholder="Fournisseur, client, facture..."></div><div class="full"><button onclick="addFinance()">Ajouter à l'historique</button></div></div></div>
+<div class="card" style="margin-top:14px"><h3>Historique des opérations</h3><div id="financeList"></div></div></section>
+<section class="section" id="market"><h2>🛒 Marché des produits avicoles</h2><div class="card"><h3>Publier un produit</h3><div class="formgrid"><div><label>Produit</label><input id="prodName" placeholder="Plateau de 30 œufs"></div><div><label>Prix (USD)</label><input id="prodPrice" type="number" min="0" step=".01"></div><div><label>Quantité disponible</label><input id="prodQty" type="number" min="0"></div><div><label>Vendeur / ferme</label><input id="prodSeller" placeholder="Nom de la ferme"></div><div class="full"><label>Description</label><textarea id="prodDesc" rows="2"></textarea></div><div class="full"><button onclick="addProduct()">Publier le produit</button></div></div></div>
+<div class="card" style="margin-top:14px"><h3>Catalogue</h3><div id="productList" class="muted small">Aucun produit publié.</div></div></section>
+<section class="section" id="clients"><h2>👥 Espace clients, commentaires et témoignages</h2><div class="card"><h3>Laisser un avis</h3><div class="formgrid"><div><label>Nom du client</label><input id="reviewName"></div><div><label>Produit / ferme concerné</label><input id="reviewProduct"></div><div class="full"><label>Témoignage ou commentaire</label><textarea id="reviewText" rows="3"></textarea></div><div class="full"><button onclick="addReview()">Publier le témoignage</button></div></div></div><div class="card" style="margin-top:14px"><h3>Avis publiés</h3><div id="reviewList" class="muted small">Aucun avis.</div></div></section>
+<section class="section" id="location"><h2>📍 Géolocalisation et terrain d'élevage</h2><div class="card"><p class="muted">La localisation ne fonctionne qu'avec l'autorisation explicite de l'utilisateur et une connexion sécurisée HTTPS (ou localhost). Le suivi continu doit être activé volontairement par l'éleveur.</p><div class="row"><button onclick="getLocation()">Obtenir ma position GPS</button><button class="secondary" onclick="startTracking()">Activer le suivi pendant cette session</button><button class="danger" onclick="stopTracking()">Arrêter le suivi</button></div><p id="gpsOutput" class="small muted">Position non encore partagée.</p><div class="mapbox" id="mapBox">🗺️ Carte de la ferme<br><span class="small">La carte interactive sera connectée à un fournisseur cartographique lors du déploiement.</span></div><h3>Délimiter le terrain</h3><p class="small muted">Marchez autour du terrain et ajoutez les points GPS de ses limites. La superficie calculée sera une estimation.</p><button class="secondary" onclick="addBoundaryPoint()">Ajouter le point GPS actuel au périmètre</button> <button class="secondary" onclick="calculateArea()">Calculer la superficie estimée</button><p id="areaOutput" class="small muted">Aucun point de limite enregistré.</p></div></section>
+<section class="section" id="messages"><h2>💬 Communication</h2><div class="notice">La messagerie ci-dessous est une démonstration locale sur cet appareil. Les appels audio/vidéo réels nécessitent un serveur de signalisation sécurisé et une infrastructure WebRTC (STUN/TURN).</div><div class="card" style="margin-top:14px"><h3>Messagerie texte locale</h3><div id="chatList" style="min-height:100px;max-height:240px;overflow:auto" class="small muted">Aucun message.</div><label>Votre message</label><textarea id="chatText" rows="2" placeholder="Écrire un message..."></textarea><div class="row" style="margin-top:8px"><button onclick="sendMessage()">Envoyer</button><button class="secondary" onclick="callInfo('audio')">Appel audio</button><button class="secondary" onclick="callInfo('vidéo')">Appel vidéo</button></div></div></section>
+<section class="section" id="ai"><h2>✨ Assistant IA agricole</h2><div class="notice">L'analyse IA réelle nécessite un service IA connecté, des règles vétérinaires validées et une clé API protégée côté serveur. Cette version permet de préparer les observations et de tester le flux, sans prétendre diagnostiquer une maladie.</div><div class="card" style="margin-top:14px"><h3>Préparer une analyse d'image</h3><label>Photo d'un animal, d'un aliment ou d'une installation</label><input id="aiImage" type="file" accept="image/*"><label>Contexte / symptômes observés</label><textarea id="aiContext" rows="3" placeholder="Ex. baisse d'appétit, plumage, fientes, âge, effectif concerné..."></textarea><button style="margin-top:10px" onclick="analyzeImage()">Préparer l'analyse</button><div id="aiResult" class="small muted" style="margin-top:12px"></div></div><div class="card" style="margin-top:14px"><h3>Analyse économique simple</h3><p class="small muted">Calcul automatique à partir des opérations financières saisies.</p><div id="aiFinance"></div></div></section>
+<section class="section" id="admin"><h2>⚙ Administration et sécurité</h2><div class="card"><h3>Contrôles de la version pilote</h3><ul class="small"><li>Données de démonstration conservées localement dans le navigateur.</li><li>Ne partagez pas cet appareil et protégez votre session.</li><li>Avant la mise en production : authentification forte, rôles et permissions, chiffrement TLS, sauvegardes, journal d'audit et tests de sécurité.</li><li>Les paiements réels doivent passer par un prestataire agréé (mobile money / banque), avec vérification serveur des transactions.</li></ul><div class="row"><button class="secondary" onclick="exportData()">Exporter mes données (JSON)</button><button class="secondary" onclick="importDataPrompt()">Importer une sauvegarde</button><button class="danger" onclick="clearData()">Effacer les données locales</button></div><h3 style="margin-top:20px">Compte et synchronisation entre appareils</h3>
+<div class="notice">Créez un compte sur le serveur VolaConnect hébergé pour synchroniser vos données entre plusieurs appareils. Sans serveur configuré, vos données restent sur cet appareil.</div>
+<div class="formgrid" style="margin-top:10px">
+<div class="full"><label>Adresse de l’API VolaConnect (HTTPS)</label><input id="apiBase" placeholder="https://api.votredomaine.cd"></div>
+<div><label>Nom complet (inscription)</label><input id="accountName" placeholder="Nom complet"></div>
+<div><label>Adresse e-mail</label><input id="accountEmail" type="email" placeholder="nom@exemple.com"></div>
+<div class="full"><label>Mot de passe (12 caractères minimum)</label><input id="accountPassword" type="password" minlength="12" autocomplete="new-password"></div>
+<div class="full row"><button onclick="createCloudAccount()">Créer un compte</button><button class="secondary" onclick="loginCloudAccount()">Se connecter</button><button class="secondary" onclick="syncCloudNow()">Synchroniser maintenant</button><button class="danger" onclick="logoutCloudAccount()">Déconnecter</button></div>
+</div><p id="cloudStatus" class="small muted">Aucun compte connecté. La synchronisation cloud est inactive.</p>
+<h3 style="margin-top:20px">Modules optionnels à activer ultérieurement</h3><ul class="small"><li>Assistant IA : désactivé jusqu’à la configuration d’un fournisseur et la validation des usages vétérinaires.</li><li>M-Pesa, Orange Money et Airtel Money : désactivés jusqu’à la contractualisation et l’intégration des API officielles.</li></ul>
+<h3 style="margin-top:20px">Historique / journal</h3><div id="auditList" class="small muted">Aucune activité.</div></div></section>
+<footer>VolaConnect · Plateforme de gestion et de mise en relation · RDC</footer>
+</main></div><div id="toast"></div>
+<script src="app.js"></script>
+</body></html>

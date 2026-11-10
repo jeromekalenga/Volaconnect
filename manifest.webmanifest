@@ -1,0 +1,23 @@
+{
+  "name": "VolaConnect",
+  "short_name": "VolaConnect",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#176b45",
+  "description": "Gestion et marché avicole",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
