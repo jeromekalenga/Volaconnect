@@ -171,3 +171,15 @@ const localHasData = !!(
 function logoutCloudAccount(){sessionStorage.removeItem('vc_token');cloudMessage('Compte déconnecté. Les données locales ne sont pas effacées.');toast('Déconnexion effectuée.')}
 const apiField=document.getElementById('apiBase');
 if(apiField) apiField.value=localStorage.getItem('vc_api_base')||API_DEFAULT;
+function diagnosticSync(){
+  const total=(db.livestock||[]).reduce(
+    (s,x)=>s+Number(x.qty||0),0
+  );
+  alert(
+    "ÉTAT DE SYNCHRONISATION\n"+
+    "Données modifiées : "+localStorage.getItem("vc_dirty")+"\n"+
+    "Version cloud locale : "+localStorage.getItem("vc_cloud_version")+"\n"+
+    "Enregistrements animaux : "+(db.livestock||[]).length+"\n"+
+    "Effectif total : "+total
+  );
+  }
