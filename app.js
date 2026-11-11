@@ -9,6 +9,26 @@ document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()
 function val(id){return document.getElementById(id).value.trim()}
 function saveFarm(){db.farm={name:val("farmName"),owner:val("farmOwner"),type:val("farmType"),count:+val("farmCount"),address:val("farmAddress")};persist("Fiche ferme enregistrée");toast("Ferme enregistrée sur cet appareil.");}
 function addAnimal(){if(!val("animalQty"))return toast("Indiquez une quantité ou un effectif.");db.animals.unshift({kind:val("animalKind"),date:val("animalDate")||new Date().toISOString().slice(0,10),qty:+val("animalQty"),batch:val("animalBatch"),note:val("animalNote")});persist("Suivi cheptel ajouté");toast("Suivi enregistré.");}
+function addLivestock(){
+  const qty=Number(val("livestockQty"));
+  if(!Number.isInteger(qty)||qty<1){
+    return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");
+  }
+  if(!db.livestock) db.livestock=[];
+  db.livestock.unshift({
+    species:val("livestockSpecies"),
+    category:val("livestockCategory"),
+    qty:qty,
+    batch:val("livestockBatch"),
+    date:val("livestockDate")||new Date().toISOString().slice(0,10),
+    note:val("livestockNote")
+  });
+  persist("Animaux enregistrés");
+  ["livestockQty","livestockBatch","livestockNote"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  toast("Animaux enregistrés avec succès.");
+}
 function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}
 function addProduct(){if(!val("prodName")||!(+val("prodPrice")>=0))return toast("Complétez le nom et le prix.");db.products.unshift({name:val("prodName"),price:+val("prodPrice"),qty:+val("prodQty"),seller:val("prodSeller"),desc:val("prodDesc"),at:new Date().toLocaleString("fr-FR")});persist("Produit publié");toast("Produit publié dans le catalogue local.");}
 function addReview(){if(!val("reviewName")||!val("reviewText"))return toast("Nom et témoignage requis.");db.reviews.unshift({name:val("reviewName"),product:val("reviewProduct"),text:val("reviewText"),at:new Date().toLocaleString("fr-FR")});persist("Témoignage ajouté");toast("Témoignage enregistré.");}
