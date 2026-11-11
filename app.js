@@ -84,6 +84,24 @@ document.getElementById("livestockList").innerHTML=
     </p>
   `).join("")
   :"Aucun animal enregistré.";
+const equipmentTotal=(db.equipment||[]).reduce(
+  (sum,x)=>sum+Number(x.qty||0),0
+);
+document.getElementById("equipmentTotal").textContent=
+  equipmentTotal.toLocaleString("fr-FR")+" matériel(aux)";
+document.getElementById("equipmentList").innerHTML=
+  db.equipment&&db.equipment.length
+  ?db.equipment.map(x=>`
+    <p>
+      <b>${esc(x.name)}</b>
+      <br>Catégorie : ${esc(x.category)}
+      <br>Quantité : ${Number(x.qty).toLocaleString("fr-FR")}
+      <br>État : ${esc(x.state)}
+      <br>Date d'acquisition : ${esc(x.date)}
+      <br>Observations : ${esc(x.note||"Aucune")}
+    </p>
+  `).join("")
+  :"Aucun équipement enregistré.";
  document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";}
 function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
 function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
