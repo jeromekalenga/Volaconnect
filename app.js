@@ -108,42 +108,51 @@ async function syncCloudNow(){
     const remote = await cloudRequest('/api/sync/snapshot');
     const dirty = localStorage.getItem('vc_dirty') === '1';
     const knownVersion = Number(localStorage.getItem('vc_cloud_version') || 0);
-const localHasData = !!(
-  db.farm.name ||
-  db.animals.length ||
-  (db.livestock && db.livestock.length) ||
-  db.finance.length ||
-  db.products.length ||
-  db.reviews.length ||
-  db.messages.length
-);
-    if(remote.version > 0 && remote.data && !dirty){
-      if(localHasData && !confirm('Des données existent sur le serveur. Télécharger la sauvegarde cloud ?')){
-        cloudMessage('Synchronisation annulée.');
+    const remoteVersion = Number(remote.version || 0);
+    const localHasData = !!(
+      db.farm?.name ||
+      db.animals.length ||
+      (db.livestock && db.livestock.length) ||
+      db.finance.length ||
+      db.products.length ||
+      db.reviews.length ||
+      db.messages.length
+    );
+    // Cas 1 : les données locales sont déjà synchronisées.
+    if(!dirty && remoteVersion > 0 && remoteVersion === knownVersion){
+      cloudMessage('Vos données sont déjà synchronisées. Version cloud ' + remoteVersion + '.');
+      return;
+    }
+    // Cas 2 : le cloud possède une version plus récente.
+    if(remoteVersion > 0 && remote.data && !dirty && remoteVersion !== knownVersion){
+      if(localHasData && !confirm('Une nouvelle sauvegarde cloud existe. Télécharger cette version ?')){
+        cloudMessage('Synchronisation annulée. Vos données locales sont conservées.');
         return;
       }
       db = {...emptyDB(), ...remote.data};
       localStorage.setItem(KEY, JSON.stringify(db));
-      localStorage.setItem('vc_cloud_version', String(remote.version));
+      localStorage.setItem('vc_cloud_version', String(remoteVersion));
       localStorage.removeItem('vc_dirty');
       render();
-      cloudMessage('Sauvegarde cloud téléchargée.');
+      cloudMessage('Sauvegarde cloud téléchargée. Version ' + remoteVersion + '.');
       return;
     }
-    if(remote.version > 0 && remote.data && dirty && !localHasData){
+    // Cas 3 : aucune donnée locale, mais une sauvegarde cloud existe.
+    if(remoteVersion > 0 && remote.data && dirty && !localHasData){
       db = {...emptyDB(), ...remote.data};
       localStorage.setItem(KEY, JSON.stringify(db));
-      localStorage.setItem('vc_cloud_version', String(remote.version));
+      localStorage.setItem('vc_cloud_version', String(remoteVersion));
       localStorage.removeItem('vc_dirty');
       render();
       cloudMessage('Sauvegarde cloud téléchargée.');
       return;
     }
-    if(dirty && remote.version !== knownVersion && localHasData){
-      if(remote.version > 0 && remote.data && confirm('Le cloud a changé. Télécharger la dernière sauvegarde ?')){
+    // Cas 4 : conflit entre les modifications locales et le cloud.
+    if(dirty && remoteVersion !== knownVersion && localHasData){
+      if(remoteVersion > 0 && remote.data && confirm('Le cloud a changé. Télécharger la dernière sauvegarde ?')){
         db = {...emptyDB(), ...remote.data};
         localStorage.setItem(KEY, JSON.stringify(db));
-        localStorage.setItem('vc_cloud_version', String(remote.version));
+        localStorage.setItem('vc_cloud_version', String(remoteVersion));
         localStorage.removeItem('vc_dirty');
         render();
         cloudMessage('Sauvegarde cloud téléchargée.');
@@ -151,10 +160,13 @@ const localHasData = !!(
       }
       throw new Error('Conflit de synchronisation. Vos données locales sont conservées.');
     }
-    const baseVersion = Number(remote.version || 0);
+    // Cas 5 : envoyer les modifications locales vers le cloud.
     const result = await cloudRequest('/api/sync/snapshot',{
       method:'PUT',
-      body:JSON.stringify({baseVersion,data:db})
+      body:JSON.stringify({
+        baseVersion:remoteVersion,
+        data:db
+      })
     });
     localStorage.setItem('vc_cloud_version', String(result.version));
     localStorage.removeItem('vc_dirty');
@@ -167,7 +179,7 @@ const localHasData = !!(
     cloudMessage(e.message);
     toast(e.message);
   }
-}
+  }
 function logoutCloudAccount(){sessionStorage.removeItem('vc_token');cloudMessage('Compte déconnecté. Les données locales ne sont pas effacées.');toast('Déconnexion effectuée.')}
 const apiField=document.getElementById('apiBase');
 if(apiField) apiField.value=localStorage.getItem('vc_api_base')||API_DEFAULT;
