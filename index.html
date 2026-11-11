@@ -137,6 +137,63 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
 <div class="full"><label>Produit, observation ou commentaire</label><textarea id="animalNote" rows="2" placeholder="Détails de l'opération..."></textarea></div>
 <div class="full"><button onclick="addAnimal()">Enregistrer le suivi</button></div></div></div>
 <div class="card" style="margin-top:14px"><h3>Historique sanitaire</h3><div id="animalList" class="muted small">Aucun suivi enregistré.</div></div></section>
+<section class="section" id="equipment">
+  <h2>🧰 Gestion des matériels et équipements</h2>
+  <div class="card">
+    <h3>Enregistrer un équipement</h3>
+    <div class="formgrid">
+      <div>
+        <label>Catégorie</label>
+        <select id="equipmentCategory">
+          <option value="Alimentation">Alimentation</option>
+          <option value="Abreuvement">Abreuvement</option>
+          <option value="Couveuse">Couveuse</option>
+          <option value="Bâtiment">Bâtiment</option>
+          <option value="Nettoyage">Nettoyage</option>
+          <option value="Transport">Transport</option>
+          <option value="Électricité">Électricité</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div>
+        <label>Désignation du matériel</label>
+        <input id="equipmentName" placeholder="Ex. Mangeoire automatique">
+      </div>
+      <div>
+        <label>Quantité</label>
+        <input id="equipmentQty" type="number" min="1" placeholder="Ex. 20">
+      </div>
+      <div>
+        <label>État du matériel</label>
+        <select id="equipmentState">
+          <option value="Neuf">Neuf</option>
+          <option value="Bon état">Bon état</option>
+          <option value="À réparer">À réparer</option>
+          <option value="Hors service">Hors service</option>
+        </select>
+      </div>
+      <div>
+        <label>Date d'acquisition</label>
+        <input id="equipmentDate" type="date">
+      </div>
+      <div class="full">
+        <label>Observations</label>
+        <textarea id="equipmentNote" rows="2"
+          placeholder="Marque, fournisseur, détails..."></textarea>
+      </div>
+      <div class="full">
+        <button onclick="addEquipment()">Enregistrer le matériel</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📊 Inventaire des équipements</h3>
+    <div id="equipmentTotal">0 équipement</div>
+    <div id="equipmentList" class="muted small">
+      Aucun équipement enregistré.
+    </div>
+  </div>
+          </section>                                
 <section class="section" id="finance"><h2>💰 Comptabilité de la ferme</h2><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="metric-label">Revenus</div><div class="metric" id="incomeTotal">0 $</div></div><div class="card"><div class="metric-label">Dépenses</div><div class="metric" id="expenseTotal">0 $</div></div><div class="card"><div class="metric-label">Solde</div><div class="metric" id="balanceTotal">0 $</div></div></div>
 <div class="card"><h3>Nouvelle opération financière</h3><div class="formgrid"><div><label>Nature</label><select id="finType"><option value="expense">Dépense</option><option value="income">Revenu</option></select></div><div><label>Catégorie</label><select id="finCategory"><option>Aliments</option><option>Poussins / poulettes</option><option>Vaccins et soins</option><option>Transport</option><option>Équipement</option><option>Vente d'œufs</option><option>Vente de poulets</option><option>Autre</option></select></div><div><label>Montant (USD)</label><input id="finAmount" type="number" min="0.01" step="0.01"></div><div><label>Date</label><input id="finDate" type="date"></div><div class="full"><label>Note / référence</label><input id="finNote" placeholder="Fournisseur, client, facture..."></div><div class="full"><button onclick="addFinance()">Ajouter à l'historique</button></div></div></div>
 <div class="card" style="margin-top:14px"><h3>Historique des opérations</h3><div id="financeList"></div></div></section>
