@@ -88,7 +88,8 @@ const equipmentTotal=(db.equipment||[]).reduce(
   (sum,x)=>sum+Number(x.qty||0),0
 );
 document.getElementById("equipmentTotal").textContent=
-  equipmentTotal.toLocaleString("fr-FR")+" matériel(s)";
+  equipmentTotal.toLocaleString("fr-FR")+
+  (equipmentTotal<=1?" matériel":" matériels");
 document.getElementById("equipmentList").innerHTML=
   db.equipment&&db.equipment.length
   ?db.equipment.map(x=>`
