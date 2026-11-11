@@ -1,6 +1,6 @@
 const KEY="volaconnect_mvp_v1";
 let db=loadDB(), watchId=null;
-function emptyDB(){return {farm:{},animals:[],finance:[],products:[],reviews:[],messages:[],audit:[],queue:[],boundary:[],gps:null};}
+function emptyDB(){return {farm:{},animals:[],livestock:[],finance:[],products:[],reviews:[],messages:[],audit:[],queue:[],boundary:[],gps:null};}
 function loadDB(){try{return {...emptyDB(),...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch(e){return emptyDB()}}
 function persist(action="Mise à jour"){localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem("vc_dirty","1");db.queue.push({action,at:new Date().toISOString()});db.audit.unshift({action,at:new Date().toLocaleString("fr-FR")});db.audit=db.audit.slice(0,80);localStorage.setItem(KEY,JSON.stringify(db));render();updateStatus();}
 function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2400)}
