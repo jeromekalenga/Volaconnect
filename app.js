@@ -28,6 +28,30 @@ function addLivestock(){
   });
   toast("Animaux enregistrés avec succès.");
 }
+function addEquipment(){
+  const qty=Number(val("equipmentQty"));
+  const name=val("equipmentName").trim();
+  if(!name){
+    return toast("Indiquez le nom du matériel.");
+  }
+  if(!Number.isInteger(qty)||qty<1){
+    return toast("Indiquez une quantité entière supérieure à zéro.");
+  }
+  if(!db.equipment) db.equipment=[];
+  db.equipment.unshift({
+    category:val("equipmentCategory"),
+    name:name,
+    qty:qty,
+    state:val("equipmentState"),
+    date:val("equipmentDate")||new Date().toISOString().slice(0,10),
+    note:val("equipmentNote")
+  });
+  persist("Matériel enregistré");
+  ["equipmentName","equipmentQty","equipmentNote"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  toast("Matériel enregistré avec succès.");
+}
 function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}
 function addProduct(){if(!val("prodName")||!(+val("prodPrice")>=0))return toast("Complétez le nom et le prix.");db.products.unshift({name:val("prodName"),price:+val("prodPrice"),qty:+val("prodQty"),seller:val("prodSeller"),desc:val("prodDesc"),at:new Date().toLocaleString("fr-FR")});persist("Produit publié");toast("Produit publié dans le catalogue local.");}
 function addReview(){if(!val("reviewName")||!val("reviewText"))return toast("Nom et témoignage requis.");db.reviews.unshift({name:val("reviewName"),product:val("reviewProduct"),text:val("reviewText"),at:new Date().toLocaleString("fr-FR")});persist("Témoignage ajouté");toast("Témoignage enregistré.");}
