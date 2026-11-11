@@ -108,14 +108,15 @@ async function syncCloudNow(){
     const remote = await cloudRequest('/api/sync/snapshot');
     const dirty = localStorage.getItem('vc_dirty') === '1';
     const knownVersion = Number(localStorage.getItem('vc_cloud_version') || 0);
-    const localHasData = !!(
-      db.farm.name ||
-      db.animals.length ||
-      db.finance.length ||
-      db.products.length ||
-      db.reviews.length ||
-      db.messages.length
-    );
+const localHasData = !!(
+  db.farm.name ||
+  db.animals.length ||
+  (db.livestock && db.livestock.length) ||
+  db.finance.length ||
+  db.products.length ||
+  db.reviews.length ||
+  db.messages.length
+);
     if(remote.version > 0 && remote.data && !dirty){
       if(localHasData && !confirm('Des données existent sur le serveur. Télécharger la sauvegarde cloud ?')){
         cloudMessage('Synchronisation annulée.');
