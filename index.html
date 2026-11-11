@@ -153,7 +153,7 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
 <div><label>Nom complet (inscription)</label><input id="accountName" placeholder="Nom complet"></div>
 <div><label>Adresse e-mail</label><input id="accountEmail" type="email" placeholder="nom@exemple.com"></div>
 <div class="full"><label>Mot de passe (12 caractères minimum)</label><input id="accountPassword" type="password" minlength="12" autocomplete="new-password"></div>
-<div class="full row"><button onclick="createCloudAccount()">Créer un compte</button><button class="secondary" onclick="loginCloudAccount()">Se connecter</button><button class="secondary" onclick="syncCloudNow()">Synchroniser maintenant</button><button class="danger" onclick="logoutCloudAccount()">Déconnecter</button></div>
+<div class="full row"><button onclick="createCloudAccount()">Créer un compte</button><button class="secondary" onclick="loginCloudAccount()">Se connecter</button><button class="secondary" onclick="syncCloudNow()">Synchroniser maintenant</button><button class="danger" onclick="logoutCloudAccount()">Déconnecter</button></div><button class="secondary" onclick="diagnosticSync()">Diagnostic synchronisation</button>
 </div><p id="cloudStatus" class="small muted">Aucun compte connecté. La synchronisation cloud est inactive.</p>
 <h3 style="margin-top:20px">Modules optionnels à activer ultérieurement</h3><ul class="small"><li>Assistant IA : désactivé jusqu’à la configuration d’un fournisseur et la validation des usages vétérinaires.</li><li>M-Pesa, Orange Money et Airtel Money : désactivés jusqu’à la contractualisation et l’intégration des API officielles.</li></ul>
 <h3 style="margin-top:20px">Historique / journal</h3><div id="auditList" class="small muted">Aucune activité.</div></div></section>
