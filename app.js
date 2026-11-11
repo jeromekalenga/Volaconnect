@@ -26,7 +26,22 @@ document.getElementById("reviewList").innerHTML=db.reviews.length?db.reviews.map
 document.getElementById("chatList").innerHTML=db.messages.length?db.messages.map(x=>`<p><b>${esc(x.from)}</b> <span class="muted">${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun message.";
 document.getElementById("auditList").innerHTML=db.audit.length?db.audit.slice(0,30).map(x=>`<p>• ${esc(x.at)} — ${esc(x.action)}</p>`).join(""):"Aucune activité.";
 document.getElementById("aiFinance").innerHTML=`Revenus : <b>${s.inc.toFixed(2)} $</b> · Dépenses : <b>${s.exp.toFixed(2)} $</b> · Solde : <b>${s.bal.toFixed(2)} $</b><p class="small muted">${s.bal<0?"Attention : les dépenses dépassent les revenus saisis.":"Surveillez régulièrement le coût des aliments, de l’eau, des soins et les pertes de votre exploitation."}</p>`;
-document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";}
+const livestockTotal=(db.livestock||[]).reduce((sum,x)=>sum+Number(x.qty||0),0);
+document.getElementById("livestockTotal").textContent=
+  livestockTotal.toLocaleString("fr-FR")+" animal(aux)";
+document.getElementById("livestockList").innerHTML=
+  db.livestock&&db.livestock.length
+  ?db.livestock.map(x=>`
+    <p>
+      <b>${esc(x.species)}</b> — ${esc(x.category)}
+      <br>Effectif : ${Number(x.qty).toLocaleString("fr-FR")}
+      <br>Bande : ${esc(x.batch||"Non précisée")}
+      <br>Date : ${esc(x.date)}
+      <br>${esc(x.note||"")}
+    </p>
+  `).join("")
+  :"Aucun animal enregistré.";
+ document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";}
 function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
 function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
 window.addEventListener("online",()=>{updateStatus();if(sessionStorage.getItem("vc_token"))syncCloudNow()});window.addEventListener("offline",updateStatus);
