@@ -10,6 +10,14 @@ function loadDB(){
   }
 }
 let db=loadDB(), watchId=null;
+function updateNotificationCount(){
+  const notifications=Array.isArray(db.notifications)
+    ?db.notifications:[];
+  const unread=notifications.filter(n=>!n.read).length;
+  const badge=document.getElementById("notificationCount");
+  if(!badge)return;
+  badge.textContent=unread>99?"99+":String(unread);
+  badge.style.display=unread>0?"inline-block":"none";}
 function emptyDB(){
   return {
     farm:{},
