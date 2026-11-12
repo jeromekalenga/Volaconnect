@@ -73,11 +73,66 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
 <div class="card"><h3>État de synchronisation</h3><p class="muted small">Les actions sont conservées sur cet appareil lorsque la connexion est faible. Elles seront synchronisées lorsqu'un serveur sera configuré et accessible.</p><span class="tag" id="queueCount">0 opération en attente</span></div>
 </div>
 </section>
-<section class="section" id="farm"><h2>🏡 Espace ferme</h2><div class="card">
-<p class="muted">Enregistrez les informations de votre exploitation.</p><div class="formgrid">
-<div><label>Nom de la ferme</label><input id="farmName" placeholder="Ex. AgriVolaille"></div><div><label>Responsable</label><input id="farmOwner" placeholder="Nom du responsable"></div>
-<div><label>Type d'élevage</label><select id="farmType"><option>Poulets de chair et pondeuses</option><option>Poulets de chair</option><option>Pondeuses</option><option>Autre élevage</option></select></div><div><label>Effectif actuel</label><input id="farmCount" type="number" min="0" placeholder="Nombre d'animaux"></div>
-<div class="full"><label>Adresse / quartier</label><input id="farmAddress" placeholder="Lubumbashi, quartier..."></div><div class="full"><button onclick="saveFarm()">Enregistrer la ferme</button></div></div><p id="farmSaved" class="small muted"></p></div></section>
+<section class="section" id="farm">
+  <h2>🏡 Ma ferme</h2>
+  <div class="card">
+    <h3>Identité de l'exploitation</h3>
+    <div class="formgrid">
+      <div>
+        <label>Nom de la ferme</label>
+        <input id="farmName" placeholder="Nom de l'exploitation">
+      </div>
+      <div>
+        <label>Nom du propriétaire</label>
+        <input id="farmOwner" placeholder="Nom complet">
+      </div>
+      <div>
+        <label>Responsable de la ferme</label>
+        <input id="farmManager" placeholder="Nom du responsable">
+      </div>
+      <div>
+        <label>Téléphone</label>
+        <input id="farmPhone" type="tel" placeholder="+243...">
+      </div>
+      <div>
+        <label>Adresse e-mail</label>
+        <input id="farmEmail" type="email">
+      </div>
+      <div>
+        <label>Type d'élevage</label>
+        <select id="farmType">
+          <option value="Mixte">Poulets de chair et pondeuses</option>
+          <option value="Chair">Poulets de chair</option>
+          <option value="Pondeuses">Pondeuses</option>
+          <option value="Autre">Autre élevage</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Localisation de la ferme</h3>
+    <div class="formgrid">
+      <div><label>Province</label><input id="farmProvince"></div>
+      <div><label>Ville / territoire</label><input id="farmCity"></div>
+      <div><label>Commune</label><input id="farmCommune"></div>
+      <div><label>Quartier</label><input id="farmNeighborhood"></div>
+      <div class="full"><label>Adresse complète</label><input id="farmAddress"></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Capacité et infrastructures</h3>
+    <div class="formgrid">
+      <div><label>Superficie (m²)</label><input id="farmArea" type="number" min="0"></div>
+      <div><label>Capacité maximale (animaux)</label><input id="farmCapacity" type="number" min="0"></div>
+      <div><label>Effectif actuel</label><input id="farmCount" type="number" min="0"></div>
+      <div><label>Nombre de bâtiments</label><input id="farmBuildings" type="number" min="0"></div>
+      <div><label>Date de création</label><input id="farmCreationDate" type="date"></div>
+      <div class="full"><label>Description et observations</label><textarea id="farmDescription" rows="3"></textarea></div>
+      <div class="full"><button onclick="saveFarm()">Enregistrer les informations de la ferme</button></div>
+    </div>
+    <p id="farmSaved" class="small muted"></p>
+  </div>
+</section>
 <section class="section" id="animals"><h2>🐔 Cheptel, bandes et santé</h2>
 <div class="card">
   <h3>🐔 Enregistrer des animaux</h3>
