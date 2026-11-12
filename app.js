@@ -70,6 +70,25 @@ function addEquipment(){
 }
 function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}
 function addProduct(){if(!val("prodName")||!(+val("prodPrice")>=0))return toast("Complétez le nom et le prix.");db.products.unshift({name:val("prodName"),price:+val("prodPrice"),qty:+val("prodQty"),seller:val("prodSeller"),desc:val("prodDesc"),at:new Date().toLocaleString("fr-FR")});persist("Produit publié");toast("Produit publié dans le catalogue local.");}
+function addClient(){
+  const name=val("clientName").trim();
+  const phone=val("clientPhone").trim();
+  if(!name){
+    return toast("Veuillez saisir le nom du client.");
+  }
+  if(!db.clients) db.clients=[];
+  db.clients.unshift({
+    id:Date.now(),
+    name:name,
+    phone:phone,
+    address:val("clientAddress").trim(),
+    date:new Date().toISOString().slice(0,10)
+  });
+  persist("Nouveau client enregistré");
+  ["clientName","clientPhone","clientAddress"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  toast("Client enregistré avec succès.");}
 function addReview(){if(!val("reviewName")||!val("reviewText"))return toast("Nom et témoignage requis.");db.reviews.unshift({name:val("reviewName"),product:val("reviewProduct"),text:val("reviewText"),at:new Date().toLocaleString("fr-FR")});persist("Témoignage ajouté");toast("Témoignage enregistré.");}
 function sendMessage(){if(!val("chatText"))return;db.messages.push({text:val("chatText"),at:new Date().toLocaleString("fr-FR"),from:"Moi"});document.getElementById("chatText").value="";persist("Message local enregistré");}
 function callInfo(kind){toast("Appel "+kind+" : serveur WebRTC non encore configuré.");}
