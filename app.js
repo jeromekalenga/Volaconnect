@@ -46,7 +46,7 @@ function emptyDB(){
     audit:[],
     queue:[],
     boundary:[],
-    gps:null
+    gps:null};}
 function generateHealthNotifications(){
   if(!Array.isArray(db.notifications)) db.notifications=[];
   if(!Array.isArray(db.animals)) db.animals=[];
@@ -65,7 +65,6 @@ function generateHealthNotifications(){
     const exists=db.notifications.some(
       n=>n.id===notificationId
     );
-
     if(!exists){
       db.notifications.unshift({
         id:notificationId,
@@ -77,12 +76,8 @@ function generateHealthNotifications(){
         date:animal.nextDate,
         read:false,
         createdAt:new Date().toISOString()
-      });
-    }
-  });
-    }
-  };
-    }
+      });}
+  });}
 function persist(action="Mise à jour"){
   if(!Array.isArray(db.queue))db.queue=[];
   if(!Array.isArray(db.audit))db.audit=[];
