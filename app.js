@@ -344,7 +344,8 @@ document.getElementById("equipmentList").innerHTML=
 generateHealthNotifications();
 const healthNotifications=document.getElementById("healthNotifications");
 const notificationHistory=document.getElementById("notificationHistory");
-const healthAlerts=(db.notifications||[]).filter(n=>n.type==="Santé");
+const healthAlerts=(db.notifications||[])
+  .filter(n=>n.type==="Santé");
 if(healthNotifications){
   healthNotifications.innerHTML=healthAlerts.length
     ?healthAlerts.map(n=>`
@@ -354,28 +355,59 @@ if(healthNotifications){
         <small>${esc(n.date||"Date non précisée")}</small>
       </div>
     `).join("")
-    :"Aucune alerte sanitaire pour le moment.";}
+    :"Aucune alerte sanitaire pour le moment.";
+}
 if(notificationHistory){
+  const unreadCount=(db.notifications||[])
+    .filter(n=>!n.read).length;
   notificationHistory.innerHTML=(db.notifications||[]).length
-    ?db.notifications.map(n=>`
-      <div class="card" style="margin-bottom:10px">
-        <strong>${esc(n.title)}</strong>
-        <p>${esc(n.message)}</p>
-        <small>${esc(n.createdAt||"Date non précisée")}</small>
-        <p><span class="tag">${n.read?"Lue":"Non lue"}</span></p>
-        ${!n.read?`
-          <button class="secondary"
-            onclick="markNotificationRead('${esc(n.id)}')">
-            Marquer comme lue
-          </button>
-        `:""}
-      </div>
-    `).join("")
+    ?`
+      ${unreadCount>0?`
+        <button class="secondary"
+          onclick="markAllNotificationsRead()">
+          Tout marquer comme lu
+        </button>
+      `:""}
+      ${(db.notifications||[]).map(n=>`
+        <div class="card" style="margin-bottom:10px">
+          <strong>${esc(n.title)}</strong>
+          <p>${esc(n.message)}</p>
+          <small>${esc(n.createdAt||"Date non précisée")}</small>
+          <p><span class="tag">${n.read?"Lue":"Non lue"}</span></p>
+          ${!n.read?`
+            <button class="secondary"
+              onclick="markNotificationRead('${esc(n.id)}')">
+              Marquer comme lue
+            </button>
+          `:""}
+        </div>
+      `).join("")}
+    `
     :"Aucune notification enregistrée.";}
 updateNotificationCount();}
-function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
-function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
-window.addEventListener("online",()=>{updateStatus();if(sessionStorage.getItem("vc_token"))syncCloudNow()});window.addEventListener("offline",updateStatus);
+function commentProduct(i){
+  let p=db.products[i];
+  if(!p)return toast("Produit introuvable.");
+  let c=prompt("Votre commentaire ou demande de commande pour "+p.name);
+  if(c){
+    if(!Array.isArray(db.reviews))db.reviews=[];
+    db.reviews.unshift({
+      name:"Visiteur local",
+      product:p.name,
+      text:c,
+      at:new Date().toLocaleString("fr-FR")});
+    persist("Commentaire sur produit");
+    toast("Commentaire enregistré.");}}
+function updateStatus(){
+  let online=navigator.onLine;
+  const status=document.getElementById("syncStatus");
+  if(!status)return;
+  status.textContent=online
+    ?"● Connecté (mode local)"
+    :"● Hors connexion";
+  status.style.background=online
+    ?"#ffffff20"
+    :"#7b4a1b";}
 function getLocation(){if(!navigator.geolocation)return toast("GPS non disponible.");navigator.geolocation.getCurrentPosition(pos=>{db.gps={lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy,at:new Date().toISOString()};document.getElementById("gpsOutput").textContent=`Latitude : ${db.gps.lat.toFixed(6)} · Longitude : ${db.gps.lon.toFixed(6)} · précision ±${Math.round(db.gps.accuracy)} m`;document.getElementById("mapBox").innerHTML=`📍 Position obtenue<br>${db.gps.lat.toFixed(5)}, ${db.gps.lon.toFixed(5)}<br><span class="small">Carte à connecter au déploiement.</span>`;persist("Position GPS enregistrée");},e=>toast("GPS refusé ou indisponible : "+e.message),{enableHighAccuracy:true,timeout:12000});}
 function startTracking(){if(!navigator.geolocation)return toast("GPS non disponible.");if(watchId!==null)return toast("Suivi déjà actif.");watchId=navigator.geolocation.watchPosition(p=>{db.gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy,at:new Date().toISOString()};document.getElementById("gpsOutput").textContent=`Suivi actif · ${db.gps.lat.toFixed(6)}, ${db.gps.lon.toFixed(6)} · précision ±${Math.round(db.gps.accuracy)} m`;localStorage.setItem(KEY,JSON.stringify(db));},e=>toast(e.message),{enableHighAccuracy:true,maximumAge:5000});toast("Suivi GPS activé pour cette session.");}
 function stopTracking(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null;}toast("Suivi GPS arrêté.");}
@@ -388,7 +420,6 @@ function clearData(){if(confirm("Effacer toutes les données enregistrées sur c
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 if(db.farm.name){farmName.value=db.farm.name;farmOwner.value=db.farm.owner||"";farmType.value=db.farm.type||farmType.value;farmCount.value=db.farm.count||"";farmAddress.value=db.farm.address||"";}
 render();updateStatus();document.getElementById("animalDate").value=new Date().toISOString().slice(0,10);document.getElementById("finDate").value=new Date().toISOString().slice(0,10);
-
 /* VolaConnect: langues, compte cloud et synchronisation versionnée. */
 const LANGS={
  fr:{nav:['Tableau de bord','Ma ferme','Cheptel & santé','Finances','Marché','Clients & avis','Localisation','Messages','Assistant IA','Administration'],h1:'Bienvenue sur VolaConnect',h2:['Espace ferme','Cheptel, bandes et santé','Comptabilité de la ferme','Marché des produits avicoles','Espace clients, commentaires et témoignages','Géolocalisation et terrain d’élevage','Communication','Assistant IA agricole','Administration et sécurité'],labels:['Nom de la ferme','Responsable','Type d’élevage','Effectif actuel','Adresse / quartier','Type d’opération','Date','Effectif concerné / quantité','Bande / bâtiment','Produit, observation ou commentaire','Nature','Catégorie','Montant (USD)','Note / référence','Produit','Prix (USD)','Quantité disponible','Vendeur / ferme','Description','Nom du client','Produit / ferme concerné','Témoignage ou commentaire','Votre message'],buttons:{saveFarm:'Enregistrer la ferme',addAnimal:'Enregistrer le suivi',addFinance:'Ajouter à l’historique',addProduct:'Publier le produit',addReview:'Publier le témoignage',sendMessage:'Envoyer',getLocation:'Obtenir ma position GPS',startTracking:'Activer le suivi pendant cette session',stopTracking:'Arrêter le suivi',analyzeImage:'Préparer l’analyse'}},
