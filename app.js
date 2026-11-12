@@ -329,7 +329,32 @@ document.getElementById("equipmentList").innerHTML=
     </p>
   `).join("")
   :"Aucun équipement enregistré.";
- document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";generateHealthNotifications();
+ document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en 
+generateHealthNotifications();
+const healthNotifications=document.getElementById("healthNotifications");
+const notificationHistory=document.getElementById("notificationHistory");
+const healthAlerts=(db.notifications||[]).filter(n=>n.type==="Santé");
+if(healthNotifications){
+  healthNotifications.innerHTML=healthAlerts.length
+    ?healthAlerts.map(n=>`
+      <div class="card" style="margin-bottom:10px">
+        <strong>${esc(n.title)}</strong>
+        <p>${esc(n.message)}</p>
+        <small>${esc(n.date||"Date non précisée")}</small>
+      </div>
+    `).join("")
+    :"Aucune alerte sanitaire pour le moment.";}
+if(notificationHistory){
+  notificationHistory.innerHTML=(db.notifications||[]).length
+    ?db.notifications.map(n=>`
+      <div class="card" style="margin-bottom:10px">
+        <strong>${esc(n.title)}</strong>
+        <p>${esc(n.message)}</p>
+        <small>${esc(n.createdAt||"Date non précisée")}</small>
+        <span class="tag">${n.read?"Lue":"Non lue"}</span>
+      </div>
+    `).join("")
+    :"Aucune notification enregistrée.";}
 updateNotificationCount();}
 function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
 function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
