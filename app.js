@@ -18,6 +18,17 @@ function updateNotificationCount(){
   if(!badge)return;
   badge.textContent=unread>99?"99+":String(unread);
   badge.style.display=unread>0?"inline-block":"none";}
+function markNotificationRead(id){
+  const notification=db.notifications.find(n=>n.id===id);
+  if(!notification)return;
+  notification.read=true;
+  persist("Notification marquée comme lue");
+  toast("Notification marquée comme lue.");}
+function markAllNotificationsRead(){
+  (db.notifications||[]).forEach(n=>{
+    n.read=true;});
+  persist("Toutes les notifications marquées comme lues");
+  toast("Toutes les notifications sont maintenant lues.");}
 function generateHealthNotifications(){
   if(!Array.isArray(db.notifications)) db.notifications=[];
   if(!Array.isArray(db.animals)) db.animals=[];
