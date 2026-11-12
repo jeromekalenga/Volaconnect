@@ -198,7 +198,6 @@ if(!document.activeElement.closest("#farm")){
   });
 }
 document.getElementById("recentActivity").innerHTML=db.audit.length?db.audit.slice(0,5).map(x=>`<p>• ${esc(x.action)} <span class="muted">— ${esc(x.at)}</span></p>`).join(""):"Aucune activité enregistrée.";
-document.getElementById("animalList").innerHTML=db.animals.length?db.animals.map(x=>`<p><span class="tag">${esc(x.kind)}</span> ${esc(x.date)} · ${x.qty} · ${esc(x.batch)}<br>${esc(x.note)}</p>`).join(""):"Aucun suivi enregistré.";
 document.getElementById("financeList").innerHTML=db.finance.length?`<table><tr><th>Date</th><th>Nature</th><th>Catégorie</th><th>Montant</th><th>Note</th></tr>${db.finance.map(x=>`<tr><td>${esc(x.date)}</td><td>${x.type==="income"?"Revenu":"Dépense"}</td><td>${esc(x.category)}</td><td>${x.amount.toFixed(2)} $</td><td>${esc(x.note)}</td></tr>`).join("")}</table>`:"Aucune opération.";
 document.getElementById("productList").innerHTML=db.products.length?db.products.map((x,i)=>`<div class="product"><div><b>${esc(x.name)}</b><div class="small muted">${esc(x.seller)} · ${x.qty} disponible(s)<br>${esc(x.desc)}</div><div class="small">💬 <button class="secondary" onclick="commentProduct(${i})">Commenter / commander</button></div></div><b>${x.price.toFixed(2)} $</b></div>`).join(""):"Aucun produit publié.";
 const clientsTotal=(db.clients||[]).length;
@@ -231,7 +230,21 @@ document.getElementById("orderList").innerHTML=
       <br>Montant total : <b>${Number(x.total).toFixed(2)} $</b>
       <br>Date : ${esc(x.date)}
       <br>Statut : ${esc(x.status)}
+document.getElementById("animalList").innerHTML=
+  db.animals&&db.animals.length
+  ?db.animals.map(x=>`
+    <div class="card" style="margin-bottom:10px">
+      <p>
+        <span class="tag">${esc(x.kind||"Opération sanitaire")}</span>
+        <strong>${esc(x.date||"Date non précisée")}</strong>
+      </p>
+      <p><strong>Effectif concerné :</strong> ${Number(x.qty||0)} animal(aux)</p>
+      <p><strong>Bande / bâtiment :</strong> ${esc(x.batch||"Non précisé")}</p>
+      <p><strong>Vaccin / médicament / produit :</strong> ${esc(x.product||"Non précisé")}</p>
+      <p><strong>Observations :</strong> ${esc(x.note||"Aucune observation")}</p>
     </div>
+  `).join("")
+  :"Aucun suivi sanitaire enregistré.";</div>
   `).join("")
   :"Aucune commande enregistrée.";
 document.getElementById("reviewList").innerHTML=db.reviews.length?db.reviews.map(x=>`<p><b>${esc(x.name)}</b> <span class="muted small">· ${esc(x.product)} · ${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun avis.";
@@ -404,8 +417,7 @@ function diagnosticSync(){
     "Version cloud locale : "+localStorage.getItem("vc_cloud_version")+"\n"+
     "Enregistrements animaux : "+(db.livestock||[]).length+"\n"+
     "Effectif total : "+total
-  );
-  }
+  );}
 document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll("nav button").forEach(b=>{
     b.addEventListener("click",()=>showPage(b.dataset.page));
