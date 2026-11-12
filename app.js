@@ -363,9 +363,12 @@ if(notificationHistory){
         <p>${esc(n.message)}</p>
         <small>${esc(n.createdAt||"Date non précisée")}</small>
         <span class="tag">${n.read?"Lue":"Non lue"}</span>
-      </div>
-    `).join("")
-    :"Aucune notification enregistrée.";}
+${!n.read?`
+  <button class="secondary"
+    onclick="markNotificationRead('${esc(n.id)}')">
+    Marquer comme lue
+  </button>
+`:""}
 updateNotificationCount();}
 function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
 function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
