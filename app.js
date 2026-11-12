@@ -276,37 +276,41 @@ const ordersTotal=(db.orders||[]).length;
 document.getElementById("orderTotal").textContent=
   ordersTotal.toLocaleString("fr-FR")+
   (ordersTotal<=1?" commande":" commandes");
-document.getElementById("orderList").innerHTML=
+document.gdocument.getElementById("orderList").innerHTML=
   db.orders&&db.orders.length
   ?db.orders.map(x=>`
     <div style="padding:10px 0;border-bottom:1px solid #ddd">
       <b>${esc(x.client)}</b>
       <br>Produit : ${esc(x.product)}
-      <br>Quantité : ${x.qty}
-      <br>Prix unitaire : ${Number(x.price).toFixed(2)} $
-      <br>Montant total : <b>${Number(x.total).toFixed(2)} $</b>
+      <br>Quantité : ${Number(x.qty||0)}
+      <br>Prix unitaire : ${Number(x.price||0).toFixed(2)} $
+      <br>Montant total : <b>${Number(x.total||0).toFixed(2)} $</b>
       <br>Date : ${esc(x.date)}
       <br>Statut : ${esc(x.status)}
+    </div>
+  `).join("")
+  :"Aucune commande enregistrée.";
 document.getElementById("animalList").innerHTML=
   db.animals&&db.animals.length
   ?db.animals.map(x=>`
- <div class="card" style="margin-bottom:10px">
- <p><span class="tag">${esc(x.kind||"Opération sanitaire")}</span>
- <strong>${esc(x.date||"Date non précisée")}</strong></p>
- <p><strong>Effectif concerné :</strong> ${Number(x.qty||0)} animal(aux)</p>
-<p><strong>Prochaine intervention :</strong>
-  ${x.nextDate ? esc(x.nextDate) : "Aucune date programmée"}
-  ${x.nextDate && x.nextDate < new Date().toISOString().slice(0,10)
-    ? '<span class="tag">En retard</span>'
-    : ''}</p>
-<p><strong>Bande / bâtiment :</strong> ${esc(x.batch||"Non précisé")}</p>
-<p><strong>Vaccin / médicament / produit :</strong> ${esc(x.product||"Non précisé")}</p>
-<p><strong>Observations :</strong> ${esc(x.note||"Aucune observation")}</p>
+    <div class="card" style="margin-bottom:10px">
+      <p>
+        <span class="tag">${esc(x.kind||"Opération sanitaire")}</span>
+        <strong>${esc(x.date||"Date non précisée")}</strong>
+      </p>
+      <p><strong>Effectif concerné :</strong> ${Number(x.qty||0)} animal(aux)</p>
+      <p><strong>Prochaine intervention :</strong>
+        ${x.nextDate?esc(x.nextDate):"Aucune date programmée"}
+        ${x.nextDate&&x.nextDate<new Date().toISOString().slice(0,10)
+          ?'<span class="tag">En retard</span>'
+          :''}
+      </p>
+      <p><strong>Bande / bâtiment :</strong> ${esc(x.batch||"Non précisé")}</p>
+      <p><strong>Vaccin / médicament / produit :</strong> ${esc(x.product||"Non précisé")}</p>
+      <p><strong>Observations :</strong> ${esc(x.note||"Aucune observation")}</p>
     </div>
   `).join("")
-  :"Aucun suivi sanitaire enregistré.";</div>
-  `).join("")
-  :"Aucune commande enregistrée.";
+  :"Aucun suivi sanitaire enregistré.";
 document.getElementById("reviewList").innerHTML=db.reviews.length?db.reviews.map(x=>`<p><b>${esc(x.name)}</b> <span class="muted small">· ${esc(x.product)} · ${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun avis.";
 document.getElementById("chatList").innerHTML=db.messages.length?db.messages.map(x=>`<p><b>${esc(x.from)}</b> <span class="muted">${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun message.";
 document.getElementById("auditList").innerHTML=db.audit.length?db.audit.slice(0,30).map(x=>`<p>• ${esc(x.at)} — ${esc(x.action)}</p>`).join(""):"Aucune activité.";
