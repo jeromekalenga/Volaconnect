@@ -83,7 +83,22 @@ function generateHealthNotifications(){
     }
   };
     }
-function persist(action="Mise à jour"){localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem("vc_dirty","1");db.queue.push({action,at:new Date().toISOString()});db.audit.unshift({action,at:new Date().toLocaleString("fr-FR")});db.audit=db.audit.slice(0,80);localStorage.setItem(KEY,JSON.stringify(db));render();updateStatus();}
+function persist(action="Mise à jour"){
+  if(!Array.isArray(db.queue))db.queue=[];
+  if(!Array.isArray(db.audit))db.audit=[];
+  db.queue.push({
+    action,
+    at:new Date().toISOString()
+  });
+  db.audit.unshift({
+    action,
+    at:new Date().toLocaleString("fr-FR")
+  });
+  db.audit=db.audit.slice(0,80);
+  localStorage.setItem(KEY,JSON.stringify(db));
+  localStorage.setItem("vc_dirty","1");
+  render();
+  updateStatus();}
 function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2400)}
 function showPage(p){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(p).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));}
 function val(id){return document.getElementById(id).value.trim()}
@@ -349,7 +364,8 @@ document.getElementById("equipmentList").innerHTML=
     </p>
   `).join("")
   :"Aucun équipement enregistré.";
- document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en 
+ document.getElementById("queueCount").textContent=
+  db.queue.length+" opération(s) en attente";
 generateHealthNotifications();
 const healthNotifications=document.getElementById("healthNotifications");
 const notificationHistory=document.getElementById("notificationHistory");
@@ -461,14 +477,17 @@ async function syncCloudNow(){
     const knownVersion = Number(localStorage.getItem('vc_cloud_version') || 0);
     const remoteVersion = Number(remote.version || 0);
     const localHasData = !!(
-      db.farm?.name ||
-      db.animals.length ||
-      (db.livestock && db.livestock.length) ||
-      db.finance.length ||
-      db.products.length ||
-      db.reviews.length ||
-      db.messages.length
-    );
+  db.farm?.name ||
+  (db.animals||[]).length ||
+  (db.livestock||[]).length ||
+  (db.equipment||[]).length ||
+  (db.clients||[]).length ||
+  (db.orders||[]).length ||
+  (db.finance||[]).length ||
+  (db.products||[]).length ||
+  (db.reviews||[]).length ||
+  (db.messages||[]).length ||
+  (db.notifications||[]).length);
     // Cas 1 : les données locales sont déjà synchronisées.
     if(!dirty && remoteVersion > 0 && remoteVersion === knownVersion){
       cloudMessage('Vos données sont déjà synchronisées. Version cloud ' + remoteVersion + '.');
