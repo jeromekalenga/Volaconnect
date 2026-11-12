@@ -152,7 +152,38 @@ function callInfo(kind){toast("Appel "+kind+" : serveur WebRTC non encore config
 function sums(){let inc=db.finance.filter(x=>x.type==="income").reduce((a,x)=>a+x.amount,0),exp=db.finance.filter(x=>x.type==="expense").reduce((a,x)=>a+x.amount,0);return {inc,exp,bal:inc-exp};}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function render(){let s=sums();document.getElementById("dashAnimals").textContent=Number(db.farm.count||0).toLocaleString();document.getElementById("dashRecords").textContent=db.animals.length.toLocaleString();["dashExpenses","expenseTotal"].forEach(id=>document.getElementById(id).textContent=s.exp.toFixed(2)+" $");["dashIncome","incomeTotal"].forEach(id=>document.getElementById(id).textContent=s.inc.toFixed(2)+" $");document.getElementById("balanceTotal").textContent=s.bal.toFixed(2)+" $";
-document.getElementById("farmSaved").textContent=db.farm.name?`Ferme active : ${db.farm.name} — ${db.farm.address||"adresse non précisée"}`:"Aucune ferme configurée.";
+const farm=db.farm||{};
+document.getElementById("farmSaved").textContent=
+  farm.name
+  ?`Ferme active : ${farm.name} — ${farm.address||"adresse non précisée"}`
+  :"Aucune ferme configurée.";
+if(!document.activeElement.closest("#farm")){
+  const farmFields={
+    farmName:farm.name,
+    farmOwner:farm.owner,
+    farmManager:farm.manager,
+    farmPhone:farm.phone,
+    farmEmail:farm.email,
+    farmType:farm.type,
+    farmProvince:farm.province,
+    farmCity:farm.city,
+    farmCommune:farm.commune,
+    farmNeighborhood:farm.neighborhood,
+    farmAddress:farm.address,
+    farmArea:farm.area,
+    farmCapacity:farm.capacity,
+    farmCount:farm.count,
+    farmBuildings:farm.buildings,
+    farmCreationDate:farm.creationDate,
+    farmDescription:farm.description
+  };
+  Object.entries(farmFields).forEach(([id,value])=>{
+    const field=document.getElementById(id);
+    if(field && value!==undefined && value!==null){
+      field.value=value;
+    }
+  });
+}
 document.getElementById("recentActivity").innerHTML=db.audit.length?db.audit.slice(0,5).map(x=>`<p>• ${esc(x.action)} <span class="muted">— ${esc(x.at)}</span></p>`).join(""):"Aucune activité enregistrée.";
 document.getElementById("animalList").innerHTML=db.animals.length?db.animals.map(x=>`<p><span class="tag">${esc(x.kind)}</span> ${esc(x.date)} · ${x.qty} · ${esc(x.batch)}<br>${esc(x.note)}</p>`).join(""):"Aucun suivi enregistré.";
 document.getElementById("financeList").innerHTML=db.finance.length?`<table><tr><th>Date</th><th>Nature</th><th>Catégorie</th><th>Montant</th><th>Note</th></tr>${db.finance.map(x=>`<tr><td>${esc(x.date)}</td><td>${x.type==="income"?"Revenu":"Dépense"}</td><td>${esc(x.category)}</td><td>${x.amount.toFixed(2)} $</td><td>${esc(x.note)}</td></tr>`).join("")}</table>`:"Aucune opération.";
