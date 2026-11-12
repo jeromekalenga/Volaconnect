@@ -19,6 +19,7 @@ function updateNotificationCount(){
   badge.textContent=unread>99?"99+":String(unread);
   badge.style.display=unread>0?"inline-block":"none";}
 function markNotificationRead(id){
+  if(!Array.isArray(db.notifications))return;
   const notification=db.notifications.find(n=>n.id===id);
   if(!notification)return;
   notification.read=true;
@@ -29,36 +30,6 @@ function markAllNotificationsRead(){
     n.read=true;});
   persist("Toutes les notifications marquées comme lues");
   toast("Toutes les notifications sont maintenant lues.");}
-function generateHealthNotifications(){
-  if(!Array.isArray(db.notifications)) db.notifications=[];
-  if(!Array.isArray(db.animals)) db.animals=[];
-  const today=new Date();
-  today.setHours(0,0,0,0);
-  const limit=new Date(today);
-  limit.setDate(limit.getDate()+7);
-  db.animals.forEach((animal,index)=>{
-    if(!animal.nextDate)return;
-    const next=new Date(animal.nextDate+"T00:00:00");
-    if(isNaN(next.getTime()))return;
-    if(next>limit)return;
-    const animalId=animal.id||index;
-    const notificationId=
-      "health-"+animalId+"-"+animal.nextDate;
-    const exists=db.notifications.some(
-      n=>n.id===notificationId
-    );
-    if(!exists){
-      db.notifications.unshift({
-        id:notificationId,
-        type:"Santé",
-        title:animal.nextDate<today.toISOString().slice(0,10)
-          ?"Intervention sanitaire en retard"
-          :"Intervention sanitaire à venir",
-        message:(animal.kind||"Intervention")+
-          " — "+animal.nextDate,
-        date:animal.nextDate,
-        read:false,
-        createdAt:new Date().toISOString()});}});}
 function emptyDB(){
   return {
     farm:{},
@@ -76,6 +47,40 @@ function emptyDB(){
     queue:[],
     boundary:[],
     gps:null
+function generateHealthNotifications(){
+  if(!Array.isArray(db.notifications)) db.notifications=[];
+  if(!Array.isArray(db.animals)) db.animals=[];
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const limit=new Date(today);
+  limit.setDate(limit.getDate()+7);
+  db.animals.forEach((animal,index)=>{
+    if(!animal.nextDate)return;
+    const next=new Date(animal.nextDate+"T00:00:00");
+    if(isNaN(next.getTime()))return;
+    if(next<new Date(today.getTime()-7*86400000))return;
+    if(next>limit)return;
+    const animalId=animal.id||index;
+    const notificationId="health-"+animalId+"-"+animal.nextDate;
+    const exists=db.notifications.some(
+      n=>n.id===notificationId
+    );
+
+    if(!exists){
+      db.notifications.unshift({
+        id:notificationId,
+        type:"Santé",
+        title:animal.nextDate<today.toISOString().slice(0,10)
+          ?"Intervention sanitaire en retard"
+          :"Intervention sanitaire à venir",
+        message:(animal.kind||"Intervention")+" — "+animal.nextDate,
+        date:animal.nextDate,
+        read:false,
+        createdAt:new Date().toISOString()
+      });
+    }
+  });
+    }
   };
     }
 function persist(action="Mise à jour"){localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem("vc_dirty","1");db.queue.push({action,at:new Date().toISOString()});db.audit.unshift({action,at:new Date().toLocaleString("fr-FR")});db.audit=db.audit.slice(0,80);localStorage.setItem(KEY,JSON.stringify(db));render();updateStatus();}
