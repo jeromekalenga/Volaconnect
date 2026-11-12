@@ -1,14 +1,18 @@
 const KEY="volaconnect_mvp_v1";
 function loadDB(){
-  try{
+  try{const saved=JSON.parse(
+    localStorage.getItem(KEY)||"{}");
+    const base=emptyDB();
     return {
-      ...emptyDB(),
-      ...JSON.parse(localStorage.getItem(KEY)||"{}")
-    };
-  }catch(e){
-    return emptyDB();
-  }
-}
+      ...base,
+      ...saved,
+      farm:{
+        ...base.farm,
+        ...(saved.farm||{})},
+      settings:{
+        ...base.settings,
+        ...(saved.settings||{})}};}catch(e){
+    return emptyDB();}}
 let db=loadDB(), watchId=null;
 function updateNotificationCount(){
   const notifications=Array.isArray(db.notifications)
