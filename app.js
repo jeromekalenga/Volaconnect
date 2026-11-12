@@ -36,6 +36,7 @@ function emptyDB(){
     animals:[],
     livestock:[],
     equipment:[],
+    incubator:[],
     clients:[],
     orders:[],
     finance:[],
@@ -46,7 +47,8 @@ function emptyDB(){
     audit:[],
     queue:[],
     boundary:[],
-    gps:null};}
+    gps:null,
+    settings:{language:"fr"}};}
 function generateHealthNotifications(){
   if(!Array.isArray(db.notifications)) db.notifications=[];
   if(!Array.isArray(db.animals)) db.animals=[];
