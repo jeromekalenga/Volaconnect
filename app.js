@@ -235,15 +235,18 @@ document.getElementById("orderList").innerHTML=
 document.getElementById("animalList").innerHTML=
   db.animals&&db.animals.length
   ?db.animals.map(x=>`
-    <div class="card" style="margin-bottom:10px">
-      <p>
-        <span class="tag">${esc(x.kind||"Opération sanitaire")}</span>
-        <strong>${esc(x.date||"Date non précisée")}</strong>
-      </p>
-      <p><strong>Effectif concerné :</strong> ${Number(x.qty||0)} animal(aux)</p>
-      <p><strong>Bande / bâtiment :</strong> ${esc(x.batch||"Non précisé")}</p>
-      <p><strong>Vaccin / médicament / produit :</strong> ${esc(x.product||"Non précisé")}</p>
-      <p><strong>Observations :</strong> ${esc(x.note||"Aucune observation")}</p>
+ <div class="card" style="margin-bottom:10px">
+ <p><span class="tag">${esc(x.kind||"Opération sanitaire")}</span>
+ <strong>${esc(x.date||"Date non précisée")}</strong></p>
+ <p><strong>Effectif concerné :</strong> ${Number(x.qty||0)} animal(aux)</p>
+<p><strong>Prochaine intervention :</strong>
+  ${x.nextDate ? esc(x.nextDate) : "Aucune date programmée"}
+  ${x.nextDate && x.nextDate < new Date().toISOString().slice(0,10)
+    ? '<span class="tag">En retard</span>'
+    : ''}</p>
+<p><strong>Bande / bâtiment :</strong> ${esc(x.batch||"Non précisé")}</p>
+<p><strong>Vaccin / médicament / produit :</strong> ${esc(x.product||"Non précisé")}</p>
+<p><strong>Observations :</strong> ${esc(x.note||"Aucune observation")}</p>
     </div>
   `).join("")
   :"Aucun suivi sanitaire enregistré.";</div>
