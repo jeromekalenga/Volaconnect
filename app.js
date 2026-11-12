@@ -32,7 +32,30 @@ function persist(action="Mise à jour"){localStorage.setItem(KEY,JSON.stringify(
 function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2400)}
 function showPage(p){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(p).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));}
 function val(id){return document.getElementById(id).value.trim()}
-function saveFarm(){db.farm={name:val("farmName"),owner:val("farmOwner"),type:val("farmType"),count:+val("farmCount"),address:val("farmAddress")};persist("Fiche ferme enregistrée");toast("Ferme enregistrée sur cet appareil.");}
+function saveFarm(){
+  db.farm={
+    ...db.farm,
+    name:val("farmName").trim(),
+    owner:val("farmOwner").trim(),
+    manager:val("farmManager").trim(),
+    phone:val("farmPhone").trim(),
+    email:val("farmEmail").trim(),
+    type:val("farmType"),
+    province:val("farmProvince").trim(),
+    city:val("farmCity").trim(),
+    commune:val("farmCommune").trim(),
+    neighborhood:val("farmNeighborhood").trim(),
+    address:val("farmAddress").trim(),
+    area:Number(val("farmArea")||0),
+    capacity:Number(val("farmCapacity")||0),
+    count:Number(val("farmCount")||0),
+    buildings:Number(val("farmBuildings")||0),
+    creationDate:val("farmCreationDate"),
+    description:val("farmDescription").trim()
+  };
+  persist("Informations de la ferme enregistrées");
+  toast("Informations de la ferme enregistrées avec succès.");
+}
 function addAnimal(){if(!val("animalQty"))return toast("Indiquez une quantité ou un effectif.");db.animals.unshift({kind:val("animalKind"),date:val("animalDate")||new Date().toISOString().slice(0,10),qty:+val("animalQty"),batch:val("animalBatch"),note:val("animalNote")});persist("Suivi cheptel ajouté");toast("Suivi enregistré.");}
 function addLivestock(){
   const qty=Number(val("livestockQty"));
