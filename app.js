@@ -287,3 +287,8 @@ function diagnosticSync(){
     "Effectif total : "+total
   );
   }
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.addEventListener("click",()=>showPage(b.dataset.page));
+  });
+});
