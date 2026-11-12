@@ -199,8 +199,90 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
 <div class="card" style="margin-top:14px"><h3>Historique des opérations</h3><div id="financeList"></div></div></section>
 <section class="section" id="market"><h2>🛒 Marché des produits avicoles</h2><div class="card"><h3>Publier un produit</h3><div class="formgrid"><div><label>Produit</label><input id="prodName" placeholder="Plateau de 30 œufs"></div><div><label>Prix (USD)</label><input id="prodPrice" type="number" min="0" step=".01"></div><div><label>Quantité disponible</label><input id="prodQty" type="number" min="0"></div><div><label>Vendeur / ferme</label><input id="prodSeller" placeholder="Nom de la ferme"></div><div class="full"><label>Description</label><textarea id="prodDesc" rows="2"></textarea></div><div class="full"><button onclick="addProduct()">Publier le produit</button></div></div></div>
 <div class="card" style="margin-top:14px"><h3>Catalogue</h3><div id="productList" class="muted small">Aucun produit publié.</div></div></section>
-<section class="section" id="clients"><h2>👥 Espace clients, commentaires et témoignages</h2><div class="card"><h3>Laisser un avis</h3><div class="formgrid"><div><label>Nom du client</label><input id="reviewName"></div><div><label>Produit / ferme concerné</label><input id="reviewProduct"></div><div class="full"><label>Témoignage ou commentaire</label><textarea id="reviewText" rows="3"></textarea></div><div class="full"><button onclick="addReview()">Publier le témoignage</button></div></div></div><div class="card" style="margin-top:14px"><h3>Avis publiés</h3><div id="reviewList" class="muted small">Aucun avis.</div></div></section>
-<section class="section" id="location"><h2>📍 Géolocalisation et terrain d'élevage</h2><div class="card"><p class="muted">La localisation ne fonctionne qu'avec l'autorisation explicite de l'utilisateur et une connexion sécurisée HTTPS (ou localhost). Le suivi continu doit être activé volontairement par l'éleveur.</p><div class="row"><button onclick="getLocation()">Obtenir ma position GPS</button><button class="secondary" onclick="startTracking()">Activer le suivi pendant cette session</button><button class="danger" onclick="stopTracking()">Arrêter le suivi</button></div><p id="gpsOutput" class="small muted">Position non encore partagée.</p><div class="mapbox" id="mapBox">🗺️ Carte de la ferme<br><span class="small">La carte interactive sera connectée à un fournisseur cartographique lors du déploiement.</span></div><h3>Délimiter le terrain</h3><p class="small muted">Marchez autour du terrain et ajoutez les points GPS de ses limites. La superficie calculée sera une estimation.</p><button class="secondary" onclick="addBoundaryPoint()">Ajouter le point GPS actuel au périmètre</button> <button class="secondary" onclick="calculateArea()">Calculer la superficie estimée</button><p id="areaOutput" class="small muted">Aucun point de limite enregistré.</p></div></section>
+<section class="section" id="location"><h2>📍 Géolocalisation et terrain d'élevage</h2><div class="card"><p class="muted">La localisation ne fonctionne qu'avec l'autorisation explicite de l'utilisateur et une connexion sécurisée HTTPS (ou localhost). Le suivi continu doit être activé volontairement par l'éleveur.</p><div class="row"><button onclick="getLocation()">Obtenir ma position GPS</button><button class="secondary" onclick="startTracking()">Activer le suivi pendant cette session</button><button class="danger" onclick="stopTracking()">Arrêter le suivi</button></div><p id="gpsOutput" class="small muted">Position non encore partagée.</p><div class="mapbox" id="mapBox">🗺️ Carte de la ferme<br><span class="small">La carte interactive sera connectée à un fournisseur cartographique lors du déploiement.</span></div><h3>Délimiter le terrain</h3><p class="small muted">Marchez autour du terrain et ajoutez les points GPS de ses limites. La superficie calculée sera une est<section class="section" id="clients">
+  <h2>👥 Clients & avis</h2>
+  <!-- 1. FICHIER CLIENTS -->
+  <div class="card">
+    <h3>👤 Enregistrer un nouveau client</h3>
+    <div class="formgrid">
+      <div>
+        <label>Nom complet du client</label>
+        <input id="clientName" placeholder="Nom et prénom">
+      </div>
+      <div>
+        <label>Numéro de téléphone</label>
+        <input id="clientPhone" type="tel" placeholder="+243...">
+      </div>
+      <div class="full">
+        <label>Adresse du client</label>
+        <input id="clientAddress" placeholder="Ville, commune, quartier">
+      </div>
+      <div class="full">
+        <button onclick="addClient()">Enregistrer le client</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📋 Fichier des clients enregistrés</h3>
+    <div id="clientTotal">0 client</div>
+    <div id="clientList" class="muted small">
+      Aucun client enregistré.
+    </div>
+  </div>
+  <!-- 2. COMMANDES ET ACHATS -->
+  <div class="card" style="margin-top:14px">
+    <h3>🛒 Commandes et achats</h3>
+    <p class="muted small">
+      Historique des commandes et achats des clients.
+      Ce module sera développé à l'étape suivante.
+    </p>
+  </div>
+  <!-- 3. PAIEMENTS -->
+  <div class="card" style="margin-top:14px">
+    <h3>💰 Paiements des clients</h3>
+    <p class="muted small">
+      Suivi des montants payés et des soldes restants.
+      Ce module sera développé à l'étape suivante.
+    </p>
+  </div>
+    <!-- 4. AVIS ET TÉMOIGNAGES -->
+  <div class="card" style="margin-top:14px">
+    <h3>⭐ Laisser un avis</h3>
+    <div class="formgrid">
+      <div>
+        <label>Nom du client</label>
+        <input id="reviewName">
+      </div>
+      <div>
+        <label>Produit / ferme concerné</label>
+        <input id="reviewProduct">
+      </div>
+      <div>
+        <label>Note du client</label>
+        <select id="reviewRating">
+          <option value="5">5 étoiles</option>
+          <option value="4">4 étoiles</option>
+          <option value="3">3 étoiles</option>
+          <option value="2">2 étoiles</option>
+          <option value="1">1 étoile</option>
+        </select>
+      </div>
+      <div class="full">
+        <label>Témoignage ou commentaire</label>
+        <textarea id="reviewText" rows="3"></textarea>
+      </div>
+      <div class="full">
+        <button onclick="addReview()">Publier le témoignage</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📢 Avis publiés</h3>
+    <div id="reviewList" class="muted small">
+      Aucun avis.
+    </div>
+  </div></section>
+</p><button class="secondary" onclick="addBoundaryPoint()">Ajouter le point GPS actuel au périmètre</button> <button class="secondary" onclick="calculateArea()">Calculer la superficie estimée</button><p id="areaOutput" class="small muted">Aucun point de limite enregistré.</p></div></section>
 <section class="section" id="messages"><h2>💬 Communication</h2><div class="notice">La messagerie ci-dessous est une démonstration locale sur cet appareil. Les appels audio/vidéo réels nécessitent un serveur de signalisation sécurisé et une infrastructure WebRTC (STUN/TURN).</div><div class="card" style="margin-top:14px"><h3>Messagerie texte locale</h3><div id="chatList" style="min-height:100px;max-height:240px;overflow:auto" class="small muted">Aucun message.</div><label>Votre message</label><textarea id="chatText" rows="2" placeholder="Écrire un message..."></textarea><div class="row" style="margin-top:8px"><button onclick="sendMessage()">Envoyer</button><button class="secondary" onclick="callInfo('audio')">Appel audio</button><button class="secondary" onclick="callInfo('vidéo')">Appel vidéo</button></div></div></section>
 <section class="section" id="ai"><h2>✨ Assistant IA agricole</h2><div class="notice">L'analyse IA réelle nécessite un service IA connecté, des règles vétérinaires validées et une clé API protégée côté serveur. Cette version permet de préparer les observations et de tester le flux, sans prétendre diagnostiquer une maladie.</div><div class="card" style="margin-top:14px"><h3>Préparer une analyse d'image</h3><label>Photo d'un animal, d'un aliment ou d'une installation</label><input id="aiImage" type="file" accept="image/*"><label>Contexte / symptômes observés</label><textarea id="aiContext" rows="3" placeholder="Ex. baisse d'appétit, plumage, fientes, âge, effectif concerné..."></textarea><button style="margin-top:10px" onclick="analyzeImage()">Préparer l'analyse</button><div id="aiResult" class="small muted" style="margin-top:12px"></div></div><div class="card" style="margin-top:14px"><h3>Analyse économique simple</h3><p class="small muted">Calcul automatique à partir des opérations financières saisies.</p><div id="aiFinance"></div></div></section>
 <section class="section" id="admin"><h2>⚙ Administration et sécurité</h2><div class="card"><h3>Contrôles de la version pilote</h3><ul class="small"><li>Données de démonstration conservées localement dans le navigateur.</li><li>Ne partagez pas cet appareil et protégez votre session.</li><li>Avant la mise en production : authentification forte, rôles et permissions, chiffrement TLS, sauvegardes, journal d'audit et tests de sécurité.</li><li>Les paiements réels doivent passer par un prestataire agréé (mobile money / banque), avec vérification serveur des transactions.</li></ul><div class="row"><button class="secondary" onclick="exportData()">Exporter mes données (JSON)</button><button class="secondary" onclick="importDataPrompt()">Importer une sauvegarde</button><button class="danger" onclick="clearData()">Effacer les données locales</button></div><h3 style="margin-top:20px">Compte et synchronisation entre appareils</h3>
