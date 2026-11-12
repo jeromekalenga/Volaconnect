@@ -1,4 +1,14 @@
 const KEY="volaconnect_mvp_v1";
+function loadDB(){
+  try{
+    return {
+      ...emptyDB(),
+      ...JSON.parse(localStorage.getItem(KEY)||"{}")
+    };
+  }catch(e){
+    return emptyDB();
+  }
+}
 let db=loadDB(), watchId=null;
 function emptyDB(){
   return {
