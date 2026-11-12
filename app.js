@@ -51,19 +51,33 @@ function saveFarm(){
     count:Number(val("farmCount")||0),
     buildings:Number(val("farmBuildings")||0),
     creationDate:val("farmCreationDate"),
-    description:val("farmDescription").trim()
-  };
+    description:val("farmDescription").trim()};
   persist("Informations de la ferme enregistrées");
-  toast("Informations de la ferme enregistrées avec succès.");
-}
-function addAnimal(){if(!val("animalQty"))return toast("Indiquez une quantité ou un effectif.");db.animals.unshift({kind:val("animalKind"),date:val("animalDate")||new Date().toISOString().slice(0,10),qty:+val("animalQty"),batch:val("animalBatch"),note:val("animalNote")});persist("Suivi cheptel ajouté");toast("Suivi enregistré.");}
+  toast("Informations de la ferme enregistrées avec succès.");}
+function addAnimal(){
+  const qty=Number(val("animalQty"));
+  const kind=val("animalKind");
+  if(!Number.isInteger(qty)||qty<0){
+    return toast("Indiquez un effectif valide.");}
+  if(!db.animals) db.animals=[];
+  db.animals.unshift({
+    id:Date.now(),
+    kind:kind,
+    date:val("animalDate")||new Date().toISOString().slice(0,10),
+    qty:qty,
+    batch:val("animalBatch"),
+    product:val("animalProduct"),
+    note:val("animalNote")});
+  persist("Opération sanitaire enregistrée");
+  ["animalQty","animalBatch","animalProduct","animalNote"].forEach(id=>{
+    document.getElementById(id).value="";});
+  toast("Suivi sanitaire enregistré avec succès.");}
 function addLivestock(){
   const qty=Number(val("livestockQty"));
   const species=val("livestockSpecies");
   const category=val("livestockCategory");
   if(!Number.isInteger(qty)||qty<1){
-    return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");
-  }
+    return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");}
   if(!db.livestock) db.livestock=[];
   db.livestock.unshift({
     id:Date.now(),
@@ -73,23 +87,18 @@ function addLivestock(){
     batch:val("livestockBatch"),
     origin:val("livestockOrigin"),
     date:val("livestockDate")||new Date().toISOString().slice(0,10),
-    note:val("livestockNote")
-  });
+    note:val("livestockNote")});
   persist("Animaux enregistrés");
   ["livestockQty","livestockBatch","livestockOrigin","livestockNote"].forEach(id=>{
-    document.getElementById(id).value="";
-  });
-  toast("Animaux enregistrés avec succès.");
-    }
+    document.getElementById(id).value="";});
+  toast("Animaux enregistrés avec succès.");}
 function addEquipment(){
   const qty=Number(val("equipmentQty"));
   const name=val("equipmentName").trim();
   if(!name){
-    return toast("Indiquez le nom du matériel.");
-  }
+    return toast("Indiquez le nom du matériel.");}
   if(!Number.isInteger(qty)||qty<1){
-    return toast("Indiquez une quantité entière supérieure à zéro.");
-  }
+    return toast("Indiquez une quantité entière supérieure à zéro.");}
   if(!db.equipment) db.equipment=[];
   db.equipment.unshift({
     category:val("equipmentCategory"),
