@@ -121,6 +121,120 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
   </div>
   <div class="card" style="margin-top:14px">
     <h3>Capacité et infrastructures</h3>
+<!-- RUBRIQUE 3 : CHEPTEL -->
+<section class="section" id="animals">
+  <h2>🐔 Cheptel</h2>
+  <div class="card">
+    <h3>Enregistrer des animaux</h3>
+    <div class="formgrid">
+      <div>
+        <label>Espèce</label>
+        <select id="livestockSpecies">
+          <option value="Poulet">Poulet</option>
+          <option value="Canard">Canard</option>
+          <option value="Dinde">Dinde</option>
+          <option value="Pintade">Pintade</option>
+          <option value="Caille">Caille</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div>
+        <label>Catégorie</label>
+        <select id="livestockCategory">
+          <option value="Poussins">Poussins</option>
+          <option value="Poulettes">Poulettes</option>
+          <option value="Pondeuses">Pondeuses</option>
+          <option value="Poulets de chair">Poulets de chair</option>
+          <option value="Reproducteurs">Reproducteurs</option>
+          <option value="Adultes">Adultes</option>
+          <option value="Autres">Autres</option>
+        </select>
+      </div>
+      <div>
+        <label>Nombre d'animaux</label>
+        <input id="livestockQty" type="number" min="1">
+      </div>
+      <div>
+        <label>Bande / bâtiment</label>
+        <input id="livestockBatch" placeholder="Ex. Bande A">
+      </div>
+      <div>
+        <label>Origine / fournisseur</label>
+        <input id="livestockOrigin" placeholder="Fournisseur ou origine">
+      </div>
+      <div>
+        <label>Date d'acquisition</label>
+        <input id="livestockDate" type="date">
+      </div>
+      <div class="full">
+        <label>Observations</label>
+        <textarea id="livestockNote" rows="2"></textarea>
+      </div>
+      <div class="full">
+        <button onclick="addLivestock()">Enregistrer les animaux</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📊 Effectif du cheptel</h3>
+    <div id="livestockTotal">0 animal</div>
+    <div id="livestockList" class="muted small">
+      Aucun animal enregistré.
+    </div>
+  </div>
+</section>
+<!-- RUBRIQUE 4 : SANTÉ ET VACCINATIONS -->
+<section class="section" id="health">
+  <h2>🩺 Santé & vaccinations</h2>
+
+  <div class="card">
+    <h3>Enregistrer une opération sanitaire</h3>
+
+    <div class="formgrid">
+      <div>
+        <label>Type d'opération</label>
+        <select id="animalKind">
+          <option>Vaccination</option>
+          <option>Maladie</option>
+          <option>Symptômes</option>
+          <option>Diagnostic vétérinaire</option>
+          <option>Traitement</option>
+          <option>Mortalité</option>
+          <option>Visite vétérinaire</option>
+        </select>
+      </div>
+      <div>
+        <label>Date de l'opération</label>
+        <input id="animalDate" type="date">
+      </div>
+      <div>
+        <label>Effectif concerné</label>
+        <input id="animalQty" type="number" min="0">
+      </div>
+      <div>
+        <label>Bande / bâtiment</label>
+        <input id="animalBatch" placeholder="Ex. Bande A">
+      </div>
+      <div class="full">
+        <label>Produit, vaccin ou médicament</label>
+        <input id="animalProduct" placeholder="Nom du produit">
+      </div>
+      <div class="full">
+        <label>Observations, symptômes ou diagnostic</label>
+        <textarea id="animalNote" rows="3"></textarea>
+      </div>
+      <div class="full">
+        <button onclick="addAnimal()">Enregistrer le suivi sanitaire</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📋 Historique sanitaire</h3>
+    <div id="animalList" class="muted small">
+      Aucun suivi enregistré.
+    </div>
+  </div>
+</section>
     <div class="formgrid">
       <div><label>Superficie (m²)</label><input id="farmArea" type="number" min="0"></div>
       <div><label>Capacité maximale (animaux)</label><input id="farmCapacity" type="number" min="0"></div>
@@ -146,52 +260,6 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
         <option value="Pintade">Pintade</option>
         <option value="Caille">Caille</option>
         <option value="Autre">Autre</option>
-      </select>
-    </div>
-    <div>
-      <label>Catégorie</label>
-      <select id="livestockCategory">
-        <option value="Poussins">Poussins</option>
-        <option value="Poulettes">Poulettes</option>
-        <option value="Pondeuses">Pondeuses</option>
-        <option value="Poulets de chair">Poulets de chair</option>
-        <option value="Reproducteurs">Reproducteurs</option>
-        <option value="Adultes">Adultes</option>
-        <option value="Autres">Autres</option>
-      </select>
-    </div>
-    <div>
-      <label>Nombre d'animaux</label>
-      <input id="livestockQty" type="number" min="1" placeholder="Ex. 200">
-    </div>
-    <div>
-      <label>Bande / bâtiment</label>
-      <input id="livestockBatch" placeholder="Ex. Bande A">
-    </div>
-    <div>
-      <label>Date d'enregistrement</label>
-      <input id="livestockDate" type="date">
-    </div>
-    <div class="full">
-      <label>Observations</label>
-      <textarea id="livestockNote" rows="2" placeholder="Informations complémentaires"></textarea>
-    </div>
-    <div class="full">
-      <button onclick="addLivestock()">Enregistrer les animaux</button>
-    </div>
-  </div>
-</div>
-<div class="card" style="margin-top:14px">
-  <h3>📊 Effectif du cheptel</h3>
-  <div id="livestockTotal">0 animal</div>
-  <div id="livestockList" class="muted small">Aucun animal enregistré.</div>
-          </div>
-          <div class="card"><h3>Ajouter un suivi sanitaire ou de production</h3><div class="formgrid">
-<div><label>Type d'opération</label><select id="animalKind"><option>Vaccination</option><option>Alimentation</option><option>Mortalité</option><option>Ponte / production</option><option>Visite vétérinaire</option></select></div><div><label>Date</label><input id="animalDate" type="date"></div>
-<div><label>Effectif concerné / quantité</label><input id="animalQty" type="number" min="0"></div><div><label>Bande / bâtiment</label><input id="animalBatch" placeholder="Bande A"></div>
-<div class="full"><label>Produit, observation ou commentaire</label><textarea id="animalNote" rows="2" placeholder="Détails de l'opération..."></textarea></div>
-<div class="full"><button onclick="addAnimal()">Enregistrer le suivi</button></div></div></div>
-<div class="card" style="margin-top:14px"><h3>Historique sanitaire</h3><div id="animalList" class="muted small">Aucun suivi enregistré.</div></div></section>
 <section class="section" id="equipment">
   <h2>🧰 Gestion des matériels et équipements</h2>
   <div class="card">
