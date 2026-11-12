@@ -22,6 +22,7 @@ function emptyDB(){
     products:[],
     reviews:[],
     messages:[],
+    notifications:[],
     audit:[],
     queue:[],
     boundary:[],
