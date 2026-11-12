@@ -20,7 +20,6 @@ function emptyDB(){
 function persist(action="Mise à jour"){localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem("vc_dirty","1");db.queue.push({action,at:new Date().toISOString()});db.audit.unshift({action,at:new Date().toLocaleString("fr-FR")});db.audit=db.audit.slice(0,80);localStorage.setItem(KEY,JSON.stringify(db));render();updateStatus();}
 function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2400)}
 function showPage(p){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(p).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));}
-document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 function val(id){return document.getElementById(id).value.trim()}
 function saveFarm(){db.farm={name:val("farmName"),owner:val("farmOwner"),type:val("farmType"),count:+val("farmCount"),address:val("farmAddress")};persist("Fiche ferme enregistrée");toast("Ferme enregistrée sur cet appareil.");}
 function addAnimal(){if(!val("animalQty"))return toast("Indiquez une quantité ou un effectif.");db.animals.unshift({kind:val("animalKind"),date:val("animalDate")||new Date().toISOString().slice(0,10),qty:+val("animalQty"),batch:val("animalBatch"),note:val("animalNote")});persist("Suivi cheptel ajouté");toast("Suivi enregistré.");}
