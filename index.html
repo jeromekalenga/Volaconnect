@@ -450,6 +450,34 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
   </div></section>
 </p><button class="secondary" onclick="addBoundaryPoint()">Ajouter le point GPS actuel au périmètre</button> <button class="secondary" onclick="calculateArea()">Calculer la superficie estimée</button><p id="areaOutput" class="small muted">Aucun point de limite enregistré.</p></div></section>
 <section class="section" id="messages"><h2>💬 Communication</h2><div class="notice">La messagerie ci-dessous est une démonstration locale sur cet appareil. Les appels audio/vidéo réels nécessitent un serveur de signalisation sécurisé et une infrastructure WebRTC (STUN/TURN).</div><div class="card" style="margin-top:14px"><h3>Messagerie texte locale</h3><div id="chatList" style="min-height:100px;max-height:240px;overflow:auto" class="small muted">Aucun message.</div><label>Votre message</label><textarea id="chatText" rows="2" placeholder="Écrire un message..."></textarea><div class="row" style="margin-top:8px"><button onclick="sendMessage()">Envoyer</button><button class="secondary" onclick="callInfo('audio')">Appel audio</button><button class="secondary" onclick="callInfo('vidéo')">Appel vidéo</button></div></div></section>
+<!-- RUBRIQUE 12 : NOTIFICATIONS -->
+<section class="section" id="notifications">
+  <h2>🔔 Notifications et alertes</h2>
+  <div class="card">
+    <h3>🩺 Alertes sanitaires</h3>
+    <div id="healthNotifications">
+      Aucune alerte sanitaire pour le moment.
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>🐔 Alertes du cheptel</h3>
+    <div id="livestockNotifications">
+      Aucune alerte sur le cheptel.
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>🛒 Commandes et paiements</h3>
+    <div id="orderNotifications">
+      Aucune nouvelle commande ou alerte de paiement.
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>📋 Historique des notifications</h3>
+    <div id="notificationHistory">
+      Aucune notification enregistrée.
+    </div>
+  </div>
+</section>
 <section class="section" id="ai"><h2>✨ Assistant IA agricole</h2><div class="notice">L'analyse IA réelle nécessite un service IA connecté, des règles vétérinaires validées et une clé API protégée côté serveur. Cette version permet de préparer les observations et de tester le flux, sans prétendre diagnostiquer une maladie.</div><div class="card" style="margin-top:14px"><h3>Préparer une analyse d'image</h3><label>Photo d'un animal, d'un aliment ou d'une installation</label><input id="aiImage" type="file" accept="image/*"><label>Contexte / symptômes observés</label><textarea id="aiContext" rows="3" placeholder="Ex. baisse d'appétit, plumage, fientes, âge, effectif concerné..."></textarea><button style="margin-top:10px" onclick="analyzeImage()">Préparer l'analyse</button><div id="aiResult" class="small muted" style="margin-top:12px"></div></div><div class="card" style="margin-top:14px"><h3>Analyse économique simple</h3><p class="small muted">Calcul automatique à partir des opérations financières saisies.</p><div id="aiFinance"></div></div></section>
 <section class="section" id="admin"><h2>⚙ Administration et sécurité</h2><div class="card"><h3>Contrôles de la version pilote</h3><ul class="small"><li>Données de démonstration conservées localement dans le navigateur.</li><li>Ne partagez pas cet appareil et protégez votre session.</li><li>Avant la mise en production : authentification forte, rôles et permissions, chiffrement TLS, sauvegardes, journal d'audit et tests de sécurité.</li><li>Les paiements réels doivent passer par un prestataire agréé (mobile money / banque), avec vérification serveur des transactions.</li></ul><div class="row"><button class="secondary" onclick="exportData()">Exporter mes données (JSON)</button><button class="secondary" onclick="importDataPrompt()">Importer une sauvegarde</button><button class="danger" onclick="clearData()">Effacer les données locales</button></div><h3 style="margin-top:20px">Compte et synchronisation entre appareils</h3>
 <div class="notice">Créez un compte sur le serveur VolaConnect hébergé pour synchroniser vos données entre plusieurs appareils. Sans serveur configuré, vos données restent sur cet appareil.</div>
