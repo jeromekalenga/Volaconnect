@@ -100,6 +100,21 @@ document.getElementById("recentActivity").innerHTML=db.audit.length?db.audit.sli
 document.getElementById("animalList").innerHTML=db.animals.length?db.animals.map(x=>`<p><span class="tag">${esc(x.kind)}</span> ${esc(x.date)} · ${x.qty} · ${esc(x.batch)}<br>${esc(x.note)}</p>`).join(""):"Aucun suivi enregistré.";
 document.getElementById("financeList").innerHTML=db.finance.length?`<table><tr><th>Date</th><th>Nature</th><th>Catégorie</th><th>Montant</th><th>Note</th></tr>${db.finance.map(x=>`<tr><td>${esc(x.date)}</td><td>${x.type==="income"?"Revenu":"Dépense"}</td><td>${esc(x.category)}</td><td>${x.amount.toFixed(2)} $</td><td>${esc(x.note)}</td></tr>`).join("")}</table>`:"Aucune opération.";
 document.getElementById("productList").innerHTML=db.products.length?db.products.map((x,i)=>`<div class="product"><div><b>${esc(x.name)}</b><div class="small muted">${esc(x.seller)} · ${x.qty} disponible(s)<br>${esc(x.desc)}</div><div class="small">💬 <button class="secondary" onclick="commentProduct(${i})">Commenter / commander</button></div></div><b>${x.price.toFixed(2)} $</b></div>`).join(""):"Aucun produit publié.";
+const clientsTotal=(db.clients||[]).length;
+document.getElementById("clientTotal").textContent=
+  clientsTotal.toLocaleString("fr-FR")+
+  (clientsTotal<=1?" client":" clients");
+document.getElementById("clientList").innerHTML=
+  db.clients&&db.clients.length
+  ?db.clients.map(x=>`
+    <div style="padding:10px 0;border-bottom:1px solid #ddd">
+      <b>${esc(x.name)}</b>
+      <br>Téléphone : ${esc(x.phone||"Non renseigné")}
+      <br>Adresse : ${esc(x.address||"Non renseignée")}
+      <br>Date d'inscription : ${esc(x.date)}
+    </div>
+  `).join("")
+  :"Aucun client enregistré.";
 document.getElementById("reviewList").innerHTML=db.reviews.length?db.reviews.map(x=>`<p><b>${esc(x.name)}</b> <span class="muted small">· ${esc(x.product)} · ${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun avis.";
 document.getElementById("chatList").innerHTML=db.messages.length?db.messages.map(x=>`<p><b>${esc(x.from)}</b> <span class="muted">${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun message.";
 document.getElementById("auditList").innerHTML=db.audit.length?db.audit.slice(0,30).map(x=>`<p>• ${esc(x.at)} — ${esc(x.action)}</p>`).join(""):"Aucune activité.";
