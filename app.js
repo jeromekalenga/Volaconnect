@@ -57,6 +57,7 @@ function saveFarm(){
 function addAnimal(){
   const qty=Number(val("animalQty"));
   const kind=val("animalKind");
+  const nextDate=val("animalNextDate");
   if(!Number.isInteger(qty)||qty<0){
     return toast("Indiquez un effectif valide.");}
   if(!db.animals) db.animals=[];
@@ -64,12 +65,13 @@ function addAnimal(){
     id:Date.now(),
     kind:kind,
     date:val("animalDate")||new Date().toISOString().slice(0,10),
+    nextDate:nextDate,
     qty:qty,
     batch:val("animalBatch"),
     product:val("animalProduct"),
     note:val("animalNote")});
   persist("Opération sanitaire enregistrée");
-  ["animalQty","animalBatch","animalProduct","animalNote"].forEach(id=>{
+  ["animalQty","animalBatch","animalProduct","animalNote","animalNextDate"].forEach(id=>{
     document.getElementById(id).value="";});
   toast("Suivi sanitaire enregistré avec succès.");}
 function addLivestock(){
