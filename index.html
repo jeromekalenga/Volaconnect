@@ -231,13 +231,51 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
     </div>
   </div>
   <!-- 2. COMMANDES ET ACHATS -->
-  <div class="card" style="margin-top:14px">
-    <h3>🛒 Commandes et achats</h3>
-    <p class="muted small">
-      Historique des commandes et achats des clients.
-      Ce module sera développé à l'étape suivante.
-    </p>
+<div class="card" style="margin-top:14px">
+  <h3>🛒 Enregistrer une commande</h3>
+  <div class="formgrid">
+    <div>
+      <label>Nom du client</label>
+      <input id="orderClient" placeholder="Nom du client">
+    </div>
+    <div>
+      <label>Produit commandé</label>
+      <input id="orderProduct" placeholder="Ex. Poulets de chair">
+    </div>
+    <div>
+      <label>Quantité</label>
+      <input id="orderQty" type="number" min="1" placeholder="Quantité">
+    </div>
+    <div>
+      <label>Prix unitaire (USD)</label>
+      <input id="orderPrice" type="number" min="0" step="0.01" placeholder="Prix unitaire">
+    </div>
+    <div>
+      <label>Date de commande</label>
+      <input id="orderDate" type="date">
+    </div>
+    <div>
+      <label>Statut de la commande</label>
+      <select id="orderStatus">
+        <option value="En attente">En attente</option>
+        <option value="Confirmée">Confirmée</option>
+        <option value="En préparation">En préparation</option>
+        <option value="Livrée">Livrée</option>
+        <option value="Annulée">Annulée</option>
+      </select>
+    </div>
+    <div class="full">
+      <button onclick="addOrder()">Enregistrer la commande</button>
+    </div>
   </div>
+</div>
+<div class="card" style="margin-top:14px">
+  <h3>📋 Historique des commandes</h3>
+  <div id="orderTotal">0 commande</div>
+  <div id="orderList" class="muted small">
+    Aucune commande enregistrée.
+  </div>
+</div>
   <!-- 3. PAIEMENTS -->
   <div class="card" style="margin-top:14px">
     <h3>💰 Paiements des clients</h3>
