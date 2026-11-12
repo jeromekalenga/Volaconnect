@@ -59,24 +59,28 @@ function saveFarm(){
 function addAnimal(){if(!val("animalQty"))return toast("Indiquez une quantité ou un effectif.");db.animals.unshift({kind:val("animalKind"),date:val("animalDate")||new Date().toISOString().slice(0,10),qty:+val("animalQty"),batch:val("animalBatch"),note:val("animalNote")});persist("Suivi cheptel ajouté");toast("Suivi enregistré.");}
 function addLivestock(){
   const qty=Number(val("livestockQty"));
+  const species=val("livestockSpecies");
+  const category=val("livestockCategory");
   if(!Number.isInteger(qty)||qty<1){
     return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");
   }
   if(!db.livestock) db.livestock=[];
   db.livestock.unshift({
-    species:val("livestockSpecies"),
-    category:val("livestockCategory"),
+    id:Date.now(),
+    species:species,
+    category:category,
     qty:qty,
     batch:val("livestockBatch"),
+    origin:val("livestockOrigin"),
     date:val("livestockDate")||new Date().toISOString().slice(0,10),
     note:val("livestockNote")
   });
   persist("Animaux enregistrés");
-  ["livestockQty","livestockBatch","livestockNote"].forEach(id=>{
+  ["livestockQty","livestockBatch","livestockOrigin","livestockNote"].forEach(id=>{
     document.getElementById(id).value="";
   });
   toast("Animaux enregistrés avec succès.");
-}
+    }
 function addEquipment(){
   const qty=Number(val("equipmentQty"));
   const name=val("equipmentName").trim();
