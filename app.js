@@ -299,7 +299,7 @@ document.getElementById("equipmentList").innerHTML=
     </p>
   `).join("")
   :"Aucun équipement enregistré.";
- document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";}
+ document.getElementById("queueCount").textContent=db.queue.length+" opération(s) en attente";updateNotificationCount();}
 function commentProduct(i){let p=db.products[i];let c=prompt("Votre commentaire ou demande de commande pour "+p.name);if(c){db.reviews.unshift({name:"Visiteur local",product:p.name,text:c,at:new Date().toLocaleString("fr-FR")});persist("Commentaire sur produit");}}
 function updateStatus(){let online=navigator.onLine;document.getElementById("syncStatus").textContent=online?"● Connecté (mode local)":"● Hors connexion";document.getElementById("syncStatus").style.background=online?"#ffffff20":"#7b4a1b";}
 window.addEventListener("online",()=>{updateStatus();if(sessionStorage.getItem("vc_token"))syncCloudNow()});window.addEventListener("offline",updateStatus);
