@@ -149,6 +149,24 @@ document.getElementById("clientList").innerHTML=
     </div>
   `).join("")
   :"Aucun client enregistré.";
+const ordersTotal=(db.orders||[]).length;
+document.getElementById("orderTotal").textContent=
+  ordersTotal.toLocaleString("fr-FR")+
+  (ordersTotal<=1?" commande":" commandes");
+document.getElementById("orderList").innerHTML=
+  db.orders&&db.orders.length
+  ?db.orders.map(x=>`
+    <div style="padding:10px 0;border-bottom:1px solid #ddd">
+      <b>${esc(x.client)}</b>
+      <br>Produit : ${esc(x.product)}
+      <br>Quantité : ${x.qty}
+      <br>Prix unitaire : ${Number(x.price).toFixed(2)} $
+      <br>Montant total : <b>${Number(x.total).toFixed(2)} $</b>
+      <br>Date : ${esc(x.date)}
+      <br>Statut : ${esc(x.status)}
+    </div>
+  `).join("")
+  :"Aucune commande enregistrée.";
 document.getElementById("reviewList").innerHTML=db.reviews.length?db.reviews.map(x=>`<p><b>${esc(x.name)}</b> <span class="muted small">· ${esc(x.product)} · ${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun avis.";
 document.getElementById("chatList").innerHTML=db.messages.length?db.messages.map(x=>`<p><b>${esc(x.from)}</b> <span class="muted">${esc(x.at)}</span><br>${esc(x.text)}</p>`).join(""):"Aucun message.";
 document.getElementById("auditList").innerHTML=db.audit.length?db.audit.slice(0,30).map(x=>`<p>• ${esc(x.at)} — ${esc(x.action)}</p>`).join(""):"Aucune activité.";
