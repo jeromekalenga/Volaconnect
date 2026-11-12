@@ -17,6 +17,7 @@ function emptyDB(){
     livestock:[],
     equipment:[],
     clients:[],
+    orders:[],
     finance:[],
     products:[],
     reviews:[],
