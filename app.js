@@ -528,46 +528,52 @@ async function syncCloudNow(){
         localStorage.removeItem('vc_dirty');
         render();
         cloudMessage('Sauvegarde cloud téléchargée.');
-        return;
-      }
-      throw new Error('Conflit de synchronisation. Vos données locales sont conservées.');
-    }
+        return;}
+      throw new Error('Conflit de synchronisation. Vos données locales sont conservées.');}
     // Cas 5 : envoyer les modifications locales vers le cloud.
     const result = await cloudRequest('/api/sync/snapshot',{
       method:'PUT',
       body:JSON.stringify({
         baseVersion:remoteVersion,
-        data:db
-      })
-    });
+        data:db})});
     localStorage.setItem('vc_cloud_version', String(result.version));
     localStorage.removeItem('vc_dirty');
     db.queue = [];
     localStorage.setItem(KEY, JSON.stringify(db));
     render();
     cloudMessage('Synchronisation terminée. Version cloud ' + result.version + '.');
-    toast('Données synchronisées.');
-  } catch(e) {
-    cloudMessage(e.message);
-    toast(e.message);
-  }
-  }
+    toast('Données synchronisées.');} catch(e) {
+    cloudMessage(e.message);toast(e.message);}}
 function logoutCloudAccount(){sessionStorage.removeItem('vc_token');cloudMessage('Compte déconnecté. Les données locales ne sont pas effacées.');toast('Déconnexion effectuée.')}
 const apiField=document.getElementById('apiBase');
 if(apiField) apiField.value=localStorage.getItem('vc_api_base')||API_DEFAULT;
 function diagnosticSync(){
   const total=(db.livestock||[]).reduce(
-    (s,x)=>s+Number(x.qty||0),0
-  );
+    (s,x)=>s+Number(x.qty||0),0);
+  const sections={
+    "Ma ferme":Object.keys(db.farm||{}).length,
+    "Cheptel":(db.livestock||[]).length,
+    "Santé":(db.animals||[]).length,
+    "Matériels":(db.equipment||[]).length,
+    "Couveuse":(db.incubator||[]).length,
+    "Finances":(db.finance||[]).length,
+    "Marché":(db.products||[]).length,
+    "Clients":(db.clients||[]).length,
+    "Commandes":(db.orders||[]).length,
+    "Avis":(db.reviews||[]).length,
+    "Messages":(db.messages||[]).length,
+    "Notifications":(db.notifications||[]).length};
+  const details=Object.entries(sections)
+    .map(([name,count])=>name+" : "+count)
+    .join("\n");
   alert(
-    "ÉTAT DE SYNCHRONISATION\n"+
-    "Données modifiées : "+localStorage.getItem("vc_dirty")+"\n"+
-    "Version cloud locale : "+localStorage.getItem("vc_cloud_version")+"\n"+
-    "Enregistrements animaux : "+(db.livestock||[]).length+"\n"+
-    "Effectif total : "+total
-  );}
+    "DIAGNOSTIC VOLACONNECT\n\n"+
+    "Modifications locales : "+
+    (localStorage.getItem("vc_dirty")||"0")+"\n"+
+    "Version cloud : "+
+    (localStorage.getItem("vc_cloud_version")||"0")+"\n"+
+    "Effectif total : "+total+"\n\n"+
+    "ENREGISTREMENTS PAR RUBRIQUE\n"+details);}
 document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll("nav button").forEach(b=>{
-    b.addEventListener("click",()=>showPage(b.dataset.page));
-  });
-});
+    b.addEventListener("click",()=>showPage(b.dataset.page));});});
