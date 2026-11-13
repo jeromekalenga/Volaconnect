@@ -352,7 +352,80 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
       Aucun équipement enregistré.
     </div>
   </div>
-          </section>                                
+</section>
+
+<!-- RUBRIQUE 6 : COUVEUSE -->
+
+<section class="section" id="incubator">
+  <h2>🐣 Gestion de la couveuse</h2>
+
+  <div class="card">
+    <h3>Enregistrement d'une incubation</h3>
+    <div class="formgrid">
+      <div>
+        <label>Identifiant de la couveuse</label>
+        <input id="incubatorName" placeholder="Ex. Couveuse A">
+      </div>
+      <div>
+        <label>Capacité de la couveuse (œufs)</label>
+        <input id="incubatorCapacity" type="number" min="1">
+      </div>
+      <div>
+        <label>Espèce des œufs</label>
+        <select id="incubatorSpecies">
+          <option value="Poulet">Poulet</option>
+          <option value="Canard">Canard</option>
+          <option value="Dinde">Dinde</option>
+          <option value="Pintade">Pintade</option>
+          <option value="Caille">Caille</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </div>
+      <div>
+       <label>Nombre d'œufs</label>
+        <input id="incubatorEggs" type="number" min="1">
+      </div>
+      <div>
+        <label>Origine des œufs</label>
+        <input id="incubatorOrigin" placeholder="Fournisseur ou provenance">
+      </div>
+      <div>
+        <label>Date de mise en incubation</label>
+        <input id="incubatorStart" type="date">
+      </div>
+      <div>
+        <label>Température (°C)</label>
+        <input id="incubatorTemperature" type="number" step="0.1">
+      </div>
+      <div>
+        <label>Humidité (%)</label>
+        <input id="incubatorHumidity" type="number" min="0" max="100">
+      </div>
+      <div>
+        <label>Retournement des œufs</label>
+        <select id="incubatorTurning">
+          <option value="Automatique">Automatique</option>
+          <option value="Manuel">Manuel</option>
+          <option value="Non renseigné">Non renseigné</option>
+        </select>
+        </div>
+ <div class="full">
+        <label>Observations</label>
+        <textarea id="incubatorNote" rows="2"></textarea>
+      </div>
+      <div class="full">
+        <button onclick="addIncubator()">Enregistrer l'incubation</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>📊 Suivi des incubations</h3>
+    <div id="incubatorList" class="muted small">
+      Aucune incubation enregistrée.
+    </div>
+  </div>
+</section>
 <section class="section" id="finance"><h2>💰 Comptabilité de la ferme</h2><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="metric-label">Revenus</div><div class="metric" id="incomeTotal">0 $</div></div><div class="card"><div class="metric-label">Dépenses</div><div class="metric" id="expenseTotal">0 $</div></div><div class="card"><div class="metric-label">Solde</div><div class="metric" id="balanceTotal">0 $</div></div></div>
 <div class="card"><h3>Nouvelle opération financière</h3><div class="formgrid"><div><label>Nature</label><select id="finType"><option value="expense">Dépense</option><option value="income">Revenu</option></select></div><div><label>Catégorie</label><select id="finCategory"><option>Aliments</option><option>Poussins / poulettes</option><option>Vaccins et soins</option><option>Transport</option><option>Équipement</option><option>Vente d'œufs</option><option>Vente de poulets</option><option>Autre</option></select></div><div><label>Montant (USD)</label><input id="finAmount" type="number" min="0.01" step="0.01"></div><div><label>Date</label><input id="finDate" type="date"></div><div class="full"><label>Note / référence</label><input id="finNote" placeholder="Fournisseur, client, facture..."></div><div class="full"><button onclick="addFinance()">Ajouter à l'historique</button></div></div></div>
 <div class="card" style="margin-top:14px"><h3>Historique des opérations</h3><div id="financeList"></div></div></section>
