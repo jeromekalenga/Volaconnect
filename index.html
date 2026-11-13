@@ -121,6 +121,38 @@ footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
   </div>
   <div class="card" style="margin-top:14px">
     <h3>Capacité et infrastructures</h3>
+<div class="formgrid">
+  <div>
+    <label>Superficie de la ferme (m²)</label>
+    <input id="farmArea" type="number" min="0">
+  </div>
+  <div>
+    <label>Capacité maximale d'accueil</label>
+    <input id="farmCapacity" type="number" min="0">
+  </div>
+  <div>
+    <label>Effectif actuel d'animaux</label>
+    <input id="farmCount" type="number" min="0">
+  </div>
+  <div>
+    <label>Nombre de bâtiments</label>
+    <input id="farmBuildings" type="number" min="0">
+  </div>
+  <div>
+    <label>Date de création</label>
+    <input id="farmCreationDate" type="date">
+  </div>
+  <div class="full">
+    <label>Description de la ferme</label>
+    <textarea id="farmDescription" rows="3"></textarea>
+  </div>
+  <div class="full">
+    <button onclick="saveFarm()">Enregistrer les informations de la ferme</button>
+  </div>
+</div>
+</div>
+</div>
+</section>
 <!-- RUBRIQUE 3 : CHEPTEL -->
 <section class="section" id="animals">
   <h2>🐔 Cheptel</h2>
