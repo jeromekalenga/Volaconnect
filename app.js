@@ -173,19 +173,13 @@ function addEquipment(){const qty=Number(val("equipmentQty"));const name=val("eq
     document.getElementById(id).value="";});
   toast("Matériel enregistré avec succès.");}
 let editingIncubatorId=null;
-
 function editIncubator(id){
-
   const incubation=db.incubator.find(
     x=>Number(x.id)===Number(id)
   );
-
   if(!incubation){
-    return toast("Fiche d'incubation introuvable.");
-  }
-
+    return toast("Fiche d'incubation introuvable.");}
   editingIncubatorId=incubation.id;
-
   document.getElementById("incubatorName").value=incubation.name||"";
   document.getElementById("incubatorCapacity").value=incubation.capacity||"";
   document.getElementById("incubatorSpecies").value=incubation.species||"Poulet";
@@ -201,14 +195,9 @@ function editIncubator(id){
     behavior:"smooth",
     block:"center"});toast("Modifiez les informations puis enregistrez.");}
 function deleteIncubator(id){const incubation=db.incubator.find(x=>Number(x.id)===Number(id));if(!incubation){return toast("Fiche d'incubation introuvable.");}if(!confirm("Voulez-vous vraiment supprimer cette incubation ?")){return;}db.incubator=db.incubator.filter(x=>Number(x.id)!==Number(id));persist("Incubation supprimée");toast("Incubation supprimée avec succès.");}
-function addIncubator(){const name=val("incubatorName").trim();const capacity=Number(val("incubatorCapacity"));
-  const eggs=Number(val("incubatorEggs"));if(!name){
-    return toast("Indiquez l'identifiant de la couveuse.");}if(!Number.isInteger(capacity)||capacity<1){
-    return toast("Indiquez une capacité valide.");}if(!Number.isInteger(eggs)||eggs<1){
-    return toast("Indiquez un nombre d'œufs valide.");}if(eggs>capacity){
-    return toast("Le nombre d'œufs dépasse la capacité de la couveuse.");}if(!Array.isArray(db.incubator)){
-    db.incubator=[];}db.incubator.unshift({
-    id:Date.now(),
+function addIncubator(){const name=val("incubatorName").trim();
+  const capacity=Number(val("incubatorCapacity"));
+  const eggs=Number(val("incubatorEggs"));if(!name){return toast("Indiquez l'identifiant de la couveuse.");}if(!Number.isInteger(capacity)||capacity<1){return toast("Indiquez une capacité valide.");}if(!Number.isInteger(eggs)||eggs<1){return toast("Indiquez un nombre d'œufs valide.");}if(eggs>capacity){return toast("Le nombre d'œufs dépasse la capacité de la couveuse.");}if(!Array.isArray(db.incubator)){db.incubator=[];}const record={
     name:name,
     capacity:capacity,
     species:val("incubatorSpecies"),
@@ -218,9 +207,8 @@ function addIncubator(){const name=val("incubatorName").trim();const capacity=Nu
     temperature:val("incubatorTemperature"),
     humidity:val("incubatorHumidity"),
     turning:val("incubatorTurning"),
-    note:val("incubatorNote").trim(),
-    createdAt:new Date().toISOString()});persist("Nouvelle incubation enregistrée");
-    ["incubatorName",
+    note:val("incubatorNote").trim()};let action="Nouvelle incubation enregistrée";if(editingIncubatorId!==null){const index=db.incubator.findIndex(x=>Number(x.id)===Number(editingIncubatorId));if(index===-1){editingIncubatorId=null;return toast("La fiche à modifier est introuvable.");}db.incubator[index]={...db.incubator[index],...record};action="Incubation modifiée";}else{db.incubator.unshift({id:Date.now(),...record,createdAt:new Date().toISOString()});}editingIncubatorId=null;
+  ["incubatorName",
     "incubatorCapacity",
     "incubatorEggs",
     "incubatorOrigin",
@@ -229,29 +217,51 @@ function addIncubator(){const name=val("incubatorName").trim();const capacity=Nu
     "incubatorHumidity",
     "incubatorNote"].forEach(id=>{
     document.getElementById(id).value="";});
-  toast("Incubation enregistrée avec succès.");}
+  const button=document.querySelector('#incubator button[onclick="addIncubator()"]');if(button){
+    button.textContent="Enregistrer l'incubation";}
+  persist(action);
+  toast("Opération enregistrée avec succès.");}
 function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}                                        
-function addLivestock(){const qty=Number(val("livestockQty"));const species=val("livestockSpecies");
+function addLivestock(){
+  const qty=Number(val("livestockQty"));
+  const species=val("livestockSpecies");
   const category=val("livestockCategory");if(!Number.isInteger(qty)||qty<1){
     return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");}if(!Array.isArray(db.livestock)){
-    db.livestock=[];}const record={species:species,category:category,qty:qty,
+    db.livestock=[];}const record={
+    species:species,
+    category:category,
+    qty:qty,
     batch:val("livestockBatch").trim(),
     origin:val("livestockOrigin").trim(),
     date:val("livestockDate")||new Date().toISOString().slice(0,10),
-    note:val("livestockNote").trim()};let action="Animaux enregistrés";if(editingLivestockId!==null){
+    note:val("livestockNote").trim()
+  };let action="Animaux enregistrés";
+  if(editingLivestockId!==null){
     const index=db.livestock.findIndex(
-      x=>Number(x.id)===Number(editingLivestockId));if(index===-1){editingLivestockId=null;
-      return toast("La fiche à modifier est introuvable.");}db.livestock[index]={
+      x=>Number(x.id)===Number(editingLivestockId)
+    );if(index===-1){
+      editingLivestockId=null;
+      return toast("La fiche à modifier est introuvable.");
+    }db.livestock[index]={
       ...db.livestock[index],
-      ...record};action="Fiche du cheptel modifiée";}else{
-    db.livestock.unshift({id:Date.now(),...record});}
-editingLivestockId=null;
+      ...record};
+    action="Fiche du cheptel modifiée";}else{
+    db.livestock.unshift({
+      id:Date.now(),
+      ...record
+    });}
+  editingLivestockId=null;
   ["livestockQty","livestockBatch","livestockOrigin","livestockNote"].forEach(id=>{
-    document.getElementById(id).value="";});
+    document.getElementById(id).value="";
+  });
   const button=document.querySelector(
-    '#animals button[onclick="addLivestock()"]');if(button){
-    button.textContent="Enregistrer les animaux";}
-  persist(action);toast(
+    '#animals button[onclick="addLivestock()"]'
+  );
+  if(button){
+    button.textContent="Enregistrer les animaux";
+  }
+  persist(action);
+  toast(
     action==="Fiche du cheptel modifiée"
       ?"Modifications enregistrées avec succès."
       :"Animaux enregistrés avec succès.");}
