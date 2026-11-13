@@ -437,17 +437,14 @@ document.getElementById("equipmentTotal").textContent=
   (equipmentTotal<=1?" matériel":" matériels");
 document.getElementById("equipmentList").innerHTML=
   db.equipment&&db.equipment.length
-  ?db.equipment.map(x=>`
-    <p>
+  ?db.equipment.map(x=>`<p>
       <b>${esc(x.name)}</b>
       <br>Catégorie : ${esc(x.category)}
       <br>Quantité : ${Number(x.qty).toLocaleString("fr-FR")}
       <br>État : ${esc(x.state)}
       <br>Date d'acquisition : ${esc(x.date)}
       <br>Observations : ${esc(x.note||"Aucune")}
-    </p>
-  `).join("")
-  :"Aucun équipement enregistré.";
+    </p>`).join(""):"Aucun équipement enregistré.";
  document.getElementById("incubatorList").innerHTML=
   Array.isArray(db.incubator)&&db.incubator.length
   ?db.incubator.map(x=>`
@@ -462,6 +459,16 @@ document.getElementById("equipmentList").innerHTML=
       <br>Humidité : ${esc(x.humidity??"Non renseignée")} %
       <br>Retournement : ${esc(x.turning||"Non renseigné")}
       <br>Observations : ${esc(x.note||"Aucune")}
+      <div class="row" style="margin-top:10px">
+        <button class="secondary"
+          onclick="editIncubator(${Number(x.id)})">
+          Modifier
+        </button>
+        <button class="secondary"
+          onclick="deleteIncubator(${Number(x.id)})">
+          Supprimer
+        </button>
+      </div>
     </div>
   `).join("")
   :"Aucune incubation enregistrée.";
