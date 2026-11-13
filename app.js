@@ -327,18 +327,24 @@ document.getElementById("chatList").innerHTML=db.messages.length?db.messages.map
 document.getElementById("auditList").innerHTML=db.audit.length?db.audit.slice(0,30).map(x=>`<p>• ${esc(x.at)} — ${esc(x.action)}</p>`).join(""):"Aucune activité.";
 document.getElementById("aiFinance").innerHTML=`Revenus : <b>${s.inc.toFixed(2)} $</b> · Dépenses : <b>${s.exp.toFixed(2)} $</b> · Solde : <b>${s.bal.toFixed(2)} $</b><p class="small muted">${s.bal<0?"Attention : les dépenses dépassent les revenus saisis.":"Surveillez régulièrement le coût des aliments, de l’eau, des soins et les pertes de votre exploitation."}</p>`;
 const livestockTotal=(db.livestock||[]).reduce((sum,x)=>sum+Number(x.qty||0),0);
-document.getElementById("livestockTotal").textContent=
-  livestockTotal.toLocaleString("fr-FR")+" animal(aux)";
-document.getElementById("livestockList").innerHTML=
-  db.livestock&&db.livestock.length
-  ?db.livestock.map(x=>`
-    <p>
+document.getElementById("livestockTotal").textContent=livestockTotal.toLocaleString("fr-FR")+" animal(aux)";
+document.getElementById("livestockList").innerHTML=db.livestock&&db.livestock.length?db.livestock.map(x=>`
+    <div class="card" style="margin-bottom:10px">
       <b>${esc(x.species)}</b> — ${esc(x.category)}
-      <br>Effectif : ${Number(x.qty).toLocaleString("fr-FR")}
+      <br>Effectif : ${Number(x.qty||0).toLocaleString("fr-FR")}
       <br>Bande : ${esc(x.batch||"Non précisée")}
-      <br>Date : ${esc(x.date)}
-      <br>${esc(x.note||"")}
-    </p>
+      <br>Origine : ${esc(x.origin||"Non précisée")}
+      <br>Date : ${esc(x.date||"Non précisée")}
+      <br>Observations : ${esc(x.note||"Aucune")}
+      <div class="row" style="margin-top:10px">
+        <button class="secondary" onclick="editLivestock(${Number(x.id)})">
+          Modifier
+        </button>
+        <button class="secondary" onclick="deleteLivestock(${Number(x.id)})">
+          Supprimer
+        </button>
+      </div>
+    </div>
   `).join("")
   :"Aucun animal enregistré.";
 const equipmentTotal=(db.equipment||[]).reduce(
