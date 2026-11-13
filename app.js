@@ -157,12 +157,7 @@ const button=document.querySelector(
     block:"center"
   });toast("Modifiez les informations puis enregistrez.");}
 function deleteLivestock(id){const animal=db.livestock.find(x=>Number(x.id)===Number(id));if(!animal){return toast("Fiche du cheptel introuvable.");}if(!confirm("Voulez-vous vraiment supprimer cette fiche du cheptel ?")){return;}db.livestock=db.livestock.filter(x=>Number(x.id)!==Number(id));persist("Fiche du cheptel supprimée");toast("Fiche supprimée avec succès.");}
-
-function addEquipment(){
-  const qty=Number(val("equipmentQty"));
-  const name=val("equipmentName").trim();
-  if(!name){
-    return toast("Indiquez le nom du matériel.");}
+function addEquipment(){const qty=Number(val("equipmentQty"));const name=val("equipmentName").trim();if(!name){return toast("Indiquez le nom du matériel.");}
   if(!Number.isInteger(qty)||qty<1){
     return toast("Indiquez une quantité entière supérieure à zéro.");}
   if(!db.equipment) db.equipment=[];
@@ -177,6 +172,35 @@ function addEquipment(){
   ["equipmentName","equipmentQty","equipmentNote"].forEach(id=>{
     document.getElementById(id).value="";});
   toast("Matériel enregistré avec succès.");}
+function addIncubator(){const name=val("incubatorName").trim();const capacity=Number(val("incubatorCapacity"));
+  const eggs=Number(val("incubatorEggs"));if(!name){
+    return toast("Indiquez l'identifiant de la couveuse.");}if(!Number.isInteger(capacity)||capacity<1){
+    return toast("Indiquez une capacité valide.");}if(!Number.isInteger(eggs)||eggs<1){
+    return toast("Indiquez un nombre d'œufs valide.");}if(eggs>capacity){
+    return toast("Le nombre d'œufs dépasse la capacité de la couveuse.");}if(!Array.isArray(db.incubator)){
+    db.incubator=[];}db.incubator.unshift({
+    id:Date.now(),
+    name:name,
+    capacity:capacity,
+    species:val("incubatorSpecies"),
+    eggs:eggs,
+    origin:val("incubatorOrigin").trim(),
+    start:val("incubatorStart"),
+    temperature:val("incubatorTemperature"),
+    humidity:val("incubatorHumidity"),
+    turning:val("incubatorTurning"),
+    note:val("incubatorNote").trim(),
+    createdAt:new Date().toISOString()});persist("Nouvelle incubation enregistrée");
+    ["incubatorName",
+    "incubatorCapacity",
+    "incubatorEggs",
+    "incubatorOrigin",
+    "incubatorStart",
+    "incubatorTemperature",
+    "incubatorHumidity",
+    "incubatorNote"].forEach(id=>{
+    document.getElementById(id).value="";});
+  toast("Incubation enregistrée avec succès.");}
 function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}                                        
 function addLivestock(){const qty=Number(val("livestockQty"));const species=val("livestockSpecies");
   const category=val("livestockCategory");if(!Number.isInteger(qty)||qty<1){
