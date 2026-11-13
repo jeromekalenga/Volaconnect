@@ -157,24 +157,7 @@ const button=document.querySelector(
     block:"center"
   });toast("Modifiez les informations puis enregistrez.");}
 function deleteLivestock(id){const animal=db.livestock.find(x=>Number(x.id)===Number(id));if(!animal){return toast("Fiche du cheptel introuvable.");}if(!confirm("Voulez-vous vraiment supprimer cette fiche du cheptel ?")){return;}db.livestock=db.livestock.filter(x=>Number(x.id)!==Number(id));persist("Fiche du cheptel supprimée");toast("Fiche supprimée avec succès.");}
-function addLivestock(){const qty=Number(val("livestockQty"));const species=val("livestockSpecies");
-  const category=val("livestockCategory");
-  if(!Number.isInteger(qty)||qty<1){
-    return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");}
-  if(!db.livestock) db.livestock=[];
-  db.livestock.unshift({
-    id:Date.now(),
-    species:species,
-    category:category,
-    qty:qty,
-    batch:val("livestockBatch"),
-    origin:val("livestockOrigin"),
-    date:val("livestockDate")||new Date().toISOString().slice(0,10),
-    note:val("livestockNote")});
-  persist("Animaux enregistrés");
-  ["livestockQty","livestockBatch","livestockOrigin","livestockNote"].forEach(id=>{
-    document.getElementById(id).value="";});
-  toast("Animaux enregistrés avec succès.");}
+
 function addEquipment(){
   const qty=Number(val("equipmentQty"));
   const name=val("equipmentName").trim();
@@ -194,7 +177,31 @@ function addEquipment(){
   ["equipmentName","equipmentQty","equipmentNote"].forEach(id=>{
     document.getElementById(id).value="";});
   toast("Matériel enregistré avec succès.");}
-function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}
+function addFinance(){let amount=+val("finAmount");if(!(amount>0))return toast("Montant invalide.");db.finance.unshift({type:val("finType"),category:val("finCategory"),amount,date:val("finDate")||new Date().toISOString().slice(0,10),note:val("finNote")});persist("Opération financière ajoutée");toast("Opération enregistrée.");}                                        
+function addLivestock(){const qty=Number(val("livestockQty"));const species=val("livestockSpecies");
+  const category=val("livestockCategory");if(!Number.isInteger(qty)||qty<1){
+    return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");}if(!Array.isArray(db.livestock)){
+    db.livestock=[];}const record={species:species,category:category,qty:qty,
+    batch:val("livestockBatch").trim(),
+    origin:val("livestockOrigin").trim(),
+    date:val("livestockDate")||new Date().toISOString().slice(0,10),
+    note:val("livestockNote").trim()};let action="Animaux enregistrés";if(editingLivestockId!==null){
+    const index=db.livestock.findIndex(
+      x=>Number(x.id)===Number(editingLivestockId));if(index===-1){editingLivestockId=null;
+      return toast("La fiche à modifier est introuvable.");}db.livestock[index]={
+      ...db.livestock[index],
+      ...record};action="Fiche du cheptel modifiée";}else{
+    db.livestock.unshift({id:Date.now(),...record});}
+editingLivestockId=null;
+  ["livestockQty","livestockBatch","livestockOrigin","livestockNote"].forEach(id=>{
+    document.getElementById(id).value="";});
+  const button=document.querySelector(
+    '#animals button[onclick="addLivestock()"]');if(button){
+    button.textContent="Enregistrer les animaux";}
+  persist(action);toast(
+    action==="Fiche du cheptel modifiée"
+      ?"Modifications enregistrées avec succès."
+      :"Animaux enregistrés avec succès.");}
 function addProduct(){if(!val("prodName")||!(+val("prodPrice")>=0))return toast("Complétez le nom et le prix.");db.products.unshift({name:val("prodName"),price:+val("prodPrice"),qty:+val("prodQty"),seller:val("prodSeller"),desc:val("prodDesc"),at:new Date().toLocaleString("fr-FR")});persist("Produit publié");toast("Produit publié dans le catalogue local.");}
 function addClient(){
   const name=val("clientName").trim();
