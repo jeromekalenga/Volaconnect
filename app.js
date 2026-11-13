@@ -14,6 +14,7 @@ function loadDB(){
         ...(saved.settings||{})}};}catch(e){
     return emptyDB();}}
 let db=loadDB(), watchId=null;
+let editingLivestockId=null;
 function updateNotificationCount(){
   const notifications=Array.isArray(db.notifications)
     ?db.notifications:[];
