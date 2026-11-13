@@ -172,6 +172,35 @@ function addEquipment(){const qty=Number(val("equipmentQty"));const name=val("eq
   ["equipmentName","equipmentQty","equipmentNote"].forEach(id=>{
     document.getElementById(id).value="";});
   toast("Matériel enregistré avec succès.");}
+let editingIncubatorId=null;
+
+function editIncubator(id){
+
+  const incubation=db.incubator.find(
+    x=>Number(x.id)===Number(id)
+  );
+
+  if(!incubation){
+    return toast("Fiche d'incubation introuvable.");
+  }
+
+  editingIncubatorId=incubation.id;
+
+  document.getElementById("incubatorName").value=incubation.name||"";
+  document.getElementById("incubatorCapacity").value=incubation.capacity||"";
+  document.getElementById("incubatorSpecies").value=incubation.species||"Poulet";
+  document.getElementById("incubatorEggs").value=incubation.eggs||"";
+  document.getElementById("incubatorOrigin").value=incubation.origin||"";
+  document.getElementById("incubatorStart").value=incubation.start||"";
+  document.getElementById("incubatorTemperature").value=incubation.temperature||"";
+  document.getElementById("incubatorHumidity").value=incubation.humidity||"";
+  document.getElementById("incubatorTurning").value=incubation.turning||"Non renseigné";
+  document.getElementById("incubatorNote").value=incubation.note||"";
+  const button=document.querySelector('#incubator button[onclick="addIncubator()"]');if(button){button.textContent="Enregistrer les modifications";}
+  document.getElementById("incubatorName").scrollIntoView({
+    behavior:"smooth",
+    block:"center"});toast("Modifiez les informations puis enregistrez.");}
+function deleteIncubator(id){const incubation=db.incubator.find(x=>Number(x.id)===Number(id));if(!incubation){return toast("Fiche d'incubation introuvable.");}if(!confirm("Voulez-vous vraiment supprimer cette incubation ?")){return;}db.incubator=db.incubator.filter(x=>Number(x.id)!==Number(id));persist("Incubation supprimée");toast("Incubation supprimée avec succès.");}
 function addIncubator(){const name=val("incubatorName").trim();const capacity=Number(val("incubatorCapacity"));
   const eggs=Number(val("incubatorEggs"));if(!name){
     return toast("Indiquez l'identifiant de la couveuse.");}if(!Number.isInteger(capacity)||capacity<1){
