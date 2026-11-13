@@ -385,6 +385,23 @@ document.getElementById("equipmentList").innerHTML=
     </p>
   `).join("")
   :"Aucun équipement enregistré.";
+ document.getElementById("incubatorList").innerHTML=
+  Array.isArray(db.incubator)&&db.incubator.length
+  ?db.incubator.map(x=>`
+    <div class="card" style="margin-bottom:10px">
+      <b>${esc(x.name||"Couveuse sans nom")}</b>
+      <br>Capacité : ${Number(x.capacity||0)} œufs
+      <br>Espèce : ${esc(x.species||"Non précisée")}
+      <br>Œufs en incubation : ${Number(x.eggs||0)}
+      <br>Origine : ${esc(x.origin||"Non précisée")}
+      <br>Date de début : ${esc(x.start||"Non précisée")}
+      <br>Température : ${esc(x.temperature??"Non renseignée")} °C
+      <br>Humidité : ${esc(x.humidity??"Non renseignée")} %
+      <br>Retournement : ${esc(x.turning||"Non renseigné")}
+      <br>Observations : ${esc(x.note||"Aucune")}
+    </div>
+  `).join("")
+  :"Aucune incubation enregistrée.";
  document.getElementById("queueCount").textContent=
   db.queue.length+" opération(s) en attente";
 generateHealthNotifications();
