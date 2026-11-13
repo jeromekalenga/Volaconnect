@@ -66,46 +66,40 @@ function generateHealthNotifications(){
     if(isNaN(next.getTime()))return;
     if(next<new Date(today.getTime()-7*86400000))return;
     if(next>limit)return;
-    const animalId=animal.id||index;
-    const notificationId="health-"+animalId+"-"+animal.nextDate;
+    const animalId=animal.id||index;const notificationId="health-"+animalId+"-"+animal.nextDate;
     const exists=db.notifications.some(
-      n=>n.id===notificationId
-    );
-    if(!exists){
+      n=>n.id===notificationId);if(!exists){
       db.notifications.unshift({
         id:notificationId,
         type:"Santé",
-        title:animal.nextDate<today.toISOString().slice(0,10)
-          ?"Intervention sanitaire en retard"
-          :"Intervention sanitaire à venir",
+        title:animal.nextDate<today.toISOString().slice(0,10)?"Intervention sanitaire en retard":"Intervention sanitaire à venir",
         message:(animal.kind||"Intervention")+" — "+animal.nextDate,
         date:animal.nextDate,
         read:false,
-        createdAt:new Date().toISOString()
-      });}
-  });}
+        createdAt:new Date().toISOString()});}});}
 function persist(action="Mise à jour"){
   if(!Array.isArray(db.queue))db.queue=[];
   if(!Array.isArray(db.audit))db.audit=[];
   db.queue.push({
-    action,
-    at:new Date().toISOString()
-  });
+    action,at:new Date().toISOString()});
   db.audit.unshift({
-    action,
-    at:new Date().toLocaleString("fr-FR")
-  });
+    action,at:new Date().toLocaleString("fr-FR")});
   db.audit=db.audit.slice(0,80);
   localStorage.setItem(KEY,JSON.stringify(db));
   localStorage.setItem("vc_dirty","1");
-  render();
-  updateStatus();}
+  render();updateStatus();}
 function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2400)}
-function showPage(p){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(p).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));}
+function showPage(p){const target=document.getElementById(p);
+  if(!target){console.error("Rubrique introuvable :",p);
+    toast("Cette rubrique est introuvable.");return;}
+  document.querySelectorAll(".section").forEach(section=>{
+    section.classList.remove("active");});
+  target.classList.add("active");
+  document.querySelectorAll("nav button").forEach(button=>{
+    button.classList.toggle("active",button.dataset.page===p);});}
 function val(id){return document.getElementById(id).value.trim()}
 function saveFarm(){
-  db.farm={
-    ...db.farm,
+  db.farm={...db.farm,
     name:val("farmName").trim(),
     owner:val("farmOwner").trim(),
     manager:val("farmManager").trim(),
