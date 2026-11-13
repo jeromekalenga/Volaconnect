@@ -286,7 +286,7 @@ const ordersTotal=(db.orders||[]).length;
 document.getElementById("orderTotal").textContent=
   ordersTotal.toLocaleString("fr-FR")+
   (ordersTotal<=1?" commande":" commandes");
-document.gdocument.getElementById("orderList").innerHTML=
+document.getElementById("orderList").innerHTML=
   db.orders&&db.orders.length
   ?db.orders.map(x=>`
     <div style="padding:10px 0;border-bottom:1px solid #ddd">
