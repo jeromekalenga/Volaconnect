@@ -447,25 +447,28 @@ if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.ser
 if(db.farm.name){farmName.value=db.farm.name;farmOwner.value=db.farm.owner||"";farmType.value=db.farm.type||farmType.value;farmCount.value=db.farm.count||"";farmAddress.value=db.farm.address||"";}
 render();updateStatus();document.getElementById("animalDate").value=new Date().toISOString().slice(0,10);document.getElementById("finDate").value=new Date().toISOString().slice(0,10);
 /* VolaConnect: langues, compte cloud et synchronisation versionnée. */
-const LANGS={
- fr:{nav:['Tableau de bord','Ma ferme','Cheptel & santé','Finances','Marché','Clients & avis','Localisation','Messages','Assistant IA','Administration'],h1:'Bienvenue sur VolaConnect',h2:['Espace ferme','Cheptel, bandes et santé','Comptabilité de la ferme','Marché des produits avicoles','Espace clients, commentaires et témoignages','Géolocalisation et terrain d’élevage','Communication','Assistant IA agricole','Administration et sécurité'],labels:['Nom de la ferme','Responsable','Type d’élevage','Effectif actuel','Adresse / quartier','Type d’opération','Date','Effectif concerné / quantité','Bande / bâtiment','Produit, observation ou commentaire','Nature','Catégorie','Montant (USD)','Note / référence','Produit','Prix (USD)','Quantité disponible','Vendeur / ferme','Description','Nom du client','Produit / ferme concerné','Témoignage ou commentaire','Votre message'],buttons:{saveFarm:'Enregistrer la ferme',addAnimal:'Enregistrer le suivi',addFinance:'Ajouter à l’historique',addProduct:'Publier le produit',addReview:'Publier le témoignage',sendMessage:'Envoyer',getLocation:'Obtenir ma position GPS',startTracking:'Activer le suivi pendant cette session',stopTracking:'Arrêter le suivi',analyzeImage:'Préparer l’analyse'}},
+const LANGS={fr:{nav:['Tableau de bord','Ma ferme','Cheptel & santé','Finances','Marché','Clients & avis','Localisation','Messages','Assistant IA','Administration'],h1:'Bienvenue sur VolaConnect',h2:['Espace ferme','Cheptel, bandes et santé','Comptabilité de la ferme','Marché des produits avicoles','Espace clients, commentaires et témoignages','Géolocalisation et terrain d’élevage','Communication','Assistant IA agricole','Administration et sécurité'],labels:['Nom de la ferme','Responsable','Type d’élevage','Effectif actuel','Adresse / quartier','Type d’opération','Date','Effectif concerné / quantité','Bande / bâtiment','Produit, observation ou commentaire','Nature','Catégorie','Montant (USD)','Note / référence','Produit','Prix (USD)','Quantité disponible','Vendeur / ferme','Description','Nom du client','Produit / ferme concerné','Témoignage ou commentaire','Votre message'],buttons:{saveFarm:'Enregistrer la ferme',addAnimal:'Enregistrer le suivi',addFinance:'Ajouter à l’historique',addProduct:'Publier le produit',addReview:'Publier le témoignage',sendMessage:'Envoyer',getLocation:'Obtenir ma position GPS',startTracking:'Activer le suivi pendant cette session',stopTracking:'Arrêter le suivi',analyzeImage:'Préparer l’analyse'}},
  en:{nav:['Dashboard','My farm','Livestock & health','Finances','Marketplace','Customers & reviews','Location','Messages','AI assistant','Administration'],h1:'Welcome to VolaConnect',h2:['Farm space','Livestock, batches & health','Farm accounting','Poultry products marketplace','Customer space, comments & testimonials','Geolocation & farm plot','Communication','Agricultural AI assistant','Administration & security'],labels:['Farm name','Manager','Type of livestock','Current headcount','Address / area','Operation type','Date','Affected animals / quantity','Batch / building','Product, observation or comment','Type','Category','Amount (USD)','Note / reference','Product','Price (USD)','Available quantity','Seller / farm','Description','Customer name','Related product / farm','Testimonial or comment','Your message'],buttons:{saveFarm:'Save farm',addAnimal:'Save record',addFinance:'Add to history',addProduct:'Publish product',addReview:'Publish testimonial',sendMessage:'Send',getLocation:'Get my GPS position',startTracking:'Enable tracking for this session',stopTracking:'Stop tracking',analyzeImage:'Prepare analysis'}},
  sw:{nav:['Dashibodi','Shamba langu','Mifugo na afya','Fedha','Soko','Wateja na maoni','Mahali','Ujumbe','Msaidizi wa AI','Usimamizi'],h1:'Karibu VolaConnect',h2:['Sehemu ya shamba','Mifugo, makundi na afya','Hesabu za shamba','Soko la bidhaa za kuku','Wateja, maoni na ushuhuda','Mahali na eneo la shamba','Mawasiliano','Msaidizi wa AI wa kilimo','Usimamizi na usalama'],labels:['Jina la shamba','Msimamizi','Aina ya ufugaji','Idadi ya sasa','Anwani / eneo','Aina ya shughuli','Tarehe','Idadi / kiasi','Kundi / banda','Bidhaa, uchunguzi au maoni','Aina','Kategoria','Kiasi (USD)','Dokezo / rejea','Bidhaa','Bei (USD)','Kiasi kilichopo','Muuzaji / shamba','Maelezo','Jina la mteja','Bidhaa / shamba husika','Ushuhuda au maoni','Ujumbe wako'],buttons:{saveFarm:'Hifadhi shamba',addAnimal:'Hifadhi taarifa',addFinance:'Ongeza kwenye historia',addProduct:'Chapisha bidhaa',addReview:'Chapisha ushuhuda',sendMessage:'Tuma',getLocation:'Pata eneo langu la GPS',startTracking:'Washa ufuatiliaji kwa kipindi hiki',stopTracking:'Simamisha ufuatiliaji',analyzeImage:'Andaa uchambuzi'}},
  ln:{nav:['Etando ya mosala','Ferme na ngai','Bitumba mpe bokolɔngɔnɔ','Mbongo','Zando','Bakiliya mpe makanisi','Esika','Bansango','Mosungi IA','Boyangeli'],h1:'Boyei malamu na VolaConnect',h2:['Esika ya ferme','Bitumba, bituluku mpe bokolɔngɔnɔ','Mikanda ya mbongo ya ferme','Zando ya biloko ya nsoso','Bakiliya, makanisi mpe litatoli','Esika mpe mabele ya bokóli','Kosolola','Mosungi IA ya bilanga','Boyangeli mpe bokengi'],labels:['Kombo ya ferme','Mokambi','Lolenge ya bokóli','Motango ya sikoyo','Adresɛ / quartier','Lolenge ya mosala','Mokolo','Motango / bonene','Etuluku / ndako','Eloko, botali to makanisi','Lolenge','Etuluku','Motango (USD)','Liyebisi / référence','Eloko','Ntalo (USD)','Motango oyo etikali','Motɛki / ferme','Ndimbola','Kombo ya client','Eloko / ferme oyo etali','Litatoli to makanisi','Nsango na yo'],buttons:{saveFarm:'Bomba ferme',addAnimal:'Bomba bolandi',addFinance:'Bakisa na lisolo',addProduct:'Tinda eloko na zando',addReview:'Tinda litatoli',sendMessage:'Tinda',getLocation:'Luka esika na GPS',startTracking:'Fungola bolandi mpo na session oyo',stopTracking:'Kanga bolandi',analyzeImage:'Bongisa botali'}},
- bem:{nav:['Ichibukisho','Ifamu yandi','Imfuyo na bumi','Indalama','Icitolo','Abakashi na amashiwi','Ukufika','Amashiwi','Umwafwilishi wa AI','Imilimo'],h1:'Mwaiseni ku VolaConnect',h2:['Umulimo wa ifamu','Imfuyo, imitundu na bumi','Amabuku ya ndalama ya ifamu','Icitolo ca fipasho fya nkoko','Abakashi, amashiwi na ubunte','Ukufika na icifulo ca ifamu','Ukulanshanya','Umwafwilishi wa AI wa bulimi','Imilimo na ukupususha'],labels:['Ishina lya ifamu','Umupashi wa milimo','Ubushiku bwa mfuyo','Umubala wa ino nshita','Aderesi / icifulo','Ubushiku bwa mulimo','Ubushiku','Umubala / ubunono','Umulwi / inanda','Icipasho, ukulolesha nangu amashiwi','Ubushiku','Umulungu','Indalama (USD)','Ilyashi / reference','Icipasho','Umulilo (USD)','Umubala uuli','Umushitishi / ifamu','Ukulondolola','Ishina lya mukashitisha','Icipasho / ifamu','Ubufumya nangu amashiwi','Ubutumwa bwenu'],buttons:{saveFarm:'Sungila ifamu',addAnimal:'Sungila ukulondolola',addFinance:'Bika mu malembelo',addProduct:'Langa icipasho',addReview:'Langa ubunte',sendMessage:'Tumina',getLocation:'Sanga GPS yandi',startTracking:'Tendeka ukulondolola muli iyi nshita',stopTracking:'Imya ukulondolola',analyzeImage:'Lungika ukupima'}}
-};
+ bem:{nav:['Ichibukisho','Ifamu yandi','Imfuyo na bumi','Indalama','Icitolo','Abakashi na amashiwi','Ukufika','Amashiwi','Umwafwilishi wa AI','Imilimo'],h1:'Mwaiseni ku VolaConnect',h2:['Umulimo wa ifamu','Imfuyo, imitundu na bumi','Amabuku ya ndalama ya ifamu','Icitolo ca fipasho fya nkoko','Abakashi, amashiwi na ubunte','Ukufika na icifulo ca ifamu','Ukulanshanya','Umwafwilishi wa AI wa bulimi','Imilimo na ukupususha'],labels:['Ishina lya ifamu','Umupashi wa milimo','Ubushiku bwa mfuyo','Umubala wa ino nshita','Aderesi / icifulo','Ubushiku bwa mulimo','Ubushiku','Umubala / ubunono','Umulwi / inanda','Icipasho, ukulolesha nangu amashiwi','Ubushiku','Umulungu','Indalama (USD)','Ilyashi / reference','Icipasho','Umulilo (USD)','Umubala uuli','Umushitishi / ifamu','Ukulondolola','Ishina lya mukashitisha','Icipasho / ifamu','Ubufumya nangu amashiwi','Ubutumwa bwenu'],buttons:{saveFarm:'Sungila ifamu',addAnimal:'Sungila ukulondolola',addFinance:'Bika mu malembelo',addProduct:'Langa icipasho',addReview:'Langa ubunte',sendMessage:'Tumina',getLocation:'Sanga GPS yandi',startTracking:'Tendeka ukulondolola muli iyi nshita',stopTracking:'Imya ukulondolola',analyzeImage:'Lungika ukupima'}}};
 function applyLanguage(lang){lang=LANGS[lang]?lang:'fr';localStorage.setItem('vc_language',lang);document.documentElement.lang=lang;const t=LANGS[lang];document.querySelectorAll('#nav button').forEach((b,i)=>{if(t.nav[i])b.textContent=b.textContent.replace(/^.*?(?=\s)/,'')?b.textContent.replace(/(?<=\s).*/,t.nav[i]):t.nav[i]});const h1=document.querySelector('#dashboard h1');if(h1)h1.textContent=t.h1;document.querySelectorAll('section.section > h2').forEach((el,i)=>{if(t.h2[i])el.textContent=el.textContent.replace(/^[^A-Za-zÀ-ÿ]+/,'')?el.textContent.replace(/(?<=\s).*/,t.h2[i]):t.h2[i]});let labelIndex=0;document.querySelectorAll('label').forEach(el=>{if(el.closest('#admin')||el.closest('header'))return;if(t.labels[labelIndex])el.textContent=t.labels[labelIndex];labelIndex++});const fnMap={saveFarm:'saveFarm',addAnimal:'addAnimal',addFinance:'addFinance',addProduct:'addProduct',addReview:'addReview',sendMessage:'sendMessage',getLocation:'getLocation',startTracking:'startTracking',stopTracking:'stopTracking',analyzeImage:'analyzeImage'};for(const [key,fn] of Object.entries(fnMap)){const el=document.querySelector(`[onclick^="${fn}("]`);if(el&&t.buttons[key])el.textContent=t.buttons[key]} }
 const languageSelect=document.getElementById('languageSelect');languageSelect.value=localStorage.getItem('vc_language')||'fr';languageSelect.addEventListener('change',()=>applyLanguage(languageSelect.value));applyLanguage(languageSelect.value);
 const API_DEFAULT='https://volaconnect-api.onrender.com';
-function apiRoot(){
- const field=document.getElementById('apiBase');
- return ((field?.value || localStorage.getItem('vc_api_base') || API_DEFAULT).trim()).replace(/\/+$/,'');
-}
+function apiRoot(){const field=document.getElementById('apiBase');
+ return ((field?.value || localStorage.getItem('vc_api_base') || API_DEFAULT).trim()).replace(/\/+$/,'');}
 function cloudMessage(s){const el=document.getElementById('cloudStatus');if(el)el.textContent=s}
 function cloudHeaders(){return {'Content-Type':'application/json','Authorization':'Bearer '+sessionStorage.getItem('vc_token')}}
 async function cloudRequest(path,options={}){const base=apiRoot();if(!base)throw new Error('Configurez d’abord l’adresse HTTPS de votre API.');localStorage.setItem('vc_api_base',base);const r=await fetch(base+path,{...options,headers:{...cloudHeaders(),...(options.headers||{})}});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||('Erreur serveur '+r.status));return d}
 async function createCloudAccount(){try{const name=document.getElementById('accountName').value.trim(),email=document.getElementById('accountEmail').value.trim(),password=document.getElementById('accountPassword').value;if(!name||!email||password.length<12)throw new Error('Nom, e-mail et mot de passe de 12 caractères minimum requis.');localStorage.setItem('vc_api_base',apiRoot());const r=await fetch(apiRoot()+'/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fullName:name,email,password,role:'farmer'})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Inscription impossible');sessionStorage.setItem('vc_token',d.token);cloudMessage('Compte créé et connecté : '+d.user.email);toast('Compte VolaConnect créé.');await syncCloudNow()}catch(e){cloudMessage(e.message);toast(e.message)}}
 async function loginCloudAccount(){try{const email=document.getElementById('accountEmail').value.trim(),password=document.getElementById('accountPassword').value;if(!email||!password)throw new Error('Saisissez votre e-mail et votre mot de passe.');localStorage.setItem('vc_api_base',apiRoot());const r=await fetch(apiRoot()+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Connexion impossible');sessionStorage.setItem('vc_token',d.token);cloudMessage('Connecté : '+d.user.email);toast('Connexion réussie.');await syncCloudNow()}catch(e){cloudMessage(e.message);toast(e.message)}}
+function mergeCloudData(data){const base=emptyDB();return {...base,...(data||{}),
+    farm:{
+      ...base.farm,
+      ...(data?.farm||{})},
+    settings:{
+      ...base.settings,
+      ...(data?.settings||{}) a}};}
 async function syncCloudNow(){
   try {
     if(!sessionStorage.getItem('vc_token'))
@@ -477,37 +480,36 @@ async function syncCloudNow(){
     const dirty = localStorage.getItem('vc_dirty') === '1';
     const knownVersion = Number(localStorage.getItem('vc_cloud_version') || 0);
     const remoteVersion = Number(remote.version || 0);
-    const localHasData = !!(
-  db.farm?.name ||
+    const localHasData = !!(Object.values(db.farm||{}).some(v=>v!==null&&v!=="") ||
   (db.animals||[]).length ||
   (db.livestock||[]).length ||
   (db.equipment||[]).length ||
+  (db.incubator||[]).length ||
   (db.clients||[]).length ||
   (db.orders||[]).length ||
   (db.finance||[]).length ||
   (db.products||[]).length ||
   (db.reviews||[]).length ||
   (db.messages||[]).length ||
-  (db.notifications||[]).length);
+  (db.notifications||[]).length ||
+  (db.boundary||[]).length ||
+  !!db.gps);
     // Cas 1 : les données locales sont déjà synchronisées.
     if(!dirty && remoteVersion > 0 && remoteVersion === knownVersion){
       cloudMessage('Vos données sont déjà synchronisées. Version cloud ' + remoteVersion + '.');
-      return;
-    }
+      return;}
     // Cas 2 : le cloud possède une version plus récente.
     if(remoteVersion > 0 && remote.data && !dirty && remoteVersion !== knownVersion){
       if(localHasData && !confirm('Une nouvelle sauvegarde cloud existe. Télécharger cette version ?')){
         cloudMessage('Synchronisation annulée. Vos données locales sont conservées.');
-        return;
-      }
-      db = {...emptyDB(), ...remote.data};
+        return;}
+      db = mergeCloudData(remote.data);
       localStorage.setItem(KEY, JSON.stringify(db));
       localStorage.setItem('vc_cloud_version', String(remoteVersion));
       localStorage.removeItem('vc_dirty');
       render();
       cloudMessage('Sauvegarde cloud téléchargée. Version ' + remoteVersion + '.');
-      return;
-    }
+      return;}
     // Cas 3 : aucune donnée locale, mais une sauvegarde cloud existe.
     if(remoteVersion > 0 && remote.data && dirty && !localHasData){
       db = {...emptyDB(), ...remote.data};
@@ -516,8 +518,7 @@ async function syncCloudNow(){
       localStorage.removeItem('vc_dirty');
       render();
       cloudMessage('Sauvegarde cloud téléchargée.');
-      return;
-    }
+      return;}
     // Cas 4 : conflit entre les modifications locales et le cloud.
     if(dirty && remoteVersion !== knownVersion && localHasData){
       if(remoteVersion > 0 && remote.data && confirm('Le cloud a changé. Télécharger la dernière sauvegarde ?')){
