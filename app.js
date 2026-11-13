@@ -140,9 +140,24 @@ function addAnimal(){
   ["animalQty","animalBatch","animalProduct","animalNote","animalNextDate"].forEach(id=>{
     document.getElementById(id).value="";});
   toast("Suivi sanitaire enregistré avec succès.");}
-function addLivestock(){
-  const qty=Number(val("livestockQty"));
-  const species=val("livestockSpecies");
+function editLivestock(id){const animal=db.livestock.find(x=>Number(x.id)===Number(id));if(!animal){return toast("Fiche du cheptel introuvable.");}editingLivestockId=animal.id;
+  document.getElementById("livestockSpecies").value=animal.species||"Poulet";
+  document.getElementById("livestockCategory").value=animal.category||"Autres";
+  document.getElementById("livestockQty").value=animal.qty||"";
+  document.getElementById("livestockBatch").value=animal.batch||"";
+  document.getElementById("livestockOrigin").value=animal.origin||"";
+  document.getElementById("livestockDate").value=animal.date||"";
+  document.getElementById("livestockNote").value=animal.note||"";
+const button=document.querySelector(
+    '#animals button[onclick="addLivestock()"]');
+  if(button){
+    button.textContent="Enregistrer les modifications";}
+  document.getElementById("livestockQty").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });toast("Modifiez les informations puis enregistrez.");}
+function deleteLivestock(id){const animal=db.livestock.find(x=>Number(x.id)===Number(id));if(!animal){return toast("Fiche du cheptel introuvable.");}if(!confirm("Voulez-vous vraiment supprimer cette fiche du cheptel ?")){return;}db.livestock=db.livestock.filter(x=>Number(x.id)!==Number(id));persist("Fiche du cheptel supprimée");toast("Fiche supprimée avec succès.");}
+function addLivestock(){const qty=Number(val("livestockQty"));const species=val("livestockSpecies");
   const category=val("livestockCategory");
   if(!Number.isInteger(qty)||qty<1){
     return toast("Indiquez un nombre entier d'animaux supérieur à zéro.");}
@@ -174,8 +189,7 @@ function addEquipment(){
     qty:qty,
     state:val("equipmentState"),
     date:val("equipmentDate")||new Date().toISOString().slice(0,10),
-    note:val("equipmentNote")
-  });
+    note:val("equipmentNote")});
   persist("Matériel enregistré");
   ["equipmentName","equipmentQty","equipmentNote"].forEach(id=>{
     document.getElementById(id).value="";});
@@ -220,13 +234,11 @@ function addOrder(){
     price:price,
     total:qty*price,
     date:val("orderDate")||new Date().toISOString().slice(0,10),
-    status:val("orderStatus")
-  });
+    status:val("orderStatus")});
   persist("Nouvelle commande enregistrée");
   ["orderClient","orderProduct","orderQty","orderPrice","orderDate"]
     .forEach(id=>document.getElementById(id).value="");
-  toast("Commande enregistrée avec succès.");
-    }
+  toast("Commande enregistrée avec succès.");}
 function addReview(){if(!val("reviewName")||!val("reviewText"))return toast("Nom et témoignage requis.");db.reviews.unshift({name:val("reviewName"),product:val("reviewProduct"),text:val("reviewText"),at:new Date().toLocaleString("fr-FR")});persist("Témoignage ajouté");toast("Témoignage enregistré.");}
 function sendMessage(){if(!val("chatText"))return;db.messages.push({text:val("chatText"),at:new Date().toLocaleString("fr-FR"),from:"Moi"});document.getElementById("chatText").value="";persist("Message local enregistré");}
 function callInfo(kind){toast("Appel "+kind+" : serveur WebRTC non encore configuré.");}
