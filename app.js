@@ -456,15 +456,8 @@ function cloudHeaders(){return {'Content-Type':'application/json','Authorization
 async function cloudRequest(path,options={}){const base=apiRoot();if(!base)throw new Error('Configurez d’abord l’adresse HTTPS de votre API.');localStorage.setItem('vc_api_base',base);const r=await fetch(base+path,{...options,headers:{...cloudHeaders(),...(options.headers||{})}});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||('Erreur serveur '+r.status));return d}
 async function createCloudAccount(){try{const name=document.getElementById('accountName').value.trim(),email=document.getElementById('accountEmail').value.trim(),password=document.getElementById('accountPassword').value;if(!name||!email||password.length<12)throw new Error('Nom, e-mail et mot de passe de 12 caractères minimum requis.');localStorage.setItem('vc_api_base',apiRoot());const r=await fetch(apiRoot()+'/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fullName:name,email,password,role:'farmer'})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Inscription impossible');sessionStorage.setItem('vc_token',d.token);cloudMessage('Compte créé et connecté : '+d.user.email);toast('Compte VolaConnect créé.');await syncCloudNow()}catch(e){cloudMessage(e.message);toast(e.message)}}
 async function loginCloudAccount(){try{const email=document.getElementById('accountEmail').value.trim(),password=document.getElementById('accountPassword').value;if(!email||!password)throw new Error('Saisissez votre e-mail et votre mot de passe.');localStorage.setItem('vc_api_base',apiRoot());const r=await fetch(apiRoot()+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Connexion impossible');sessionStorage.setItem('vc_token',d.token);cloudMessage('Connecté : '+d.user.email);toast('Connexion réussie.');await syncCloudNow()}catch(e){cloudMessage(e.message);toast(e.message)}}
-function mergeCloudData(data){const base=emptyDB();return {...base,...(data||{}),
-    farm:{
-      ...base.farm,
-      ...(data?.farm||{})},
-    settings:{
-      ...base.settings,
-      ...(data?.settings||{}) a}};}
-async function syncCloudNow(){
-  try {
+function mergeCloudData(data){const base=emptyDB();return {...base,...(data||{}),farm:{...base.farm,...(data?.farm||{})},settings:{...base.settings,...(data?.settings||{})}};                                                                                                                                                                                                                           }
+async function syncCloudNow(){try {
     if(!sessionStorage.getItem('vc_token'))
       throw new Error('Connectez-vous à votre compte avant la synchronisation.');
     if(!navigator.onLine)
