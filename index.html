@@ -1,611 +1,351 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#176b45"><meta name="description" content="VolaConnect — plateforme de gestion et de commercialisation avicole">
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
-<title>VolaConnect — Élevage connecté</title>
-<style>
-:root{--green:#176b45;--green2:#e8f4ed;--ink:#17251d;--muted:#65746b;--line:#e2e9e4;--bg:#f5f8f6;--white:#fff;--orange:#f1a33c;--red:#c94d4d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,Arial,sans-serif}
-header{background:linear-gradient(120deg,#104b32,#208354);color:white;padding:18px max(18px,calc((100vw - 1200px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
-.brand{font-size:22px;font-weight:850;letter-spacing:.2px}.brand span{color:#b9f0cd}.sub{font-size:12px;opacity:.85}
-.topright{display:flex;align-items:center;gap:10px}.pill{border:1px solid #ffffff55;border-radius:30px;padding:6px 11px;font-size:12px}
-.layout{max-width:1200px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:220px 1fr;gap:20px}
-nav{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;height:max-content;position:sticky;top:88px}
-nav button{display:flex;width:100%;border:0;background:transparent;padding:11px 12px;border-radius:10px;text-align:left;color:#405047;cursor:pointer;font-weight:650;gap:9px}
-nav button.active,nav button:hover{background:var(--green2);color:var(--green)}
-main{min-width:0}.hero{background:linear-gradient(115deg,#e3f3e9,#fff);border:1px solid #d4e8da;border-radius:18px;padding:22px;margin-bottom:16px}
-h1{font-size:25px;margin:0 0 5px}.muted{color:var(--muted)}.small{font-size:12px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}
-.card{background:white;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px #153d2410}
-.metric{font-size:25px;font-weight:800;margin-top:5px}.metric-label{font-size:12px;color:var(--muted)}
-.section{display:none}.section.active{display:block}.section h2{margin:4px 0 14px;font-size:21px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}
-button,.btn{background:var(--green);color:white;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
-button.secondary,.btn.secondary{background:#edf4ef;color:var(--green);border:1px solid #d8e7dc}
-button.danger{background:#fff0f0;color:var(--red);border:1px solid #f2d2d2}
-input,select,textarea{width:100%;padding:10px 11px;border:1px solid #d9e2dc;border-radius:9px;background:white;font:inherit;color:var(--ink)}
-label{font-size:12px;font-weight:700;color:#53645a;display:block;margin:9px 0 5px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.formgrid .full{grid-column:1/-1}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase}
-.tag{display:inline-block;padding:3px 8px;border-radius:20px;background:var(--green2);color:var(--green);font-size:11px;font-weight:700}
-.product{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:12px 0}
-.product:last-child{border:0}.notice{padding:11px 13px;background:#fff7e9;border:1px solid #f4dfb9;border-radius:10px;color:#76531d;font-size:13px}
-#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#173d2b;color:white;padding:10px 16px;border-radius:20px;display:none;z-index:10}
-.mapbox{height:240px;background:linear-gradient(135deg,#e3eee6,#d4e4d9);border-radius:12px;display:grid;place-items:center;text-align:center;padding:20px;color:#42634e}
-footer{text-align:center;color:#7b8980;font-size:11px;padding:25px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static;display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto}.grid{grid-template-columns:repeat(2,1fr)}header{padding:14px 16px}}
-@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}.hero{padding:16px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#176b45">
+  <meta name="description" content="VolaConnect AGRIVOLAILLE : gestion d'élevage et marché de viande fraîche.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>VolaConnect | AGRIVOLAILLE</title>
+  <style>:root {
+      --green:#176b45; --green-dark:#105236; --green-light:#eaf5ee;
+      --bg:#f4f7f5; --white:#fff; --text:#20342a; --muted:#718078;
+      --border:#dce7df; --red:#b33b32;}
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); }
+    header { background:var(--green); color:white; padding:20px; }
+    .header-inner { max-width:1250px; margin:auto; display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; }
+    .brand { font-size:25px; font-weight:800; }
+    .company { font-size:13px; letter-spacing:2px; margin-top:4px; }
+    .slogan { font-size:13px; margin-top:8px; max-width:650px; line-height:1.5; }
+    #syncStatus { display:inline-block; padding:8px 12px; border-radius:20px; background:#ffffff20; font-size:12px; }
+    nav { background:white; border-bottom:1px solid var(--border); padding:10px; display:flex; gap:7px; flex-wrap:wrap; justify-content:center; position:sticky; top:0; z-index:10; }
+    nav button { background:#edf4ef; color:var(--green-dark); padding:10px 13px; border:0; border-radius:8px; font-weight:600; cursor:pointer; }
+    nav button:hover,nav button.active { background:var(--green); color:white; }
+    main { max-width:1250px; margin:22px auto; padding:0 15px 40px; }
+    .section { display:none; }
+    .section.active { display:block; }
+    h1 { font-size:26px; }
+    h2 { color:var(--green-dark); font-size:21px; margin-top:0; }
+    h3 { font-size:16px; color:var(--green-dark); }
+    .card { background:white; border:1px solid var(--border); border-radius:12px; padding:17px; margin-bottom:15px; box-shadow:0 2px 8px #153c2510; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+    .stat { background:white; border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .stat strong { display:block; color:var(--green); font-size:25px; margin-top:8px; }
+    label { display:block; font-size:13px; font-weight:600; margin:12px 0 5px; }
+    input,select,textarea { width:100%; padding:11px; border:1px solid #ccd9d0; border-radius:8px; font:inherit; background:white; color:var(--text); }
+    textarea { min-height:85px; resize:vertical; }
+    button { border:0; background:var(--green); color:white; padding:11px 15px; border-radius:8px; cursor:pointer; font-weight:600; margin:5px 4px 5px 0; }
+    button:hover { background:var(--green-dark); }
+    button.secondary { background:#e9f1ec; color:var(--green-dark); }
+    button.danger { background:var(--red); color:white; }
+    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .muted,.small { color:var(--muted); font-size:12px; }
+    .tag { display:inline-block; background:var(--green-light); color:var(--green-dark); border-radius:20px; padding:4px 9px; font-size:12px; }
+    .notice { padding:13px; border-radius:8px; background:#fff7df; border:1px solid #f0dfad; line-height:1.6; }
+    .product { display:flex; justify-content:space-between; gap:15px; padding:14px; background:white; border:1px solid var(--border); border-radius:10px; margin-bottom:10px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { padding:10px; text-align:left; border-bottom:1px solid var(--border); }
+    th { background:var(--green-light); }
+    .table-wrap { overflow-x:auto; }
+    #mapBox { min-height:100px; padding:15px; background:var(--green-light); border-radius:10px; line-height:1.6; }
+    footer { text-align:center; padding:20px; color:var(--muted); font-size:12px; }
+    @media(max-width:600px) {
+      header { padding:15px; } .brand { font-size:21px; }
+      nav { position:static; justify-content:flex-start; }
+      nav button { font-size:12px; padding:9px; }
+      main { margin:15px auto; } .product { flex-direction:column; }}
+  </style>
 </head>
 <body>
-<header><div><div class="brand">🐓 Vola<span>Connect</span></div><div class="sub">Produire local • Connecter • Développer</div></div><div class="topright"><label for="languageSelect" style="color:white;margin:0">Langue</label><select id="languageSelect" aria-label="Language" style="width:auto;padding:6px 8px;border-radius:20px"><option value="fr">Français</option><option value="en">English</option><option value="sw">Kiswahili</option><option value="ln">Lingála</option><option value="bem">Bemba</option></select><span class="pill" id="syncStatus">● Mode local</span><span class="pill">Lubumbashi · RDC</span></div></header>
-<div class="layout">
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="brand">🐔 VolaConnect</div>
+      <div class="company">AGRIVOLAILLE</div>
+      <div class="slogan">Ensemble, connectons les éleveurs, les producteurs et les consommateurs autour d'une viande fraîche, saine et de qualité.</div>
+    </div>
+    <div>
+      <div id="syncStatus">● Connexion en cours...</div>
+      <p>
+        <label for="languageSelect" style="color:white">Langue</label>
+        <select id="languageSelect">
+          <option value="fr">Français</option><option value="en">English</option>
+          <option value="sw">Kiswahili</option><option value="ln">Lingála</option>
+          <option value="bem">Bemba</option>
+        </select>
+      </p>
+    </div>
+  </div>
+</header>
 <nav id="nav">
-<button class="active" data-page="dashboard">⌂ Tableau de bord</button>
-<button data-page="farm">🏡 Ma ferme</button>
-<button data-page="animals">🐔 Cheptel</button>
-<button data-page="health">🩺 Santé & vaccinations</button>
-<button data-page="equipment">🧰 Matériels</button>
-<button data-page="incubator">🐣 Couveuse</button>
-<button data-page="finance">💰 Finances</button>
-<button data-page="market">🛒 Marché</button>
-<button data-page="clients">👥 Clients & avis</button>
-<button data-page="location">📍 Localisation</button>
-<button data-page="messages">💬 Messages</button>
-<button data-page="notifications">🔔 Notifications
-<span id="notificationCount" class="tag" style="display:none">0</span>
-</button>
-<button data-page="ai">✨ Assistant IA</button>
-<button data-page="admin">⚙ Administration</button>
+  <button data-page="dashboard" class="active">🏠 Tableau de bord</button>
+  <button data-page="farm">🏡 Ma ferme</button>
+  <button data-page="livestock">🐔 Cheptel</button>
+  <button data-page="health">🩺 Santé & vaccinations</button>
+  <button data-page="equipment">🛠 Matériels</button>
+  <button data-page="incubator">🐣 Couveuse</button>
+  <button data-page="finance">💰 Finances</button>
+  <button data-page="market">🛒 Marché</button>
+  <button data-page="clients">👥 Clients & avis</button>
+  <button data-page="location">📍 Localisation</button>
+  <button data-page="messages">✉️ Messages</button>
+  <button data-page="notifications">🔔 Notifications</button>
+  <button data-page="ai">🤖 Assistant IA</button>
+  <button data-page="admin">⚙️ Administration</button>
 </nav>
 <main>
-<section class="section active" id="dashboard">
-<div class="hero"><div class="small tag">PLATEFORME AVICOLE · VERSION PILOTE</div><h1>Bienvenue sur VolaConnect</h1><div class="muted">Gérez votre élevage, suivez vos opérations et développez votre marché depuis un seul espace.</div><div class="row" style="margin-top:14px"><button onclick="showPage('farm')">Configurer ma ferme</button><button class="secondary" onclick="showPage('market')">Voir le marché</button></div></div>
-<div class="grid">
-<div class="card"><div class="metric-label">Animaux déclarés</div><div class="metric" id="dashAnimals">0</div><div class="small muted">Effectif renseigné dans votre ferme</div></div>
-<div class="card"><div class="metric-label">Suivis enregistrés</div><div class="metric" id="dashRecords">0</div><div class="small muted">Santé et production</div></div>
-<div class="card"><div class="metric-label">Dépenses enregistrées</div><div class="metric" id="dashExpenses">0 $</div><div class="small muted">Données saisies localement</div></div>
-<div class="card"><div class="metric-label">Revenus enregistrés</div><div class="metric" id="dashIncome">0 $</div><div class="small muted">Données saisies localement</div></div>
-</div>
-<div class="grid" style="grid-template-columns:1.3fr 1fr">
-<div class="card"><h3>Activités récentes</h3><div id="recentActivity" class="muted small">Aucune activité enregistrée. Commencez par ajouter une opération.</div></div>
-<div class="card"><h3>État de synchronisation</h3><p class="muted small">Les actions sont conservées sur cet appareil lorsque la connexion est faible. Elles seront synchronisées lorsqu'un serveur sera configuré et accessible.</p><span class="tag" id="queueCount">0 opération en attente</span></div>
-</div>
-</section>
-<section class="section" id="farm">
-  <h2>🏡 Ma ferme</h2>
-  <div class="card">
-    <h3>Identité de l'exploitation</h3>
-    <div class="formgrid">
-      <div>
-        <label>Nom de la ferme</label>
-        <input id="farmName" placeholder="Nom de l'exploitation">
-      </div>
-      <div>
-        <label>Nom du propriétaire</label>
-        <input id="farmOwner" placeholder="Nom complet">
-      </div>
-      <div>
-        <label>Responsable de la ferme</label>
-        <input id="farmManager" placeholder="Nom du responsable">
-      </div>
-      <div>
-        <label>Téléphone</label>
-        <input id="farmPhone" type="tel" placeholder="+243...">
-      </div>
-      <div>
-        <label>Adresse e-mail</label>
-        <input id="farmEmail" type="email">
-      </div>
-      <div>
-        <label>Type d'élevage</label>
-        <select id="farmType">
-          <option value="Mixte">Poulets de chair et pondeuses</option>
-          <option value="Chair">Poulets de chair</option>
-          <option value="Pondeuses">Pondeuses</option>
-          <option value="Autre">Autre élevage</option>
-        </select>
-      </div>
+  <section id="dashboard" class="section active">
+    <h1>Bienvenue sur VolaConnect</h1>
+    <p class="muted">Votre espace de gestion et de développement avicole.</p>
+    <div class="grid">
+      <div class="stat">Effectif déclaré<strong id="dashAnimals">0</strong></div>
+      <div class="stat">Suivis sanitaires<strong id="dashRecords">0</strong></div>
+      <div class="stat">Revenus<strong id="dashIncome">0.00 $</strong></div>
+      <div class="stat">Dépenses<strong id="dashExpenses">0.00 $</strong></div>
+      <div class="stat">Solde<strong id="balanceTotal">0.00 $</strong></div>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>Localisation de la ferme</h3>
-    <div class="formgrid">
-      <div><label>Province</label><input id="farmProvince"></div>
-      <div><label>Ville / territoire</label><input id="farmCity"></div>
-      <div><label>Commune</label><input id="farmCommune"></div>
-      <div><label>Quartier</label><input id="farmNeighborhood"></div>
-      <div class="full"><label>Adresse complète</label><input id="farmAddress"></div>
+    <div class="card" style="margin-top:15px"><h2>Ma ferme</h2><p id="farmSaved">Aucune ferme configurée.</p></div>
+    <div class="card"><h2>Activités récentes</h2><div id="recentActivity">Aucune activité enregistrée.</div></div>
+  </section>
+  <section id="farm" class="section">
+    <h2>🏡 Gestion de ma ferme</h2>
+    <div class="card">
+      <div class="grid">
+        <div><label for="farmName">Nom de la ferme</label><input id="farmName"></div>
+        <div><label for="farmOwner">Propriétaire</label><input id="farmOwner"></div>
+        <div><label for="farmManager">Responsable</label><input id="farmManager"></div>
+        <div><label for="farmPhone">Téléphone</label><input id="farmPhone" type="tel"></div>
+        <div><label for="farmEmail">Adresse e-mail</label><input id="farmEmail" type="email"></div>
+        <div><label for="farmType">Type d'élevage</label><input id="farmType"></div>
+        <div><label for="farmProvince">Province</label><input id="farmProvince"></div>
+        <div><label for="farmCity">Ville / territoire</label><input id="farmCity"></div>
+        <div><label for="farmCommune">Commune</label><input id="farmCommune"></div>
+        <div><label for="farmNeighborhood">Quartier</label><input id="farmNeighborhood"></div>
+        <div><label for="farmAddress">Adresse complète</label><input id="farmAddress"></div>
+        <div><label for="farmArea">Superficie</label><input id="farmArea" type="number" min="0"></div>
+        <div><label for="farmCapacity">Capacité d'accueil</label><input id="farmCapacity" type="number" min="0"></div>
+        <div><label for="farmCount">Effectif actuel</label><input id="farmCount" type="number" min="0"></div>
+        <div><label for="farmBuildings">Bâtiments / poulaillers</label><input id="farmBuildings"></div>
+        <div><label for="farmCreationDate">Date de création</label><input id="farmCreationDate" type="date"></div>
+      </div>
+      <label for="farmDescription">Description de l'exploitation</label><textarea id="farmDescription"></textarea>
+      <button onclick="saveFarm()">Enregistrer la ferme</button>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>Capacité et infrastructures</h3>
-<div class="formgrid">
-  <div>
-    <label>Superficie de la ferme (m²)</label>
-    <input id="farmArea" type="number" min="0">
-  </div>
-  <div>
-    <label>Capacité maximale d'accueil</label>
-    <input id="farmCapacity" type="number" min="0">
-  </div>
-  <div>
-    <label>Effectif actuel d'animaux</label>
-    <input id="farmCount" type="number" min="0">
-  </div>
-  <div>
-    <label>Nombre de bâtiments</label>
-    <input id="farmBuildings" type="number" min="0">
-  </div>
-  <div>
-    <label>Date de création</label>
-    <input id="farmCreationDate" type="date">
-  </div>
-  <div class="full">
-    <label>Description de la ferme</label>
-    <textarea id="farmDescription" rows="3"></textarea>
-  </div>
-  <div class="full">
-    <button onclick="saveFarm()">Enregistrer les informations de la ferme</button>
-  </div>
-</div>
-</div>
-</div>
-</section>
-<!-- RUBRIQUE 3 : CHEPTEL -->
-<section class="section" id="animals">
-  <h2>🐔 Cheptel</h2>
-  <div class="card">
-    <h3>Enregistrer des animaux</h3>
-    <div class="formgrid">
-      <div>
-        <label>Espèce</label>
-        <select id="livestockSpecies">
-          <option value="Poulet">Poulet</option>
-          <option value="Canard">Canard</option>
-          <option value="Dinde">Dinde</option>
-          <option value="Pintade">Pintade</option>
-          <option value="Caille">Caille</option>
-          <option value="Autre">Autre</option>
-        </select>
+  </section>
+  <section id="livestock" class="section">
+    <h2>🐔 Gestion du cheptel</h2>
+    <div class="card">
+      <h3>Enregistrer un lot d'animaux</h3>
+      <div class="grid">
+        <div><label for="livestockSpecies">Espèce</label><input id="livestockSpecies" placeholder="Poulet, canard..."></div>
+        <div><label for="livestockCategory">Catégorie</label><input id="livestockCategory" placeholder="Chair, ponte..."></div>
+        <div><label for="livestockQty">Effectif</label><input id="livestockQty" type="number" min="1"></div>
+        <div><label for="livestockBatch">Bande / bâtiment</label><input id="livestockBatch"></div>
+        <div><label for="livestockOrigin">Origine</label><input id="livestockOrigin"></div>
+        <div><label for="livestockDate">Date d'entrée</label><input id="livestockDate" type="date"></div>
       </div>
-      <div>
-        <label>Catégorie</label>
-        <select id="livestockCategory">
-          <option value="Poussins">Poussins</option>
-          <option value="Poulettes">Poulettes</option>
-          <option value="Pondeuses">Pondeuses</option>
-          <option value="Poulets de chair">Poulets de chair</option>
-          <option value="Reproducteurs">Reproducteurs</option>
-          <option value="Adultes">Adultes</option>
-          <option value="Autres">Autres</option>
-        </select>
-      </div>
-      <div>
-        <label>Nombre d'animaux</label>
-        <input id="livestockQty" type="number" min="1">
-      </div>
-      <div>
-        <label>Bande / bâtiment</label>
-        <input id="livestockBatch" placeholder="Ex. Bande A">
-      </div>
-      <div>
-        <label>Origine / fournisseur</label>
-        <input id="livestockOrigin" placeholder="Fournisseur ou origine">
-      </div>
-      <div>
-        <label>Date d'acquisition</label>
-        <input id="livestockDate" type="date">
-      </div>
-      <div class="full">
-        <label>Observations</label>
-        <textarea id="livestockNote" rows="2"></textarea>
-      </div>
-      <div class="full">
-        <button onclick="addLivestock()">Enregistrer les animaux</button>
-      </div>
+      <label for="livestockNote">Observations</label><textarea id="livestockNote"></textarea>
+      <button onclick="addLivestock()">Enregistrer le lot</button>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📊 Effectif du cheptel</h3>
-    <div id="livestockTotal">0 animal</div>
-    <div id="livestockList" class="muted small">
-      Aucun animal enregistré.
+    <div class="card"><h3>Effectif enregistré : <span id="livestockTotal">0 animal(aux)</span></h3><div id="livestockList">Aucun animal enregistré.</div></div>
+  </section>
+  <section id="health" class="section">
+    <h2>🩺 Santé et vaccinations</h2>
+    <div class="card">
+      <h3>Enregistrer une intervention sanitaire</h3>
+      <div class="grid">
+        <div><label for="animalKind">Type d'opération</label><input id="animalKind" placeholder="Vaccination, traitement..."></div>
+        <div><label for="animalDate">Date</label><input id="animalDate" type="date"></div>
+        <div><label for="animalNextDate">Prochaine intervention</label><input id="animalNextDate" type="date"></div>
+        <div><label for="animalQty">Effectif concerné</label><input id="animalQty" type="number" min="0"></div>
+        <div><label for="animalBatch">Bande / bâtiment</label><input id="animalBatch"></div>
+        <div><label for="animalProduct">Vaccin / médicament / produit</label><input id="animalProduct"></div>
+      </div>
+      <label for="animalNote">Observations</label><textarea id="animalNote"></textarea>
+      <button onclick="addAnimal()">Enregistrer le suivi sanitaire</button>
     </div>
-  </div>
-</section>
-<!-- RUBRIQUE 4 : SANTÉ ET VACCINATIONS -->
-<section class="section" id="health">
-  <h2>🩺 Santé & vaccinations</h2>
-
-  <div class="card">
-    <h3>Enregistrer une opération sanitaire</h3>
-
-    <div class="formgrid">
-      <div>
-        <label>Type d'opération</label>
-        <select id="animalKind">
-          <option>Vaccination</option>
-          <option>Maladie</option>
-          <option>Symptômes</option>
-          <option>Diagnostic vétérinaire</option>
-          <option>Traitement</option>
-          <option>Mortalité</option>
-          <option>Visite vétérinaire</option>
-        </select>
+    <div class="card"><h3>Historique sanitaire</h3><div id="animalList">Aucun suivi sanitaire enregistré.</div></div>
+    <div class="card"><h3>Alertes sanitaires</h3><div id="healthNotifications">Aucune alerte sanitaire pour le moment.</div></div>
+  </section>
+  <section id="equipment" class="section">
+    <h2>🛠 Matériels et équipements</h2>
+    <div class="card">
+      <div class="grid">
+        <div><label for="equipmentCategory">Catégorie</label><input id="equipmentCategory"></div>
+        <div><label for="equipmentName">Nom du matériel</label><input id="equipmentName"></div>
+        <div><label for="equipmentQty">Quantité</label><input id="equipmentQty" type="number" min="0"></div>
+        <div><label for="equipmentState">État</label><select id="equipmentState"><option value="Bon">Bon</option><option value="À réparer">À réparer</option><option value="Hors service">Hors service</option></select></div>
+        <div><label for="equipmentDate">Date d'acquisition</label><input id="equipmentDate" type="date"></div>
       </div>
-      <div>
-        <label>Date de l'opération</label>
-        <input id="animalDate" type="date">
-      </div>
-      <div>
-  <label>Prochaine date de vaccination / intervention</label>
-  <input id="animalNextDate" type="date">
-      </div>
-      <div>
-        <label>Effectif concerné</label>
-        <input id="animalQty" type="number" min="0">
-      </div>
-      <div>
-        <label>Bande / bâtiment</label>
-        <input id="animalBatch" placeholder="Ex. Bande A">
-      </div>
-      <div class="full">
-        <label>Produit, vaccin ou médicament</label>
-        <input id="animalProduct" placeholder="Nom du produit">
-      </div>
-      <div class="full">
-        <label>Observations, symptômes ou diagnostic</label>
-        <textarea id="animalNote" rows="3"></textarea>
-      </div>
-      <div class="full">
-        <button onclick="addAnimal()">Enregistrer le suivi sanitaire</button>
-      </div>
+      <label for="equipmentNote">Observations</label><textarea id="equipmentNote"></textarea>
+      <button onclick="addEquipment()">Enregistrer le matériel</button>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📋 Historique sanitaire</h3>
-    <div id="animalList" class="muted small">
-      Aucun suivi enregistré.
+    <div class="card"><h3>Total : <span id="equipmentTotal">0 matériel</span></h3><div id="equipmentList">Aucun équipement enregistré.</div></div>
+  </section>
+  <section id="incubator" class="section">
+    <h2>🐣 Gestion de la couveuse</h2>
+    <div class="card">
+      <div class="grid">
+        <div><label for="incubatorName">Nom / référence de la couveuse</label><input id="incubatorName"></div>
+        <div><label for="incubatorCapacity">Capacité totale (œufs)</label><input id="incubatorCapacity" type="number" min="0"></div>
+        <div><label for="incubatorSpecies">Espèce</label><input id="incubatorSpecies"></div>
+        <div><label for="incubatorEggs">Œufs en incubation</label><input id="incubatorEggs" type="number" min="0"></div>
+        <div><label for="incubatorOrigin">Origine des œufs</label><input id="incubatorOrigin"></div>
+        <div><label for="incubatorStart">Date de début</label><input id="incubatorStart" type="date"></div>
+        <div><label for="incubatorTemperature">Température (°C)</label><input id="incubatorTemperature" type="number" step="0.1"></div>
+        <div><label for="incubatorHumidity">Humidité (%)</label><input id="incubatorHumidity" type="number" min="0" max="100"></div>
+        <div><label for="incubatorTurning">Retournement</label><input id="incubatorTurning" placeholder="Automatique / manuel"></div>
+      </div>
+      <label for="incubatorNote">Observations</label><textarea id="incubatorNote"></textarea>
+      <button onclick="addIncubator()">Enregistrer l'incubation</button>
     </div>
-  </div>
-</section>
-    <div class="formgrid">
-      <div><label>Superficie (m²)</label><input id="farmArea" type="number" min="0"></div>
-      <div><label>Capacité maximale (animaux)</label><input id="farmCapacity" type="number" min="0"></div>
-      <div><label>Effectif actuel</label><input id="farmCount" type="number" min="0"></div>
-      <div><label>Nombre de bâtiments</label><input id="farmBuildings" type="number" min="0"></div>
-      <div><label>Date de création</label><input id="farmCreationDate" type="date"></div>
-      <div class="full"><label>Description et observations</label><textarea id="farmDescription" rows="3"></textarea></div>
-      <div class="full"><button onclick="saveFarm()">Enregistrer les informations de la ferme</button></div>
+    <div class="card"><h3>Incubations enregistrées</h3><div id="incubatorList">Aucune incubation enregistrée.</div></div>
+  </section>
+  <section id="finance" class="section">
+    <h2>💰 Finances de la ferme</h2>
+    <div class="grid">
+      <div class="stat">Revenus<strong id="incomeTotal">0.00 $</strong></div>
+      <div class="stat">Dépenses<strong id="expenseTotal">0.00 $</strong></div>
     </div>
-    <p id="farmSaved" class="small muted"></p>
-  </div>
-</section>
-<section class="section" id="animals"><h2>🐔 Cheptel, bandes et santé</h2>
-<div class="card">
-  <h3>🐔 Enregistrer des animaux</h3>
-  <div class="formgrid">
-    <div
-      <label>Espèce</label>
-      <select id="livestockSpecies">
-        <option value="Poulet">Poulet</option>
-        <option value="Canard">Canard</option>
-        <option value="Dinde">Dinde</option>
-        <option value="Pintade">Pintade</option>
-        <option value="Caille">Caille</option>
-        <option value="Autre">Autre</option>
-<section class="section" id="equipment">
-  <h2>🧰 Gestion des matériels et équipements</h2>
-  <div class="card">
-    <h3>Enregistrer un équipement</h3>
-    <div class="formgrid">
-      <div>
-        <label>Catégorie</label>
-        <select id="equipmentCategory">
-          <option value="Alimentation">Alimentation</option>
-          <option value="Abreuvement">Abreuvement</option>
-          <option value="Couveuse">Couveuse</option>
-          <option value="Bâtiment">Bâtiment</option>
-          <option value="Nettoyage">Nettoyage</option>
-          <option value="Transport">Transport</option>
-          <option value="Électricité">Électricité</option>
-          <option value="Autre">Autre</option>
-        </select>
+    <div class="card">
+      <h3>Ajouter une opération financière</h3>
+      <div class="grid">
+        <div><label for="finType">Nature</label><select id="finType"><option value="income">Revenu</option><option value="expense">Dépense</option></select></div>
+        <div><label for="finCategory">Catégorie</label><input id="finCategory"></div>
+        <div><label for="finAmount">Montant (USD)</label><input id="finAmount" type="number" min="0" step="0.01"></div>
+        <div><label for="finDate">Date</label><input id="finDate" type="date"></div>
       </div>
-      <div>
-        <label>Désignation du matériel</label>
-        <input id="equipmentName" placeholder="Ex. Mangeoire automatique">
-      </div>
-      <div>
-        <label>Quantité</label>
-        <input id="equipmentQty" type="number" min="1" placeholder="Ex. 20">
-      </div>
-      <div>
-        <label>État du matériel</label>
-        <select id="equipmentState">
-          <option value="Neuf">Neuf</option>
-          <option value="Bon état">Bon état</option>
-          <option value="À réparer">À réparer</option>
-          <option value="Hors service">Hors service</option>
-        </select>
-      </div>
-      <div>
-        <label>Date d'acquisition</label>
-        <input id="equipmentDate" type="date">
-      </div>
-      <div class="full">
-        <label>Observations</label>
-        <textarea id="equipmentNote" rows="2"
-          placeholder="Marque, fournisseur, détails..."></textarea>
-      </div>
-      <div class="full">
-        <button onclick="addEquipment()">Enregistrer le matériel</button>
-      </div>
+      <label for="finNote">Note / référence</label><textarea id="finNote"></textarea>
+      <button onclick="addFinance()">Ajouter à l'historique</button>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📊 Inventaire des équipements</h3>
-    <div id="equipmentTotal">0 équipement</div>
-    <div id="equipmentList" class="muted small">
-      Aucun équipement enregistré.
+    <div class="card"><h3>Historique financier</h3><div class="table-wrap" id="financeList">Aucune opération.</div></div>
+  </section>
+  <section id="market" class="section">
+    <h2>🛒 Marché avicole</h2>
+    <div class="card">
+      <h3>Publier un produit</h3>
+      <div class="grid">
+        <div><label for="prodName">Nom du produit</label><input id="prodName"></div>
+        <div><label for="prodPrice">Prix (USD)</label><input id="prodPrice" type="number" min="0" step="0.01"></div>
+        <div><label for="prodQty">Quantité disponible</label><input id="prodQty" type="number" min="0"></div>
+        <div><label for="prodSeller">Vendeur / ferme</label><input id="prodSeller"></div>
+      </div>
+      <label for="prodDesc">Description du produit</label><textarea id="prodDesc"></textarea>
+      <button onclick="addProduct()">Publier le produit</button>
     </div>
-  </div>
-</section>
-
-<!-- RUBRIQUE 6 : COUVEUSE -->
-
-<section class="section" id="incubator">
-  <h2>🐣 Gestion de la couveuse</h2>
-
-  <div class="card">
-    <h3>Enregistrement d'une incubation</h3>
-    <div class="formgrid">
-      <div>
-        <label>Identifiant de la couveuse</label>
-        <input id="incubatorName" placeholder="Ex. Couveuse A">
+    <div class="card"><h3>Produits disponibles</h3><div id="productList">Aucun produit publié.</div></div>
+  </section>
+  <section id="clients" class="section">
+    <h2>👥 Clients, commandes et avis</h2>
+    <div class="card">
+      <h3>Enregistrer un client</h3>
+      <div class="grid">
+        <div><label for="clientName">Nom du client</label><input id="clientName"></div>
+        <div><label for="clientPhone">Téléphone</label><input id="clientPhone" type="tel"></div>
+        <div><label for="clientAddress">Adresse</label><input id="clientAddress"></div>
       </div>
-      <div>
-        <label>Capacité de la couveuse (œufs)</label>
-        <input id="incubatorCapacity" type="number" min="1">
-      </div>
-      <div>
-        <label>Espèce des œufs</label>
-        <select id="incubatorSpecies">
-          <option value="Poulet">Poulet</option>
-          <option value="Canard">Canard</option>
-          <option value="Dinde">Dinde</option>
-          <option value="Pintade">Pintade</option>
-          <option value="Caille">Caille</option>
-          <option value="Autre">Autre</option>
-        </select>
-      </div>
-      <div>
-       <label>Nombre d'œufs</label>
-        <input id="incubatorEggs" type="number" min="1">
-      </div>
-      <div>
-        <label>Origine des œufs</label>
-        <input id="incubatorOrigin" placeholder="Fournisseur ou provenance">
-      </div>
-      <div>
-        <label>Date de mise en incubation</label>
-        <input id="incubatorStart" type="date">
-      </div>
-      <div>
-        <label>Température (°C)</label>
-        <input id="incubatorTemperature" type="number" step="0.1">
-      </div>
-      <div>
-        <label>Humidité (%)</label>
-        <input id="incubatorHumidity" type="number" min="0" max="100">
-      </div>
-      <div>
-        <label>Retournement des œufs</label>
-        <select id="incubatorTurning">
-          <option value="Automatique">Automatique</option>
-          <option value="Manuel">Manuel</option>
-          <option value="Non renseigné">Non renseigné</option>
-        </select>
-        </div>
- <div class="full">
-        <label>Observations</label>
-        <textarea id="incubatorNote" rows="2"></textarea>
-      </div>
-      <div class="full">
-        <button onclick="addIncubator()">Enregistrer l'incubation</button>
-      </div>
+      <button onclick="addClient()">Enregistrer le client</button>
+      <h3>Liste des clients — <span id="clientTotal">0 client</span></h3><div id="clientList">Aucun client enregistré.</div>
     </div>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h3>📊 Suivi des incubations</h3>
-    <div id="incubatorList" class="muted small">
-      Aucune incubation enregistrée.
-    </div>
-  </div>
-</section>
-<section class="section" id="finance"><h2>💰 Comptabilité de la ferme</h2><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div class="card"><div class="metric-label">Revenus</div><div class="metric" id="incomeTotal">0 $</div></div><div class="card"><div class="metric-label">Dépenses</div><div class="metric" id="expenseTotal">0 $</div></div><div class="card"><div class="metric-label">Solde</div><div class="metric" id="balanceTotal">0 $</div></div></div>
-<div class="card"><h3>Nouvelle opération financière</h3><div class="formgrid"><div><label>Nature</label><select id="finType"><option value="expense">Dépense</option><option value="income">Revenu</option></select></div><div><label>Catégorie</label><select id="finCategory"><option>Aliments</option><option>Poussins / poulettes</option><option>Vaccins et soins</option><option>Transport</option><option>Équipement</option><option>Vente d'œufs</option><option>Vente de poulets</option><option>Autre</option></select></div><div><label>Montant (USD)</label><input id="finAmount" type="number" min="0.01" step="0.01"></div><div><label>Date</label><input id="finDate" type="date"></div><div class="full"><label>Note / référence</label><input id="finNote" placeholder="Fournisseur, client, facture..."></div><div class="full"><button onclick="addFinance()">Ajouter à l'historique</button></div></div></div>
-<div class="card" style="margin-top:14px"><h3>Historique des opérations</h3><div id="financeList"></div></div></section>
-<section class="section" id="market"><h2>🛒 Marché des produits avicoles</h2><div class="card"><h3>Publier un produit</h3><div class="formgrid"><div><label>Produit</label><input id="prodName" placeholder="Plateau de 30 œufs"></div><div><label>Prix (USD)</label><input id="prodPrice" type="number" min="0" step=".01"></div><div><label>Quantité disponible</label><input id="prodQty" type="number" min="0"></div><div><label>Vendeur / ferme</label><input id="prodSeller" placeholder="Nom de la ferme"></div><div class="full"><label>Description</label><textarea id="prodDesc" rows="2"></textarea></div><div class="full"><button onclick="addProduct()">Publier le produit</button></div></div></div>
-<div class="card" style="margin-top:14px"><h3>Catalogue</h3><div id="productList" class="muted small">Aucun produit publié.</div></div></section>
-<section class="section" id="location"><h2>📍 Géolocalisation et terrain d'élevage</h2><div class="card"><p class="muted">La localisation ne fonctionne qu'avec l'autorisation explicite de l'utilisateur et une connexion sécurisée HTTPS (ou localhost). Le suivi continu doit être activé volontairement par l'éleveur.</p><div class="row"><button onclick="getLocation()">Obtenir ma position GPS</button><button class="secondary" onclick="startTracking()">Activer le suivi pendant cette session</button><button class="danger" onclick="stopTracking()">Arrêter le suivi</button></div><p id="gpsOutput" class="small muted">Position non encore partagée.</p><div class="mapbox" id="mapBox">🗺️ Carte de la ferme<br><span class="small">La carte interactive sera connectée à un fournisseur cartographique lors du déploiement.</span></div><h3>Délimiter le terrain</h3><p class="small muted">Marchez autour du terrain et ajoutez les points GPS de ses limites. 
-La superficie calculée sera une estimation.
-<button class="secondary" onclick="addBoundaryPoint()">Ajouter le point GPS actuel au périmètre</button>
-<button class="secondary" onclick="calculateArea()">Calculer la superficie estimée</button>
-<p id="areaOutput" class="small muted">Aucun point de limite enregistré.</p>
-</div>
-</section>
-<section class="section" id="clients">
-  <h2>👥 Clients & avis</h2>
-  <!-- 1. FICHIER CLIENTS -->
-  <div class="card">
-    <h3>👤 Enregistrer un nouveau client</h3>
-    <div class="formgrid">
-      <div>
-        <label>Nom complet du client</label>
-        <input id="clientName" placeholder="Nom et prénom">
+    <div class="card">
+      <h3>Enregistrer une commande</h3>
+      <div class="grid">
+        <div><label for="orderClient">Client</label><input id="orderClient"></div>
+        <div><label for="orderProduct">Produit</label><input id="orderProduct"></div>
+        <div><label for="orderQty">Quantité</label><input id="orderQty" type="number" min="1"></div>
+        <div><label for="orderPrice">Prix unitaire (USD)</label><input id="orderPrice" type="number" min="0" step="0.01"></div>
+        <div><label for="orderDate">Date</label><input id="orderDate" type="date"></div>
+        <div><label for="orderStatus">Statut</label><select id="orderStatus"><option value="En attente">En attente</option><option value="Confirmée">Confirmée</option><option value="En préparation">En préparation</option><option value="Livrée">Livrée</option><option value="Annulée">Annulée</option></select></div>
       </div>
-      <div>
-        <label>Numéro de téléphone</label>
-        <input id="clientPhone" type="tel" placeholder="+243...">
-      </div>
-      <div class="full">
-        <label>Adresse du client</label>
-        <input id="clientAddress" placeholder="Ville, commune, quartier">
-      </div>
-      <div class="full">
-        <button onclick="addClient()">Enregistrer le client</button>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📋 Fichier des clients enregistrés</h3>
-    <div id="clientTotal">0 client</div>
-    <div id="clientList" class="muted small">
-      Aucun client enregistré.
-    </div>
-  </div>
-  <!-- 2. COMMANDES ET ACHATS -->
-<div class="card" style="margin-top:14px">
-  <h3>🛒 Enregistrer une commande</h3>
-  <div class="formgrid">
-    <div>
-      <label>Nom du client</label>
-      <input id="orderClient" placeholder="Nom du client">
-    </div>
-    <div>
-      <label>Produit commandé</label>
-      <input id="orderProduct" placeholder="Ex. Poulets de chair">
-    </div>
-    <div>
-      <label>Quantité</label>
-      <input id="orderQty" type="number" min="1" placeholder="Quantité">
-    </div>
-    <div>
-      <label>Prix unitaire (USD)</label>
-      <input id="orderPrice" type="number" min="0" step="0.01" placeholder="Prix unitaire">
-    </div>
-    <div>
-      <label>Date de commande</label>
-      <input id="orderDate" type="date">
-    </div>
-    <div>
-      <label>Statut de la commande</label>
-      <select id="orderStatus">
-        <option value="En attente">En attente</option>
-        <option value="Confirmée">Confirmée</option>
-        <option value="En préparation">En préparation</option>
-        <option value="Livrée">Livrée</option>
-        <option value="Annulée">Annulée</option>
-      </select>
-    </div>
-    <div class="full">
       <button onclick="addOrder()">Enregistrer la commande</button>
+      <h3>Commandes — <span id="orderTotal">0 commande</span></h3><div id="orderList">Aucune commande enregistrée.</div>
     </div>
-  </div>
-</div>
-<div class="card" style="margin-top:14px">
-  <h3>📋 Historique des commandes</h3>
-  <div id="orderTotal">0 commande</div>
-  <div id="orderList" class="muted small">
-    Aucune commande enregistrée.
-  </div>
-</div>
-  <!-- 3. PAIEMENTS -->
-  <div class="card" style="margin-top:14px">
-    <h3>💰 Paiements des clients</h3>
-    <p class="muted small">
-      Suivi des montants payés et des soldes restants.
-      Ce module sera développé à l'étape suivante.
-    </p>
-  </div>
-    <!-- 4. AVIS ET TÉMOIGNAGES -->
-  <div class="card" style="margin-top:14px">
-    <h3>⭐ Laisser un avis</h3>
-    <div class="formgrid">
-      <div>
-        <label>Nom du client</label>
-        <input id="reviewName">
+    <div class="card">
+      <h3>Publier un avis ou témoignage</h3>
+      <div class="grid">
+        <div><label for="reviewName">Nom</label><input id="reviewName"></div>
+        <div><label for="reviewProduct">Produit concerné</label><input id="reviewProduct"></div>
       </div>
-      <div>
-        <label>Produit / ferme concerné</label>
-        <input id="reviewProduct">
+      <label for="reviewText">Témoignage ou commentaire</label><textarea id="reviewText"></textarea>
+      <button onclick="addReview()">Publier le témoignage</button>
+      <h3>Avis des clients</h3><div id="reviewList">Aucun avis.</div>
+    </div>
+  </section>
+  <section id="location" class="section">
+    <h2>📍 Localisation et terrain</h2>
+    <div class="card">
+      <h3>Position GPS de la ferme</h3>
+      <button onclick="getLocation()">Obtenir ma position GPS</button>
+      <button onclick="startTracking()">Activer le suivi pendant cette session</button>
+      <button class="secondary" onclick="stopTracking()">Arrêter le suivi</button>
+      <p id="gpsOutput">Aucune position GPS enregistrée.</p><div id="mapBox">La carte de localisation apparaîtra ici.</div>
+    </div>
+    <div class="card">
+      <h3>Délimitation du terrain</h3>
+      <p class="muted">Enregistrez au moins trois points GPS autour du terrain.</p>
+      <button onclick="addBoundaryPoint()">Ajouter un point GPS</button>
+      <button onclick="calculateArea()">Calculer la superficie estimée</button>
+      <p id="areaOutput">Aucun point de limite enregistré.</p>
+    </div>
+  </section>
+  <section id="messages" class="section">
+    <h2>✉️ Communication et messages</h2>
+    <div class="card"><h3>Envoyer un message</h3><label for="chatText">Votre message</label><textarea id="chatText" placeholder="Écrivez votre message..."></textarea><button onclick="sendMessage()">Envoyer</button></div>
+    <div class="card"><h3>Historique des messages</h3><div id="chatList">Aucun message.</div></div>
+  </section>
+  <section id="notifications" class="section">
+    <h2>🔔 Notifications</h2>
+    <div class="card"><p>Notifications non lues : <strong id="notificationCount">0</strong></p><div id="notificationHistory">Aucune notification enregistrée.</div></div>
+  </section>
+  <section id="ai" class="section">
+    <h2>🤖 Assistant IA agricole</h2>
+    <div class="card">
+      <h3>Analyse d'une observation ou d'une image</h3>
+      <label for="aiImage">Ajouter une image</label><input id="aiImage" type="file" accept="image/*">
+      <label for="aiContext">Décrire la situation observée</label><textarea id="aiContext" placeholder="Espèce, âge, symptômes ou observation..."></textarea>
+      <button onclick="analyzeImage()">Préparer l'analyse</button><div id="aiResult"></div>
+    </div>
+    <div class="card"><h3>Résumé financier</h3><div id="aiFinance">Aucune donnée financière disponible.</div></div>
+    <div class="notice">Les analyses automatiques ne remplacent pas l'avis d'un vétérinaire. En cas de maladie ou de mortalité inhabituelle, contactez un professionnel.</div>
+  </section>
+  <section id="admin" class="section">
+    <h2>⚙️ Administration et synchronisation</h2>
+    <div class="card">
+      <h3>Compte VolaConnect</h3>
+      <label for="accountName">Nom complet</label><input id="accountName" autocomplete="name">
+      <label for="accountEmail">Adresse e-mail</label><input id="accountEmail" type="email" autocomplete="email">
+      <label for="accountPassword">Mot de passe</label><input id="accountPassword" type="password" autocomplete="current-password">
+      <div class="row">
+        <button onclick="createCloudAccount()">Créer un compte</button>
+        <button class="secondary" onclick="loginCloudAccount()">Se connecter</button>
+        <button class="secondary" onclick="logoutCloudAccount()">Se déconnecter</button>
       </div>
-      <div>
-        <label>Note du client</label>
-        <select id="reviewRating">
-          <option value="5">5 étoiles</option>
-          <option value="4">4 étoiles</option>
-          <option value="3">3 étoiles</option>
-          <option value="2">2 étoiles</option>
-          <option value="1">1 étoile</option>
-        </select>
-      </div>
-      <div class="full">
-        <label>Témoignage ou commentaire</label>
-        <textarea id="reviewText" rows="3"></textarea>
-      </div>
-      <div class="full">
-        <button onclick="addReview()">Publier le témoignage</button>
-      </div>
+      <p id="cloudStatus">Compte non connecté.</p>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📢 Avis publiés</h3>
-    <div id="reviewList" class="muted small">
-      Aucun avis.
+    <div class="card">
+      <h3>Configuration du serveur</h3>
+      <label for="apiBase">Adresse HTTPS de l'API</label><input id="apiBase" type="url">
+      <button onclick="syncCloudNow()">Synchroniser maintenant</button>
+      <button class="secondary" onclick="diagnosticSync()">Diagnostic de synchronisation</button>
     </div>
-  </div></section>
-<section class="section" id="messages"><h2>💬 Communication</h2><div class="notice">La messagerie ci-dessous est une démonstration locale sur cet appareil. Les appels audio/vidéo réels nécessitent un serveur de signalisation sécurisé et une infrastructure WebRTC (STUN/TURN).</div><div class="card" style="margin-top:14px"><h3>Messagerie texte locale</h3><div id="chatList" style="min-height:100px;max-height:240px;overflow:auto" class="small muted">Aucun message.</div><label>Votre message</label><textarea id="chatText" rows="2" placeholder="Écrire un message..."></textarea><div class="row" style="margin-top:8px"><button onclick="sendMessage()">Envoyer</button><button class="secondary" onclick="callInfo('audio')">Appel audio</button><button class="secondary" onclick="callInfo('vidéo')">Appel vidéo</button></div></div></section>
-<!-- RUBRIQUE 12 : NOTIFICATIONS -->
-<section class="section" id="notifications">
-  <h2>🔔 Notifications et alertes</h2>
-  <div class="card">
-    <h3>🩺 Alertes sanitaires</h3>
-    <div id="healthNotifications">
-      Aucune alerte sanitaire pour le moment.
+    <div class="card">
+      <h3>Sauvegarde des données</h3>
+      <button onclick="exportData()">Exporter une sauvegarde</button>
+      <button class="secondary" onclick="importDataPrompt()">Importer une sauvegarde</button>
+      <button class="danger" onclick="clearData()">Effacer les données locales</button>
+      <p class="notice">Attention : l'effacement concerne les données enregistrées sur cet appareil. Exportez une sauvegarde avant toute suppression.</p>
     </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>🐔 Alertes du cheptel</h3>
-    <div id="livestockNotifications">
-      Aucune alerte sur le cheptel.
-    </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>🛒 Commandes et paiements</h3>
-    <div id="orderNotifications">
-      Aucune nouvelle commande ou alerte de paiement.
-    </div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>📋 Historique des notifications</h3>
-    <div id="notificationHistory">
-      Aucune notification enregistrée.
-    </div>
-  </div>
-</section>
-<section class="section" id="ai"><h2>✨ Assistant IA agricole</h2><div class="notice">L'analyse IA réelle nécessite un service IA connecté, des règles vétérinaires validées et une clé API protégée côté serveur. Cette version permet de préparer les observations et de tester le flux, sans prétendre diagnostiquer une maladie.</div><div class="card" style="margin-top:14px"><h3>Préparer une analyse d'image</h3><label>Photo d'un animal, d'un aliment ou d'une installation</label><input id="aiImage" type="file" accept="image/*"><label>Contexte / symptômes observés</label><textarea id="aiContext" rows="3" placeholder="Ex. baisse d'appétit, plumage, fientes, âge, effectif concerné..."></textarea><button style="margin-top:10px" onclick="analyzeImage()">Préparer l'analyse</button><div id="aiResult" class="small muted" style="margin-top:12px"></div></div><div class="card" style="margin-top:14px"><h3>Analyse économique simple</h3><p class="small muted">Calcul automatique à partir des opérations financières saisies.</p><div id="aiFinance"></div></div></section>
-<section class="section" id="admin"><h2>⚙ Administration et sécurité</h2><div class="card"><h3>Contrôles de la version pilote</h3><ul class="small"><li>Données de démonstration conservées localement dans le navigateur.</li><li>Ne partagez pas cet appareil et protégez votre session.</li><li>Avant la mise en production : authentification forte, rôles et permissions, chiffrement TLS, sauvegardes, journal d'audit et tests de sécurité.</li><li>Les paiements réels doivent passer par un prestataire agréé (mobile money / banque), avec vérification serveur des transactions.</li></ul><div class="row"><button class="secondary" onclick="exportData()">Exporter mes données (JSON)</button><button class="secondary" onclick="importDataPrompt()">Importer une sauvegarde</button><button class="danger" onclick="clearData()">Effacer les données locales</button></div><h3 style="margin-top:20px">Compte et synchronisation entre appareils</h3>
-<div class="notice">Créez un compte sur le serveur VolaConnect hébergé pour synchroniser vos données entre plusieurs appareils. Sans serveur configuré, vos données restent sur cet appareil.</div>
-<div class="formgrid" style="margin-top:10px">
-<div class="full"><label>Adresse de l’API VolaConnect (HTTPS)</label><input id="apiBase" placeholder="https://api.votredomaine.cd"></div>
-<div><label>Nom complet (inscription)</label><input id="accountName" placeholder="Nom complet"></div>
-<div><label>Adresse e-mail</label><input id="accountEmail" type="email" placeholder="nom@exemple.com"></div>
-<div class="full"><label>Mot de passe (12 caractères minimum)</label><input id="accountPassword" type="password" minlength="12" autocomplete="new-password"></div>
-<div class="full row"><button onclick="createCloudAccount()">Créer un compte</button><button class="secondary" onclick="loginCloudAccount()">Se connecter</button><button class="secondary" onclick="syncCloudNow()">Synchroniser maintenant</button><button class="danger" onclick="logoutCloudAccount()">Déconnecter</button></div><button class="secondary" onclick="diagnosticSync()">Diagnostic synchronisation</button>
-</div><p id="cloudStatus" class="small muted">Aucun compte connecté. La synchronisation cloud est inactive.</p>
-<h3 style="margin-top:20px">Modules optionnels à activer ultérieurement</h3><ul class="small"><li>Assistant IA : désactivé jusqu’à la configuration d’un fournisseur et la validation des usages vétérinaires.</li><li>M-Pesa, Orange Money et Airtel Money : désactivés jusqu’à la contractualisation et l’intégration des API officielles.</li></ul>
-<h3 style="margin-top:20px">Historique / journal</h3><div id="auditList" class="small muted">Aucune activité.</div></div></section>
-<footer>VolaConnect · Plateforme de gestion et de mise en relation · RDC</footer>
-</main></div><div id="toast"></div>
-<script>
-window.onerror=function(message,source,line,column){
-  alert("ERREUR JAVASCRIPT\n"+message+"\nLigne : "+line);};
-</script>
+    <div class="card"><h3>État de la synchronisation</h3><p id="queueCount">0 opération(s) en attente</p><div id="syncDiagnostic"></div><div id="queueList"></div></div>
+    <div class="card"><h3>Journal des activités</h3><div id="auditList">Aucune activité.</div></div>
+  </section>
+</main>
+<footer>
+  <strong>VolaConnect — AGRIVOLAILLE</strong><br>
+  Ensemble, connectons les éleveurs, les producteurs et les consommateurs autour d'une viande fraîche, saine et de qualité.
+</footer>
 <script src="app.js"></script>
-</body></html>
+</body>
+  </html>
+  
+  
